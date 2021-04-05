@@ -1,0 +1,8 @@
+<h2>Organisation unit filter</h2>
+<hr />
+<ngx-dhis2-org-unit-filter
+  [selectedOrgUnitItems]="selectionDialogData.selectedOrgUnitItems"
+  [orgUnitFilterConfig]="orgUnitFilterConfig"
+  (orgUnitClose)="onFilterUpdate($event, 'CLOSE')"
+  (orgUnitUpdate)="onFilterUpdate($event, 'UPDATE')"
+></ngx-dhis2-org-unit-filter>

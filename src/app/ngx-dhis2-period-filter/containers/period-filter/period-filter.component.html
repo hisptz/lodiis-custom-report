@@ -1,0 +1,265 @@
+<div class="period-filter-container">
+  <!--period body-->
+  <mat-button-toggle-group
+    #filterType="matButtonToggleGroup"
+    *ngIf="periodFilterTypes && periodFilterTypes.length > 1"
+  >
+    <mat-button-toggle
+      *ngFor="let periodFilterType of periodFilterTypes"
+      [value]="periodFilterType.id"
+      (click)="onSetPeriodFilterType($event, filterType)"
+      [checked]="periodFilterType.id === currentPeriodFilterType"
+    >
+      {{ periodFilterType.name }}
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+
+  <div
+    *ngIf="currentPeriodFilterType !== periodFilterTypeEnum.DATE_RANGE"
+    class="period-body"
+  >
+    <table class="table table-bordered period-available">
+      <tr>
+        <td class="p-1">
+          <div class="d-flex justify-content-between position-relative">
+            <button
+              mat-stroked-button
+              class="pr-1 period-btn"
+              (click)="onTogglePeriodTypeSelection($event)"
+              [disabled]="periodFilterConfig.disablePeriodTypeSelection"
+            >
+              <div class="d-flex justify-content-between align-items-center">
+                <span>{{ selectedPeriodType || 'Period Type' }}</span>
+                <mat-icon>arrow_drop_down</mat-icon>
+              </div>
+            </button>
+            <mat-card
+              class="period-type-container"
+              *ngIf="showPeriodTypeSelection"
+            >
+              <ul class="period-type-list">
+                <li *ngFor="let periodType of periodTypes">
+                  <a
+                    [ngClass]="{
+                      'selected-period-type':
+                        selectedPeriodType === periodType.id
+                    }"
+                    (click)="onUpdatePeriodType($event, periodType.id)"
+                    >{{ periodType.name }}</a
+                  >
+                </li>
+              </ul>
+            </mat-card>
+            <div
+              class="btn-group"
+              *ngIf="currentPeriodFilterType === periodFilterTypeEnum.FIXED"
+            >
+              <button
+                type="button"
+                mat-icon-button
+                matTooltip="Previous year"
+                (click)="pushPeriod($event, 'PREV')"
+              >
+                <mat-icon>navigate_before</mat-icon>
+              </button>
+              <button
+                type="button"
+                mat-icon-button
+                matTooltip="Next year"
+                (click)="pushPeriod($event, 'NEXT')"
+                [disabled]="selectedYear === currentYear"
+              >
+                <mat-icon>navigate_next</mat-icon>
+              </button>
+              <div class="d-flex align-items-center mr-2" style="height: 43px;">
+                {{ selectedYear }}
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="period-available-body p-1">
+          <ul
+            class="period-list"
+            [style.height]="periodFilterConfig.contentHeight"
+          >
+            <li *ngFor="let availablePeriod of availablePeriods">
+              <a
+                style="margin: 0.2em;"
+                [ngClass]="{
+                  'selected-active': isInArray(
+                    selectedPeriodList,
+                    availablePeriod?.id
+                  )
+                }"
+                (click)="
+                  onClickToSelectPeriod(availablePeriod, $event, 'SELECT')
+                "
+                (dblclick)="moveSingleSelectedPeriod(availablePeriod, $event)"
+                matTooltipPosition="right"
+              >
+                <div class="period-list-icon"></div>
+                <span class="selected-active-name">{{
+                  availablePeriod?.name
+                }}</span>
+              </a>
+            </li>
+          </ul>
+          <div
+            *ngIf="!periodFilterConfig.singleSelection"
+            class="d-flex justify-content-center"
+          >
+            <button
+              mat-flat-button
+              (click)="onSelectAllPeriods($event)"
+              matTooltip="Select all periods"
+            >
+              SELECT ALL
+            </button>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <div class="transfer-section">
+      <button
+        type="button"
+        class="transfer-btn"
+        (click)="moveSelectedPeriods($event)"
+        [disabled]="!selectedPeriodList.length"
+        mat-icon-button
+      >
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+      <button
+        type="button"
+        class="transfer-btn"
+        (click)="moveDeselectedPeriods($event)"
+        [disabled]="!deselectedPeriodList.length"
+        mat-icon-button
+      >
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+    </div>
+
+    <table class="table table-bordered period-selected">
+      <tr>
+        <td>
+          <div class="d-flex align-items-center" style="height: 27px;">
+            Selected
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="period-selected-body p-1">
+          <div
+            cdkDropList
+            (cdkDropListDropped)="drop($event)"
+            class="selected-period-list"
+            [style.height]="
+              'calc(' + periodFilterConfig.contentHeight + ' + 16px)'
+            "
+          >
+            <div
+              class="selected-period-chip"
+              *ngFor="let selectedPeriod of selectedPeriods"
+              cdkDrag
+              [ngClass]="{
+                'selected-active': isInArray(
+                  deselectedPeriodList,
+                  selectedPeriod?.id
+                )
+              }"
+              (click)="
+                onClickToSelectPeriod(selectedPeriod, $event, 'DESELECT')
+              "
+              (dblclick)="moveSingleDeselectedPeriod(selectedPeriod, $event)"
+            >
+              <span class="selected-active-name">{{
+                selectedPeriod.name
+              }}</span>
+              <span
+                (click)="onDeselectPeriod(selectedPeriod, $event)"
+                matTooltipPosition="right"
+                class="selected-period-close"
+                >&times;</span
+              >
+            </div>
+          </div>
+          <div
+            *ngIf="!periodFilterConfig.singleSelection"
+            class="d-flex justify-content-center"
+          >
+            <button
+              matTooltip="Unselect all periods"
+              mat-flat-button
+              class="period-btn"
+              (click)="onDeselectAllPeriods($event)"
+            >
+              DESELECT ALL
+            </button>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <!-- For date range picker -->
+  <div
+    *ngIf="currentPeriodFilterType === periodFilterTypeEnum.DATE_RANGE"
+    class="period-range-container"
+  >
+    <mat-form-field style="width: 100%;" appearance="outline">
+      <mat-label>Start date</mat-label>
+      <input
+        matInput
+        [matDatepicker]="start_date"
+        [min]="minStartDate"
+        [max]="maxStartDate"
+        [(ngModel)]="startDate"
+        (dateInput)="getDate($event.value, 'start_date')"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="start_date"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #start_date></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field style="width: 100%;" appearance="outline">
+      <mat-label>End date</mat-label>
+      <input
+        matInput
+        [matDatepicker]="end_date"
+        [min]="minEndDate"
+        [max]="maxEndDate"
+        [(ngModel)]="endDate"
+        (dateInput)="getDate($event.value, 'end_date')"
+      />
+      <mat-datepicker-toggle matSuffix [for]="end_date"></mat-datepicker-toggle>
+      <mat-datepicker #end_date></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <!-- End for date range picker -->
+  <!--end of period body-->
+
+  <!--period footer-->
+  <div
+    class="ngx-dhis2-period__period-buttons"
+    *ngIf="!periodFilterConfig?.hideActionButtons"
+  >
+    <div>
+      <button mat-stroked-button (click)="onClose($event)">
+        Close
+      </button>
+      <button
+        mat-stroked-button
+        color="primary"
+        class="ml-2"
+        [disabled]="selectedPeriods.length === 0"
+        (click)="onUpdate($event)"
+      >
+        Update
+      </button>
+    </div>
+  </div>
+  <!--end of period footer-->
+</div>

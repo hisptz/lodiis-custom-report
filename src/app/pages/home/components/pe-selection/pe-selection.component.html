@@ -1,0 +1,8 @@
+<ngx-dhis2-period-filter
+  [selectedPeriods]="selectionDialogData.selectedPeriods"
+  [periodFilterConfig]="periodFilterConfig"
+  [defaultPeriodTypes]="defaultPeriodTypes"
+  (close)="onFilterUpdate($event, 'CLOSE')"
+  (update)="onFilterUpdate($event, 'UPDATE')"
+>
+</ngx-dhis2-period-filter>
