@@ -1,6 +1,6 @@
 {
-  "name": "kb-custom-report",
-  "short_name": "kb-custom-report",
+  "name": "custom-report",
+  "short_name": "custom-report",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",

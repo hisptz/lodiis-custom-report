@@ -1,8 +1,8 @@
 
 {
     "version": "1.0.0",
-    "name": "KB Custom Report",
-    "description": "Custom report for KB",
+    "name": "Custom Report",
+    "description": "Custom report application",
     "appType": "APP",
     "launch_path": "index.html",
     "icons": {
