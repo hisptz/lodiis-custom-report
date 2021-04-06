@@ -1,10 +1,10 @@
 {
-  "name": "kb-cusom-report",
+  "name": "kb-custom-report",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod --aot && cd dist/kb-cusom-report && zip -r -D kb-cusom-report.zip .",
+    "build": "ng build --prod --aot && cd dist/kb-custom-report && zip -r -D kb-custom-report.zip .",
     "test": "ng test",
     "test:travis": "ng test -- --no-watch --no-progress --code-coverage --browsers=ChromeHeadlessCI",
     "lint": "ng lint",
