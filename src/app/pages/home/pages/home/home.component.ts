@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { MatDialog } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
+import * as _ from 'lodash';
+
 import { PeSelectionComponent } from '../../components/pe-selection/pe-selection.component';
 import { OuSelectionComponent } from '../../components/ou-selection/ou-selection.component';
-import {
-  getDefaultOrganisationUnitSelections,
-} from '../../helpers/get-dafault-selections';
-import { Store } from '@ngrx/store';
+import { getDefaultOrganisationUnitSelections } from '../../helpers/get-dafault-selections';
 import { State } from 'src/app/store/reducers';
 import { LoadReportData } from 'src/app/store/actions';
-import { Observable } from 'rxjs';
 import { getAnlyticsParameters } from '../../helpers/get-anlytics-parameters';
 import {
   getCurrentAnalyticsLoadingStatus,
@@ -16,7 +16,7 @@ import {
   getCurrentAnalyticsError,
 } from 'src/app/store/selectors/report-data.selectors';
 import { getCurrentUserOrganisationUnits } from 'src/app/store/selectors';
-import * as reportConfig from '../../../../core/config/report.config.json'
+import * as reportConfig from '../../../../core/config/report.config.json';
 import { Report } from 'src/app/shared/models/report.model';
 
 @Component({
@@ -27,6 +27,7 @@ import { Report } from 'src/app/shared/models/report.model';
 export class HomeComponent implements OnInit {
   selectedPeriods: Array<any>;
   selectedOrgUnitItems: Array<any>;
+  selectedReport: Report;
   reports: Array<Report>;
   isLoading$: Observable<boolean>;
   analytics$: Observable<any>;
@@ -38,8 +39,8 @@ export class HomeComponent implements OnInit {
     this.isLoading$ = this.store.select(getCurrentAnalyticsLoadingStatus);
     this.analytics$ = this.store.select(getCurrentAnalytics);
     this.analyticsError$ = this.store.select(getCurrentAnalyticsError);
-    this.selectedPeriods =  [];// getDefaultPeriodSelections();
-    this.reports = reportConfig.report;
+    this.selectedPeriods = []; // getDefaultPeriodSelections();
+    this.reports = reportConfig.report || [];
     this.store
       .select(getCurrentUserOrganisationUnits)
       .subscribe((userOrgnisationUnits) => {
@@ -91,49 +92,68 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  getReportParameterSelectionStatus(){
-    return this.selectedOrgUnitItems  && this.selectedPeriods &&this.selectedPeriods.length > 0 && this.selectedOrgUnitItems.length > 0 ;
+  onSelectReport(e) {
+    const report = _.find(
+      this.reports || [],
+      (reportObject) => reportObject.id === e.value
+    );
+    if (report) {
+      this.selectedReport = report;
+    }
+  }
+
+  getReportParameterSelectionStatus() {
+    return (
+      this.selectedOrgUnitItems &&
+      this.selectedPeriods &&
+      this.selectedReport &&
+      this.selectedPeriods.length > 0 &&
+      this.selectedOrgUnitItems.length > 0
+    );
   }
 
   onGenerateReport() {
     const isAllParameterSelected = this.getReportParameterSelectionStatus();
-    if(isAllParameterSelected ){
+    if (isAllParameterSelected) {
       const report = {
-        "id": "",
-        "name": "",
-        "program": "hOEIHJDrrvz",
-        "dxConfig": [
+        id: '',
+        name: '',
+        program: 'hOEIHJDrrvz',
+        dxConfig: [
           {
-            "programStage": "QNdBI9U7rnV",
-            "name": "First Name",
-            "id": "WTZ7GLTrE8Q"
-          },{
-            "programStage": "QNdBI9U7rnV",
-            "name": "Middle Name",
-            "id": "s1HaiT6OllL"
-          },{
-            "programStage": "NXsIkG9Q1BA",
-            "name": "Contraceptive_P",
-            "id": "uciT2F6ByYO"
-          }
-        ]
+            programStage: 'QNdBI9U7rnV',
+            name: 'First Name',
+            id: 'WTZ7GLTrE8Q',
+          },
+          {
+            programStage: 'QNdBI9U7rnV',
+            name: 'Middle Name',
+            id: 's1HaiT6OllL',
+          },
+          {
+            programStage: 'NXsIkG9Q1BA',
+            name: 'Contraceptive_P',
+            id: 'uciT2F6ByYO',
+          },
+        ],
       };
       const analyticParameters = getAnlyticsParameters(
         this.selectedOrgUnitItems,
         this.selectedPeriods,
         report.dxConfig
       );
-      this.store.dispatch(LoadReportData({analyticParameters, reportConfig : report}));
+      this.store.dispatch(
+        LoadReportData({ analyticParameters, reportConfig: report })
+      );
     }
-
   }
 
   onDownloadReport() {
     const isAllParameterSelected = this.getReportParameterSelectionStatus();
-    if(isAllParameterSelected  && this.analytics$ !== null){
-      console.log("On donaloading");
+    if (isAllParameterSelected && this.analytics$ !== null) {
+      console.log('On donaloading');
     }
-    console.log({analytics : this.analytics$});
+    console.log({ analytics: this.analytics$ });
   }
 
   // updateChart() {
