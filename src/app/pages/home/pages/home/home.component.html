@@ -10,8 +10,7 @@
           >&nbsp;&nbsp;&nbsp;&nbsp;
           <mat-form-field>
             <mat-select placeholder="Choose report">
-              <mat-option value="option1">Report 1</mat-option>
-              <mat-option value="option3">Report 2</mat-option>
+              <mat-option value="{{report.id}}'" *ngFor="let report of reports">{{report.name}}</mat-option>
             </mat-select> </mat-form-field
           >&nbsp;&nbsp;
         </div>

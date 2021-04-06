@@ -5,7 +5,6 @@ import { OuSelectionComponent } from '../../components/ou-selection/ou-selection
 import {
   getDefaultOrganisationUnitSelections,
 } from '../../helpers/get-dafault-selections';
-
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/store/reducers';
 import { LoadReportData } from 'src/app/store/actions';
@@ -17,6 +16,8 @@ import {
   getCurrentAnalyticsError,
 } from 'src/app/store/selectors/report-data.selectors';
 import { getCurrentUserOrganisationUnits } from 'src/app/store/selectors';
+import * as reportConfig from '../../../../core/config/report.config.json'
+import { Report } from 'src/app/shared/models/report.model';
 
 @Component({
   selector: 'app-home',
@@ -26,6 +27,7 @@ import { getCurrentUserOrganisationUnits } from 'src/app/store/selectors';
 export class HomeComponent implements OnInit {
   selectedPeriods: Array<any>;
   selectedOrgUnitItems: Array<any>;
+  reports: Array<Report>;
   isLoading$: Observable<boolean>;
   analytics$: Observable<any>;
   analyticsError$: Observable<any>;
@@ -37,6 +39,7 @@ export class HomeComponent implements OnInit {
     this.analytics$ = this.store.select(getCurrentAnalytics);
     this.analyticsError$ = this.store.select(getCurrentAnalyticsError);
     this.selectedPeriods =  [];// getDefaultPeriodSelections();
+    this.reports = reportConfig.report;
     this.store
       .select(getCurrentUserOrganisationUnits)
       .subscribe((userOrgnisationUnits) => {
@@ -48,7 +51,7 @@ export class HomeComponent implements OnInit {
           this.selectedOrgUnitItems = getDefaultOrganisationUnitSelections(
             userOrgnisationUnits
           );
-        } 
+        }
       });
   }
 
@@ -117,12 +120,12 @@ export class HomeComponent implements OnInit {
       };
       const analyticParameters = getAnlyticsParameters(
         this.selectedOrgUnitItems,
-        this.selectedPeriods, 
+        this.selectedPeriods,
         report.dxConfig
       );
       this.store.dispatch(LoadReportData({analyticParameters, reportConfig : report}));
     }
-    
+
   }
 
   onDownloadReport() {
