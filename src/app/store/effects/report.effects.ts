@@ -57,19 +57,49 @@ export class ReportDataEffects {
     return _.flattenDeep(eventReportAnalyticData);
   }
 
-  getSingleEventReportAnalyticData(analyticParameter : any, programId:string){
+  async getSingleEventReportAnalyticData(analyticParameter : any, programId:string){
+    let analyticData = {};
     const pe = _.join(analyticParameter.pe || [], ';');
     const ou = _.join(analyticParameter.ou || [], ';');
     const stage = _.map(analyticParameter.dx || [], (dx:string)=> dx.split('.')[0])[0];
     const dataDimension = _.join(_.map(analyticParameter.dx || [], (dx:string)=>`dimension=${dx}` ), '&');
-    //@TODO update pagination dynamically
     const pageSize = 500;
-    const page = 1;
     const url = `analytics/events/query/${programId}.json?dimension=pe:${pe}&dimension=ou:${ou}&${dataDimension}&stage=${stage}&displayProperty=NAME&outputType=EVENT&desc=eventdate`;
+    try {
+      const paginationFilters:any = await this.getPaginatinationFilters(url,pageSize);
+      for(const paginationFilter of paginationFilters){
+        const data:any = await this.getAnalyticResult(url,paginationFilter);
+        if(_.keys(analyticData).length === 0){
+          analyticData = {...analyticData, ...data};
+        }else{
+          const rows = _.concat(analyticData["rows"] || [], data["rows"]||[]);
+          analyticData = {...analyticData,rows}
+        }
+      }
+    } catch (error) {
+      console.log({error});
+    }
+    return {data  : analyticData, stage};
+  }
+
+  getAnalyticResult(url:string , paginationFilter:string ){
     return new Promise((resolve, reject)=>{
-      this.httpClient.get(`${url}&pageSize=${pageSize}&page=${page}`).subscribe(data=> resolve({
-        data, stage
-      }), error=> reject(error));
+        this.httpClient.get(`${url}&${paginationFilter}`).subscribe(data=> resolve(data), error=> reject(error));
+      });
+  }
+
+  getPaginatinationFilters(url:string, pageSize :number){
+    const paginationFilters = [];
+    return new Promise((resolve, reject)=>{
+      this.httpClient.get(`${url}&pageSize=1&page=1`).subscribe(anlytics=> {
+        const {metaData} = anlytics;
+        const pager = metaData && metaData.pager ?metaData.pager : {};
+        const total = pager.total || pageSize;
+        for (let page = 1; page <= Math.ceil(total / pageSize); page++) {
+          paginationFilters.push(`pageSize=${pageSize}&page=${page}`);
+        }
+        resolve(paginationFilters);
+      }, error=> reject(error));
     })
   }
 
@@ -85,7 +115,6 @@ export class ReportDataEffects {
         });
         let value = eventReportData ? eventReportData[id] : "";
         if(_.keys(beneficiaryData).includes(name) && beneficiaryData[name] !== ""){
-          console.log({"msg":" found", beneficiaryData, name, value})
           value = beneficiaryData[name];
         }
         beneficiaryData[name] = value !== ""?  this.getSanitizesValue(value,code, isBoolean,isDate): value;
