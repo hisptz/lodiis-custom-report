@@ -6,6 +6,6 @@ export interface ReportDataState extends BaseState {
 
 export const initialReportDataState: ReportDataState = {
   ...initialBaseState,
-  loading: true,
+  loading: false,
   analytics: null,
 };

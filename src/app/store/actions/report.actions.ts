@@ -2,9 +2,9 @@ import { createAction, props } from '@ngrx/store';
 import { ErrorMessage } from '@iapps/ngx-dhis2-http-client';
 
 export enum ReportActionTypes {
-  LoadReportData = '[Dashboard] Load dashboard data',
-  AddReportData = '[Dashboard] Add Dashboard data',
-  LoadReportDataFail = '[Dashboard] Load Dashboard data fail',
+  LoadReportData = '[Report] Load Report data',
+  AddReportData = '[Report] Add Report data',
+  LoadReportDataFail = '[Report] Load Report data fail',
 }
 
 export const LoadReportData = createAction(
