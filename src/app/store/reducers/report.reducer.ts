@@ -1,14 +1,14 @@
 import { createReducer, on } from '@ngrx/store';
 
 import {
-  loadDashboardData,
-  addDashboardData,
-  loadDashboardDataFail,
-} from '../actions/dashboard.actions';
+  LoadReportData,
+  AddReportData,
+  LoadReportDataFail,
+} from '../actions/report.actions';
 import {
-  initialDashboardDataState,
-  DashboardDataState,
-} from '../states/dashboard.state';
+  initialReportDataState,
+  ReportDataState,
+} from '../states/report.state';
 import {
   loadingBaseState,
   loadedBaseState,
@@ -16,26 +16,26 @@ import {
 } from '../states/base.state';
 
 export const reducer = createReducer(
-  initialDashboardDataState,
-  on(loadDashboardData, (state) => ({
+  initialReportDataState,
+  on(LoadReportData, (state) => ({
     ...state,
     ...loadingBaseState,
   })),
-  on(addDashboardData, (state, { analytics }) => ({
+  on(AddReportData, (state, { analytics }) => ({
     ...state,
     ...loadedBaseState,
     analytics,
   })),
-  on(loadDashboardDataFail, (state, { error }) => ({
+  on(LoadReportDataFail, (state, { error }) => ({
     ...state,
     ...errorBaseState,
     error,
   }))
 );
 
-export function dashboardDataReducer(
+export function reportDataReducer(
   state: any,
   action: any
-): DashboardDataState {
+): ReportDataState {
   return reducer(state, action);
 }

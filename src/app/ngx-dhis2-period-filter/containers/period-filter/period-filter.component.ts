@@ -243,7 +243,6 @@ export class PeriodFilterComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
   onClickToSelectPeriod(period, e, type) {
-    console.log({ config: this.periodFilterConfig });
     if (
       this.periodFilterConfig &&
       this.periodFilterConfig.hasOwnProperty('singleSelection') &&
