@@ -10,6 +10,8 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { ReportViewComponent } from './components/report-view/report-view.component';
 import { CurrentSelectionComponent } from './components/current-selection/current-selection.component';
 import { SelectionNamePipe } from './pipes/selection-name.pipe';
+import { TableHeadersPipe } from './pipes/table-headers.pipe';
+import { TableDataPipe } from './pipes/table-data.pipe';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,8 @@ import { SelectionNamePipe } from './pipes/selection-name.pipe';
     ReportViewComponent,
     CurrentSelectionComponent,
     SelectionNamePipe,
+    TableHeadersPipe,
+    TableDataPipe,
   ],
   imports: [CommonModule, SharedModule, HomeRoutingModule],
 })
