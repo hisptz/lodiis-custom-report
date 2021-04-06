@@ -28,7 +28,6 @@ export class ReportDataEffects {
   );
 
   getReportAnalyticData(paremeters: any) {
-    console.log(paremeters);
     const{ analyticParameters,reportConfig } = paremeters;
     return  new Observable(observer=>{
       this.getEventReportAnalyticData(analyticParameters,reportConfig ).then(data=>{
@@ -50,6 +49,8 @@ export class ReportDataEffects {
         const sanitizedResponse = this.getSanitizedAnalyticData(anlytics,programStage);
         analyticData.push(sanitizedResponse);
       }
+      const formattedEventReportData = this.getFormattedEventAnalyticDataForReport(_.flattenDeep(analyticData), reportConfig);
+      eventReportAnalyticData.push(formattedEventReportData);
     } catch (error) {
       console.log({error});
     }
@@ -69,12 +70,28 @@ export class ReportDataEffects {
     })
   }
 
-
+  getFormattedEventAnalyticDataForReport(analyticData :Array<any>,reportConfig:any ){
+    const groupedAnalyticDataByBeneficiary = _.groupBy(analyticData, "tei");
+    return _.flattenDeep(_.map(_.keys(groupedAnalyticDataByBeneficiary), (tei:string)=>{
+      const analyticDataByBeneficiary = groupedAnalyticDataByBeneficiary[tei];
+      const beneficiaryData = {};
+      for(const dxConfig of reportConfig.dxConfig || []){
+        const{ id,name,programStage} = dxConfig;
+        const eventReportData = _.find(analyticDataByBeneficiary, (data:any)=> {
+          return _.keys(data).includes(id) && data["programStage"] && data["programStage"] === programStage;
+        });
+        //@TODO formatted output value based on type of element fields
+        const value = eventReportData ? eventReportData[id] : "";
+        beneficiaryData[name] = value;
+      }
+      return beneficiaryData;
+    }));
+  }
 
   getSanitizedAnalyticData(anlytics:any,programStage:string){
     const {headers, rows,metaData} = anlytics;
     const dimensions = metaData && metaData.dimensions ?metaData.dimensions : {};
-    const defaultKeys = _.flattenDeep(_.concat(this.defaultAnalyticKeys, _.keys(_.omit(dimensions,["ou",'pe']))))
+    const defaultKeys = _.flattenDeep(_.concat(this.defaultAnalyticKeys, _.keys(_.omit(dimensions,_.concat(["ou",'pe',], dimensions.ou || [])))))
     return _.flattenDeep(_.map(rows, (rowData:any)=>{
       const dataObject = {"programStage" : programStage};
       for(const key of defaultKeys){
