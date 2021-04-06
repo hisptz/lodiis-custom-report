@@ -2,22 +2,14 @@
 import * as _ from 'lodash';
 
 export function getAnlyticsParameters(
-  selectedOrgUnitItems: any,
-  selectedPeriods: any,
+  selectedOrgUnitItems: Array<any>,
+  selectedPeriods: Array<any>,
+  dxConfigs : Array<{id:string,name:string, programStage:string,}>
 ) {
   const pe = _.uniq(
     _.flattenDeep(_.map(selectedPeriods, (period: any) => period.id || []))
   );
-  const dx = _.uniq(
-    _.flattenDeep(
-      _.map([], (dataConfig: any) => {
-        return _.map(
-          dataConfig.series || [],
-          (seriesConfig: any) => seriesConfig.id || []
-        );
-      })
-    )
-  );
+  const groupedDxConfigs = _.groupBy(dxConfigs|| [], 'programStage');
   const ou = _.uniq(
     _.flattenDeep(
       _.map(
@@ -26,5 +18,12 @@ export function getAnlyticsParameters(
       )
     )
   );
-  return { dx, pe, ou };
+  return _.keys(groupedDxConfigs).length > 0 ? _.flattenDeep(_.map(_.keys(groupedDxConfigs),( programStage : String)=>{
+    const dx = _.flattenDeep(_.map(groupedDxConfigs[programStage] || [], (groupedDxConfig:{id:string,name:string, programStage:string,})=> groupedDxConfig.id !=="" && groupedDxConfig.programStage !=="" ? `${groupedDxConfig.programStage}.${groupedDxConfig.id}` : []));
+    if(dx.length > 0) {
+      return {ou, pe, dx};
+    }else{
+      return [];
+    }
+  })) : [];
 }
