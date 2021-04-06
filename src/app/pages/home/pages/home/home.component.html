@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container app-container">
   <div class="row">
     <div class="col">
       <div class="row">
@@ -9,22 +9,43 @@
           <button mat-stroked-button (click)="openPeriodFilter()">Period</button
           >&nbsp;&nbsp;&nbsp;&nbsp;
           <mat-form-field>
-            <mat-select placeholder="Choose report">
-              <mat-option value="option1">Report 1</mat-option>
-              <mat-option value="option3">Report 2</mat-option>
+            <mat-select
+              placeholder="Choose report"
+              (selectionChange)="onSelectReport($event)"
+            >
+              <mat-option
+                value="{{ report.id }}"
+                *ngFor="let report of reports"
+                >{{ report.name }}</mat-option
+              >
             </mat-select> </mat-form-field
           >&nbsp;&nbsp;
         </div>
         <div class="d-flex justify-content-end">
-          <button mat-stroked-button (click)="onGenerateReport()" disabled>
+          <button
+            mat-stroked-button
+            (click)="onGenerateReport()"
+            [disabled]="!getReportParameterSelectionStatus()"
+          >
             Generate</button
           >&nbsp;&nbsp;
-          <button mat-stroked-button (click)="onDownloadReport()" disabled>
+          <button
+            mat-stroked-button
+            (click)="onDownloadReport()"
+            [disabled]="(analyticsError$ | async) || !(analytics$ | async)"
+          >
             Download</button
           >&nbsp;&nbsp;
         </div>
       </div>
-      <div class="dashboard-chart">
+      <div class="report-container">
+        <div class="current-selection">
+          <app-current-selection
+            [selectedReport]="selectedReport"
+            [selectedPeriods]="selectedPeriods"
+            [selectedOrgUnitItems]="selectedOrgUnitItems"
+          ></app-current-selection>
+        </div>
         <div *ngIf="isLoading$ | async">
           <app-loader></app-loader>
         </div>
@@ -34,13 +55,11 @@
               <mat-card>{{ analyticsError$ | async | json }}</mat-card>
             </div>
           </div>
-          <!-- <div *ngIf="!(analyticsError$ | async) && analytics$ | async">
+          <div *ngIf="!(analyticsError$ | async) && analytics$ | async">
             <mat-card>
-              <app-dashboard-chart
-                [analytics]="analytics$ | async"
-              ></app-dashboard-chart>
+              <app-report-view></app-report-view>
             </mat-card>
-          </div> -->
+          </div>
         </div>
       </div>
     </div>

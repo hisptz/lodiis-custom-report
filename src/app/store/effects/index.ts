@@ -1,11 +1,11 @@
 import { UserEffects } from './user.effects';
 import { SystemInfoEffects } from './system-info.effects';
 import { RouterEffects } from './router.effects';
-import { DashboardDataEffects } from './dashboard.effects';
+import { ReportDataEffects } from './report.effects';
 
 export const effects: any[] = [
   UserEffects,
   SystemInfoEffects,
   RouterEffects,
-  DashboardDataEffects,
+  ReportDataEffects,
 ];
