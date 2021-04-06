@@ -1,0 +1,238 @@
+{
+  "report": [
+    {
+      "id": "PSI_Layering",
+      "name": "PSI DREAMS Layering Dataset",
+      "program": "hOEIHJDrrvz",
+      "dxConfig": [
+        {
+          "programStage": "PGFt6IwdZLM",
+          "name": "First Name",
+          "id": "WTZ7GLTrE8Q"
+        },
+        {
+          "programStage": "PGFt6IwdZLM",
+          "name": "Surname",
+          "id": "rSP9c21JsfC"
+        },
+        {
+          "programStage": "PGFt6IwdZLM",
+          "name": "Date of Birth",
+          "id": "qZP982qpSPS"
+        },
+        {
+          "programStage": "PGFt6IwdZLM",
+          "name": "Age",
+          "id": "ls9hlz2tyol"
+        },
+        {
+          "programStage": "PGFt6IwdZLM",
+          "name": "District of Birth",
+          "id": ""
+        },
+        {
+          "programStage": "PGFt6IwdZLM",
+          "name": "Birth Order",
+          "id": ""
+        },
+        {
+          "programStage": "PGFt6IwdZLM",
+          "name": "Sex",
+          "id": "vIX4GTSCX4P"
+        },
+        {
+          "programStage": "PGFt6IwdZLM",
+          "name": "Contact Numbers",
+          "id": "tNdoR0jYr7R"
+        },
+        {
+          "programStage": "",
+          "name": "Client Type",
+          "id": ""
+        },
+        {
+          "programStage": "PGFt6IwdZLM",
+          "name": "Current Pregnancy status",
+          "id": "LNaNh7kvh4X"
+        },
+        {
+          "programStage": "PGFt6IwdZLM",
+          "name": "ID number",
+          "id": "fTSAY18LgCF"
+        },
+        {
+          "programStage": "",
+          "name": "Passport Number",
+          "id": ""
+        },
+        {
+          "programStage": "PGFt6IwdZLM",
+          "name": "Number of Sex Partners",
+          "id": "q8qPtzanSTU"
+        },
+        {
+          "programStage": "PGFt6IwdZLM",
+          "name": "STIs (Past or Present)",
+          "id": "rh881j2vfvT"
+        },
+        {
+          "programStage": "PGFt6IwdZLM",
+          "name": "Regular Condom Use",
+          "id": "iY67qYnywgS"
+        },
+        {
+          "programStage": "PGFt6IwdZLM",
+          "name": "Transactional Sex",
+          "id": "p33MrrhsQRz"
+        },
+        {
+          "programStage": "PGFt6IwdZLM",
+          "name": "Experiences of Violence",
+          "id": "yc3BlUIEup3"
+        },
+        {
+          "programStage": "",
+          "name": "School Enrollment",
+          "id": ""
+        },
+        {
+          "programStage": "PGFt6IwdZLM",
+          "name": "Alcohol Use",
+          "id": "HJIHPjOf5s1"
+        },
+        {
+          "programStage": "PGFt6IwdZLM",
+          "name": "Orphanhood",
+          "id": "B4ojlzKypUF"
+        },
+        {
+          "programStage": "",
+          "name": "Date of enrollment to the program",
+          "id": ""
+        },
+        {
+          "programStage": "",
+          "name": "Date Of Last Service Received",
+          "id": ""
+        },
+        {
+          "programStage": "",
+          "name": "District of Service",
+          "id": ""
+        },
+        {
+          "programStage": "",
+          "name": "Last Service Community Council",
+          "id": ""
+        },
+        {
+          "programStage": "",
+          "name": "Facility Name",
+          "id": ""
+        },
+        {
+          "programStage": "",
+          "name": "Educational Subsidies ",
+          "id": ""
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "VMMC",
+          "id": ""
+        },
+        {
+          "programStage": "",
+          "name": "Linkage to ART",
+          "id": ""
+        },
+        {
+          "programStage": "Gk494qKQP8B",
+          "name": "ART",
+          "id": "uWKbFmG9ZWQ"
+        },
+        {
+          "programStage": "NXsIkG9Q1BA",
+          "name": "Condom Promotion and Provision",
+          "id": "uciT2F6ByYO"
+        },
+        {
+          "programStage": "",
+          "name": "HIV Testing and Counseling",
+          "id": ""
+        },
+        {
+          "programStage": "bDJq2JWVTbC",
+          "name": "School-Based HIV and Violence Prevention",
+          "id": "Eug4BXDFLym",
+          "code": "LBSE"
+        },
+        {
+          "programStage": "bDJq2JWVTbC",
+          "name": "Social Assets Building",
+          "id": "Eug4BXDFLym",
+          "code": ["Go Girls", "PTS 4-GRADS", "PTS 4 NON-GRADS", "AFLATEEN/TOUN"]
+        },
+        {
+          "programStage": "bDJq2JWVTbC",
+          "name": "Stepping Stones",
+          "id": "Eug4BXDFLym",
+          "code": ["STEPPING STONES"]
+        },
+        {
+          "programStage": "bDJq2JWVTbC",
+          "name": "GBV Messaging",
+          "id": "Eug4BXDFLym",
+          "code": ["GBV Legal Messaging"]
+        },
+        {
+          "programStage": "bDJq2JWVTbC",
+          "name": "GBV Legal Protection",
+          "id": "Eug4BXDFLym",
+          "code": ["GBV Legal"]
+        },
+        {
+          "programStage": "yK0ENCuwPqh",
+          "name": "Post-Violence Care",
+          "id": "mnYT2rZyGgJ"
+        },
+        {
+          "programStage": "bDJq2JWVTbC",
+          "name": "Parenting/Caregiver Programs",
+          "id": "Eug4BXDFLym",
+          "code": ["PARENTING"]
+        },
+        {
+          "programStage": "A7Tl3vML6as",
+          "name": "Contraceptive Provision",
+          "id": "uciT2F6ByYO"
+        },
+        {
+          "programStage": "bDJq2JWVTbC",
+          "name": "Socio-Economic Services",
+          "id": "Eug4BXDFLym",
+          "code": ["SILC", "SAVING GROUP", "FINANCIAL EDUCATION"]
+        },
+        {
+          "programStage": "",
+          "name": "PrEP",
+          "id": ""
+        },
+        {
+          "programStage": "PGFt6IwdZLM",
+          "name": "HIV Prevention Messaging",
+          "id": "qFwm4RM45gi"
+        },
+        {
+          "programStage": "",
+          "name": "HIV Risk Assessment and Messaging",
+          "id": ""
+        },
+        {
+          "programStage": "",
+          "name": "Implementing Mechanism Name",
+          "id": ""
+        }
+      ]
+    }
+  ]
+}
