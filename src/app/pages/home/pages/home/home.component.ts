@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit {
           );
           this.updateChart();
         } else {
-          'here';
+          ('here');
         }
       });
   }
@@ -70,6 +70,7 @@ export class HomeComponent implements OnInit {
       if (dialogData && dialogData.action) {
         this.selectedOrgUnitItems =
           dialogData.selectedOrgUnitItems.items || this.selectedOrgUnitItems;
+          console.log(`SELECTED PERIOD:: ${JSON.stringify(this.selectedOrgUnitItems)}`);
         this.updateChart();
       }
     });
@@ -89,10 +90,21 @@ export class HomeComponent implements OnInit {
       if (dialogData && dialogData.action && dialogData.action === 'UPDATE') {
         this.selectedPeriods =
           dialogData.selectedPeriods.items || this.selectedPeriods;
+        console.log(`SELECTED PERIOD:: ${JSON.stringify(this.selectedPeriods)}`);
+
         this.updateChart();
       }
     });
   }
+
+  onGenerateReport() {
+    console.log('Generate report');
+  }
+
+  onDownloadReport() {
+    console.log('Download report');
+  }
+
   updateChart() {
     const { pe, dx, ou } = getAnlyticsParameters(
       this.selectedOrgUnitItems,
