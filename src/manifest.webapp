@@ -1,9 +1,9 @@
 
 {
     "version": "1.0.1",
-    "name": "Pact Swazi dashboard",
-    "description": "Custom dashboard for Pact Swazi",
-    "appType": "DASHBOARD_WIDGET",
+    "name": "KB Custom Report",
+    "description": "Custom report for KB",
+    "appType": "APP",
     "launch_path": "index.html",
     "icons": {
         "16": "assets/icons/icon-16x16.png",

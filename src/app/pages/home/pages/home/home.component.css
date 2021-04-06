@@ -1,3 +1,7 @@
+.container {
+  margin: 0 1vw !important;
+}
+
 .dashboard-chart {
   margin-top: 20px;
 }

@@ -29,6 +29,7 @@
     "@iapps/function-analytics": "^1.0.0-beta.21",
     "@iapps/ngx-dhis2-data-filter": "^1.0.0-beta.18",
     "@iapps/ngx-dhis2-http-client": "^2.0.8-rc.2",
+    "@iapps/ngx-dhis2-menu": "*",
     "@iapps/ngx-dhis2-org-unit-filter": "^1.1.22",
     "@ngrx/effects": "^9.1.2",
     "@ngrx/entity": "^9.1.2",
