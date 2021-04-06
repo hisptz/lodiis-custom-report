@@ -83,7 +83,11 @@ export class ReportDataEffects {
         const eventReportData = _.find(analyticDataByBeneficiary, (data:any)=> {
           return _.keys(data).includes(id) && data["programStage"] && data["programStage"] === programStage;
         });
-        const value = eventReportData ? eventReportData[id] : "";
+        let value = eventReportData ? eventReportData[id] : "";
+        if(_.keys(beneficiaryData).includes(name) && beneficiaryData[name] !== ""){
+          console.log({"msg":" found", beneficiaryData, name, value})
+          value = beneficiaryData[name];
+        }
         beneficiaryData[name] = value !== ""?  this.getSanitizesValue(value,code, isBoolean,isDate): value;
       }
       return beneficiaryData;

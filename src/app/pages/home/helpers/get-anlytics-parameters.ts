@@ -19,7 +19,7 @@ export function getAnlyticsParameters(
     )
   );
   return _.keys(groupedDxConfigs).length > 0 ? _.flattenDeep(_.map(_.keys(groupedDxConfigs),( programStage : String)=>{
-    const dx = _.flattenDeep(_.map(groupedDxConfigs[programStage] || [], (groupedDxConfig:{id:string,name:string, programStage:string,})=> groupedDxConfig.id !=="" && groupedDxConfig.programStage !=="" ? `${groupedDxConfig.programStage}.${groupedDxConfig.id}` : []));
+    const dx = _.uniq(_.flattenDeep(_.map(groupedDxConfigs[programStage] || [], (groupedDxConfig:{id:string,name:string, programStage:string,})=> groupedDxConfig.id !=="" && groupedDxConfig.programStage !=="" ? `${groupedDxConfig.programStage}.${groupedDxConfig.id}` : [])));
     if(dx.length > 0) {
       return {ou, pe, dx};
     }else{
