@@ -6,6 +6,10 @@
   margin-top: 10px;
 }
 
+.current-selection {
+  margin: 1vh 0;
+}
+
 .analyticsError {
   text-align: center;
 }

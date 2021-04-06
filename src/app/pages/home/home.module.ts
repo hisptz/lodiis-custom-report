@@ -8,9 +8,19 @@ import { OuSelectionComponent } from './components/ou-selection/ou-selection.com
 import { PeSelectionComponent } from './components/pe-selection/pe-selection.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { ReportViewComponent } from './components/report-view/report-view.component';
+import { CurrentSelectionComponent } from './components/current-selection/current-selection.component';
+import { SelectionNamePipe } from './pipes/selection-name.pipe';
 
 @NgModule({
-  declarations: [...pages, OuSelectionComponent, PeSelectionComponent, LoaderComponent, ReportViewComponent],
-  imports: [CommonModule, SharedModule, HomeRoutingModule]
+  declarations: [
+    ...pages,
+    OuSelectionComponent,
+    PeSelectionComponent,
+    LoaderComponent,
+    ReportViewComponent,
+    CurrentSelectionComponent,
+    SelectionNamePipe,
+  ],
+  imports: [CommonModule, SharedModule, HomeRoutingModule],
 })
 export class HomeModule {}

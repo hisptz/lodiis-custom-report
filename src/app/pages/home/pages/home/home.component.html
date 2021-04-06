@@ -9,22 +9,43 @@
           <button mat-stroked-button (click)="openPeriodFilter()">Period</button
           >&nbsp;&nbsp;&nbsp;&nbsp;
           <mat-form-field>
-            <mat-select placeholder="Choose report">
-              <mat-option value="option1">Report 1</mat-option>
-              <mat-option value="option3">Report 2</mat-option>
+            <mat-select
+              placeholder="Choose report"
+              (selectionChange)="onSelectReport($event)"
+            >
+              <mat-option
+                value="{{ report.id }}"
+                *ngFor="let report of reports"
+                >{{ report.name }}</mat-option
+              >
             </mat-select> </mat-form-field
           >&nbsp;&nbsp;
         </div>
         <div class="d-flex justify-content-end">
-          <button mat-stroked-button (click)="onGenerateReport()">
+          <button
+            mat-stroked-button
+            (click)="onGenerateReport()"
+            [disabled]="!getReportParameterSelectionStatus()"
+          >
             Generate</button
           >&nbsp;&nbsp;
-          <button mat-stroked-button (click)="onDownloadReport()">
+          <button
+            mat-stroked-button
+            (click)="onDownloadReport()"
+            [disabled]="(analyticsError$ | async) || !(analytics$ | async)"
+          >
             Download</button
           >&nbsp;&nbsp;
         </div>
       </div>
       <div class="report-container">
+        <div class="current-selection">
+          <app-current-selection
+            [selectedReport]="selectedReport"
+            [selectedPeriods]="selectedPeriods"
+            [selectedOrgUnitItems]="selectedOrgUnitItems"
+          ></app-current-selection>
+        </div>
         <div *ngIf="isLoading$ | async">
           <app-loader></app-loader>
         </div>
