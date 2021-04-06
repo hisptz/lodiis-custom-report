@@ -18,6 +18,7 @@ import {
 import { getCurrentUserOrganisationUnits } from 'src/app/store/selectors';
 import * as reportConfig from '../../../../core/config/report.config.json';
 import { Report } from 'src/app/shared/models/report.model';
+import { ExcelFileService } from 'src/app/core/services/excel-file.service';
 
 @Component({
   selector: 'app-home',
@@ -33,7 +34,11 @@ export class HomeComponent implements OnInit {
   analytics$: Observable<any>;
   analyticsError$: Observable<any>;
 
-  constructor(private dialog: MatDialog, private store: Store<State>) {}
+  constructor(
+    private dialog: MatDialog,
+    private store: Store<State>,
+    private excelFileService: ExcelFileService
+  ) {}
 
   ngOnInit() {
     this.isLoading$ = this.store.select(getCurrentAnalyticsLoadingStatus);
