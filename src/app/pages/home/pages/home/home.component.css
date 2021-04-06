@@ -1,5 +1,5 @@
 .app-container {
-  margin-top: 10px;
+  margin: 10px 1vw;
 }
 
 .report-container {
@@ -13,3 +13,4 @@
 .analyticsError {
   text-align: center;
 }
+

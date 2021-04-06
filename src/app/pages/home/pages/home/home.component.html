@@ -1,14 +1,14 @@
-<div class="container app-container">
+<div class="app-container">
   <div class="row">
     <div class="col">
-      <div class="row">
-        <div class="d-flex justify-content-start">
+      <div class="row d-flex justify-content-between">
+        <div >
           <button mat-stroked-button (click)="openOrganisationUnitFilter()">
-            Organisation Unit</button
+            Location</button
           >&nbsp;&nbsp;
           <button mat-stroked-button (click)="openPeriodFilter()">Period</button
-          >&nbsp;&nbsp;&nbsp;&nbsp;
-          <mat-form-field>
+          >&nbsp;&nbsp;
+          <mat-form-field floatLabel="never">
             <mat-select
               placeholder="Choose report"
               (selectionChange)="onSelectReport($event)"
@@ -18,10 +18,10 @@
                 *ngFor="let report of reports"
                 >{{ report.name }}</mat-option
               >
-            </mat-select> </mat-form-field
-          >&nbsp;&nbsp;
+            </mat-select>
+          </mat-form-field>
         </div>
-        <div class="d-flex justify-content-end">
+        <div >
           <button
             mat-stroked-button
             (click)="onGenerateReport()"
