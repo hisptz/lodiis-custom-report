@@ -9,7 +9,7 @@ export enum DashboardActionTypes {
 
 export const loadDashboardData = createAction(
   '[Dashboard] Load Dashboard data',
-  props<{ pe: string[]; dx: string[]; ou: string[] }>()
+  props<{ analyticParameters : Array<any>, reportConfig:any }>()
 );
 
 export const addDashboardData = createAction(

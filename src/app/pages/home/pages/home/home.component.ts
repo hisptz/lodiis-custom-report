@@ -4,7 +4,7 @@ import { PeSelectionComponent } from '../../components/pe-selection/pe-selection
 import { OuSelectionComponent } from '../../components/ou-selection/ou-selection.component';
 import {
   getDefaultOrganisationUnitSelections,
-} from '../../helpers/get-dashboard-chart-selections';
+} from '../../helpers/get-dafault-selections';
 
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/store/reducers';
@@ -105,7 +105,7 @@ export class HomeComponent implements OnInit {
             "name": "First Name",
             "id": "WTZ7GLTrE8Q"
           },{
-            "programStage": "kq6qeEgbDVY",
+            "programStage": "QNdBI9U7rnV",
             "name": "Middle Name",
             "id": "s1HaiT6OllL"
           },{
@@ -115,45 +115,29 @@ export class HomeComponent implements OnInit {
           }
         ]
       };
-  
-      console.log({report, selectedPeriods : this.selectedPeriods, selectedOrgUnitItems:this.selectedOrgUnitItems});
+      const analyticParameters = getAnlyticsParameters(
+        this.selectedOrgUnitItems,
+        this.selectedPeriods, 
+        report.dxConfig
+      );
+      this.store.dispatch(loadDashboardData({analyticParameters, reportConfig : report}));
     }
     
   }
 
   onDownloadReport() {
     const isAllParameterSelected = this.getReportParameterSelectionStatus();
-    if(isAllParameterSelected ){
-      const report = {
-        "id": "",
-        "name": "",
-        "program": "hOEIHJDrrvz",
-        "dxConfig": [
-          {
-            "programStage": "QNdBI9U7rnV",
-            "name": "First Name",
-            "id": "WTZ7GLTrE8Q"
-          },{
-            "programStage": "kq6qeEgbDVY",
-            "name": "Middle Name",
-            "id": "s1HaiT6OllL"
-          },{
-            "programStage": "NXsIkG9Q1BA",
-            "name": "Contraceptive_P",
-            "id": "uciT2F6ByYO"
-          }
-        ]
-      };
-  
-      console.log({report, selectedPeriods : this.selectedPeriods, selectedOrgUnitItems:this.selectedOrgUnitItems});
+    if(isAllParameterSelected  && this.analytics$ !== null){
+      console.log("On donaloading");
     }
+    console.log({analytics : this.analytics$});
   }
 
-  updateChart() {
-    const { pe, dx, ou } = getAnlyticsParameters(
-      this.selectedOrgUnitItems,
-      this.selectedPeriods
-    );
-    this.store.dispatch(loadDashboardData({ pe, dx, ou }));
-  }
+  // updateChart() {
+  //   const { pe, dx, ou } = getAnlyticsParameters(
+  //     this.selectedOrgUnitItems,
+  //     this.selectedPeriods, []
+  //   );
+  //   this.store.dispatch(loadDashboardData({ pe, dx, ou }));
+  // }
 }

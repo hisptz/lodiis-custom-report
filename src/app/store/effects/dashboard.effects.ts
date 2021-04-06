@@ -26,11 +26,13 @@ export class DashboardDataEffects {
   );
 
   getDashboardAnalyticData(paremeters: any) {
-    const pe = _.join(paremeters.pe || [], ';');
-    const dx = _.join(paremeters.dx || [], ';');
-    const ou = _.join(paremeters.ou || [], ';');
-    const url = `analytics?dimension=dx:${dx}&&filter=pe:${pe}&&filter=ou:${ou}`;
-    return this.httpClient.get(url);
+    console.log(paremeters);
+    // const pe = _.join(paremeters.pe || [], ';');
+    // const dx = _.join(paremeters.dx || [], ';');
+    // const ou = _.join(paremeters.ou || [], ';');
+    // const url = `analytics?dimension=dx:${dx}&&filter=pe:${pe}&&filter=ou:${ou}`;
+    // return this.httpClient.get(url);
+    return  of(null);
   }
 
   constructor(
