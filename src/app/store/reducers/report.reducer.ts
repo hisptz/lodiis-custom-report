@@ -20,6 +20,7 @@ export const reducer = createReducer(
   on(LoadReportData, (state) => ({
     ...state,
     ...loadingBaseState,
+    analytics : null,
   })),
   on(AddReportData, (state, { analytics }) => ({
     ...state,
