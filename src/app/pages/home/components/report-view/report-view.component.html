@@ -1,1 +1,24 @@
-<p>report-view works!</p>
+<div
+  *ngIf="
+    !(currentAnalyticsError$ | async) && !(currentAnalyticsLoading$ | async)
+  "
+>
+  <table class="table-responsive table-bordered">
+    <thead>
+      <tr>
+        <th
+          scope="col"
+          *ngFor="let header of currentAnalytics$ | async | tableHeaders"
+        >
+          {{ header }}
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let row of currentAnalytics$ | async | tableData">
+        <td *ngFor="let rowData of row">{{ rowData }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
