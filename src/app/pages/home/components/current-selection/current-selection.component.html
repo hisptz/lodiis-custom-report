@@ -1,0 +1,31 @@
+<mat-card>
+  <mat-card-content>
+    <div *ngIf="getReportParameterSelectionStatus()">
+      <h5>Current Selections</h5>
+      <div
+        class="card-item"
+        *ngIf="selectedOrgUnitItems && selectedOrgUnitItems.length > 0"
+      >
+        <span class="item-title">Organisation units: </span>
+        <span>{{ selectedOrgUnitItems | selectionName}}</span>
+      </div>
+      <div class="card-item" *ngIf="selectedReport">
+        <span class="item-title">Report: </span>
+        <span>{{ selectedReport.name }}</span>
+      </div>
+      <div
+        class="card-item"
+        *ngIf="selectedPeriods && selectedPeriods.length > 0"
+      >
+        <span class="item-title">Periods: </span>
+        <span>{{ selectedPeriods | selectionName }}</span>
+      </div>
+    </div>
+    <div class="no-selection-message" *ngIf="!getReportParameterSelectionStatus()">
+      <p>
+        There are no current selections! <br>
+        Choose Organisation Unit, Period and Report above.
+      </p>
+    </div>
+  </mat-card-content>
+</mat-card>

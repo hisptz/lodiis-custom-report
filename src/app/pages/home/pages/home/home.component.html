@@ -29,12 +29,23 @@
           >
             Generate</button
           >&nbsp;&nbsp;
-          <button mat-stroked-button (click)="onDownloadReport()">
+          <button
+            mat-stroked-button
+            (click)="onDownloadReport()"
+            [disabled]="(analyticsError$ | async) || !(analytics$ | async)"
+          >
             Download</button
           >&nbsp;&nbsp;
         </div>
       </div>
       <div class="report-container">
+        <div class="current-selection">
+          <app-current-selection
+            [selectedReport]="selectedReport"
+            [selectedPeriods]="selectedPeriods"
+            [selectedOrgUnitItems]="selectedOrgUnitItems"
+          ></app-current-selection>
+        </div>
         <div *ngIf="isLoading$ | async">
           <app-loader></app-loader>
         </div>

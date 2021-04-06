@@ -113,39 +113,14 @@ export class HomeComponent implements OnInit {
   }
 
   onGenerateReport() {
-    const isAllParameterSelected = this.getReportParameterSelectionStatus();
-    if (isAllParameterSelected) {
-      const report = {
-        id: '',
-        name: '',
-        program: 'hOEIHJDrrvz',
-        dxConfig: [
-          {
-            programStage: 'QNdBI9U7rnV',
-            name: 'First Name',
-            id: 'WTZ7GLTrE8Q',
-          },
-          {
-            programStage: 'QNdBI9U7rnV',
-            name: 'Middle Name',
-            id: 's1HaiT6OllL',
-          },
-          {
-            programStage: 'NXsIkG9Q1BA',
-            name: 'Contraceptive_P',
-            id: 'uciT2F6ByYO',
-          },
-        ],
-      };
-      const analyticParameters = getAnlyticsParameters(
-        this.selectedOrgUnitItems,
-        this.selectedPeriods,
-        report.dxConfig
-      );
-      this.store.dispatch(
-        LoadReportData({ analyticParameters, reportConfig: report })
-      );
-    }
+    const analyticParameters = getAnlyticsParameters(
+      this.selectedOrgUnitItems,
+      this.selectedPeriods,
+      this.selectedReport.dxConfig
+    );
+    this.store.dispatch(
+      LoadReportData({ analyticParameters, reportConfig: this.selectedReport })
+    );
   }
 
   onDownloadReport() {
