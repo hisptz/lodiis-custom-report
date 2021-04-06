@@ -3,13 +3,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { PeSelectionComponent } from '../../components/pe-selection/pe-selection.component';
 import { OuSelectionComponent } from '../../components/ou-selection/ou-selection.component';
 import {
-  getDefaultPeriodSelections,
   getDefaultOrganisationUnitSelections,
 } from '../../helpers/get-dashboard-chart-selections';
 
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/store/reducers';
-import { loadDashboardData, addDashboardData } from 'src/app/store/actions';
+import { loadDashboardData } from 'src/app/store/actions';
 import { Observable } from 'rxjs';
 import { getAnlyticsParameters } from '../../helpers/get-anlytics-parameters';
 import {
@@ -25,8 +24,8 @@ import { getCurrentUserOrganisationUnits } from 'src/app/store/selectors';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  selectedPeriods: any;
-  selectedOrgUnitItems: any;
+  selectedPeriods: Array<any>;
+  selectedOrgUnitItems: Array<any>;
   isLoading$: Observable<boolean>;
   analytics$: Observable<any>;
   analyticsError$: Observable<any>;
@@ -37,7 +36,7 @@ export class HomeComponent implements OnInit {
     this.isLoading$ = this.store.select(getCurrentAnalyticsLoadingStatus);
     this.analytics$ = this.store.select(getCurrentAnalytics);
     this.analyticsError$ = this.store.select(getCurrentAnalyticsError);
-    this.selectedPeriods = getDefaultPeriodSelections();
+    this.selectedPeriods =  [];// getDefaultPeriodSelections();
     this.store
       .select(getCurrentUserOrganisationUnits)
       .subscribe((userOrgnisationUnits) => {
@@ -49,10 +48,7 @@ export class HomeComponent implements OnInit {
           this.selectedOrgUnitItems = getDefaultOrganisationUnitSelections(
             userOrgnisationUnits
           );
-          this.updateChart();
-        } else {
-          ('here');
-        }
+        } 
       });
   }
 
@@ -70,8 +66,6 @@ export class HomeComponent implements OnInit {
       if (dialogData && dialogData.action) {
         this.selectedOrgUnitItems =
           dialogData.selectedOrgUnitItems.items || this.selectedOrgUnitItems;
-          console.log(`SELECTED PERIOD:: ${JSON.stringify(this.selectedOrgUnitItems)}`);
-        this.updateChart();
       }
     });
   }
@@ -90,19 +84,69 @@ export class HomeComponent implements OnInit {
       if (dialogData && dialogData.action && dialogData.action === 'UPDATE') {
         this.selectedPeriods =
           dialogData.selectedPeriods.items || this.selectedPeriods;
-        console.log(`SELECTED PERIOD:: ${JSON.stringify(this.selectedPeriods)}`);
-
-        this.updateChart();
       }
     });
   }
 
+  getReportParameterSelectionStatus(){
+    return this.selectedOrgUnitItems  && this.selectedPeriods &&this.selectedPeriods.length > 0 && this.selectedOrgUnitItems.length > 0 ;
+  }
+
   onGenerateReport() {
-    console.log('Generate report');
+    const isAllParameterSelected = this.getReportParameterSelectionStatus();
+    if(isAllParameterSelected ){
+      const report = {
+        "id": "",
+        "name": "",
+        "program": "hOEIHJDrrvz",
+        "dxConfig": [
+          {
+            "programStage": "QNdBI9U7rnV",
+            "name": "First Name",
+            "id": "WTZ7GLTrE8Q"
+          },{
+            "programStage": "kq6qeEgbDVY",
+            "name": "Middle Name",
+            "id": "s1HaiT6OllL"
+          },{
+            "programStage": "NXsIkG9Q1BA",
+            "name": "Contraceptive_P",
+            "id": "uciT2F6ByYO"
+          }
+        ]
+      };
+  
+      console.log({report, selectedPeriods : this.selectedPeriods, selectedOrgUnitItems:this.selectedOrgUnitItems});
+    }
+    
   }
 
   onDownloadReport() {
-    console.log('Download report');
+    const isAllParameterSelected = this.getReportParameterSelectionStatus();
+    if(isAllParameterSelected ){
+      const report = {
+        "id": "",
+        "name": "",
+        "program": "hOEIHJDrrvz",
+        "dxConfig": [
+          {
+            "programStage": "QNdBI9U7rnV",
+            "name": "First Name",
+            "id": "WTZ7GLTrE8Q"
+          },{
+            "programStage": "kq6qeEgbDVY",
+            "name": "Middle Name",
+            "id": "s1HaiT6OllL"
+          },{
+            "programStage": "NXsIkG9Q1BA",
+            "name": "Contraceptive_P",
+            "id": "uciT2F6ByYO"
+          }
+        ]
+      };
+  
+      console.log({report, selectedPeriods : this.selectedPeriods, selectedOrgUnitItems:this.selectedOrgUnitItems});
+    }
   }
 
   updateChart() {

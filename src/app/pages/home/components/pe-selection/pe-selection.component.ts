@@ -16,7 +16,6 @@ export class PeSelectionComponent implements OnInit {
     private dialogRef: MatDialogRef<PeSelectionComponent>,
     @Inject(MAT_DIALOG_DATA) public selectionDialogData: any
   ) {
-    this.defaultPeriodTypes = ['SixMonthlyApril'];
   }
 
   ngOnInit(): void {
@@ -24,7 +23,7 @@ export class PeSelectionComponent implements OnInit {
       singleSelection: true,
       emitOnSelection: false,
       allowDateRangeSelection: false,
-      allowRelativePeriodSelection: false,
+      allowRelativePeriodSelection: true,
       allowFixedPeriodSelection: true,
       contentHeight: '400px',
     };

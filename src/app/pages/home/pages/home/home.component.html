@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container app-container">
   <div class="row">
     <div class="col">
       <div class="row">
@@ -16,15 +16,15 @@
           >&nbsp;&nbsp;
         </div>
         <div class="d-flex justify-content-end">
-          <button mat-stroked-button (click)="onGenerateReport()" disabled>
+          <button mat-stroked-button (click)="onGenerateReport()">
             Generate</button
           >&nbsp;&nbsp;
-          <button mat-stroked-button (click)="onDownloadReport()" disabled>
+          <button mat-stroked-button (click)="onDownloadReport()">
             Download</button
           >&nbsp;&nbsp;
         </div>
       </div>
-      <div class="dashboard-chart">
+      <div class="report-container">
         <div *ngIf="isLoading$ | async">
           <app-loader></app-loader>
         </div>
@@ -34,13 +34,11 @@
               <mat-card>{{ analyticsError$ | async | json }}</mat-card>
             </div>
           </div>
-          <!-- <div *ngIf="!(analyticsError$ | async) && analytics$ | async">
+          <div *ngIf="!(analyticsError$ | async) && analytics$ | async">
             <mat-card>
-              <app-dashboard-chart
-                [analytics]="analytics$ | async"
-              ></app-dashboard-chart>
+              <app-report-view></app-report-view>
             </mat-card>
-          </div> -->
+          </div>
         </div>
       </div>
     </div>
