@@ -19,6 +19,7 @@ import { getCurrentUserOrganisationUnits } from 'src/app/store/selectors';
 import * as reportConfig from '../../../../core/config/report.config.json';
 import { Report } from 'src/app/shared/models/report.model';
 import { ExcelFileService } from 'src/app/core/services/excel-file.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -44,7 +45,7 @@ export class HomeComponent implements OnInit {
     this.isLoading$ = this.store.select(getCurrentAnalyticsLoadingStatus);
     this.analytics$ = this.store.select(getCurrentAnalytics);
     this.analyticsError$ = this.store.select(getCurrentAnalyticsError);
-    this.selectedPeriods = []; // getDefaultPeriodSelections();
+    this.selectedPeriods = [];
     this.reports = reportConfig.report || [];
     this.store
       .select(getCurrentUserOrganisationUnits)
@@ -129,18 +130,13 @@ export class HomeComponent implements OnInit {
   }
 
   onDownloadReport() {
-    const isAllParameterSelected = this.getReportParameterSelectionStatus();
-    if (isAllParameterSelected && this.analytics$ !== null) {
-      console.log('On donaloading');
-    }
-    console.log({ analytics: this.analytics$ });
-  }
+    this.analytics$.pipe(take(1)).subscribe((data) => {
+      const date = new Date();
+      const reportName = `${this.selectedReport.name}_${
+        date.toISOString().split('T')[0]
+      }`;
 
-  // updateChart() {
-  //   const { pe, dx, ou } = getAnlyticsParameters(
-  //     this.selectedOrgUnitItems,
-  //     this.selectedPeriods, []
-  //   );
-  //   this.store.dispatch(LoadReportData({ pe, dx, ou }));
-  // }
+      this.excelFileService.writeToSingleSheetExcelFile(data, reportName);
+    });
+  }
 }

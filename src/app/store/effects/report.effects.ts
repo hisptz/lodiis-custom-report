@@ -62,9 +62,12 @@ export class ReportDataEffects {
     const ou = _.join(analyticParameter.ou || [], ';');
     const stage = _.map(analyticParameter.dx || [], (dx:string)=> dx.split('.')[0])[0];
     const dataDimension = _.join(_.map(analyticParameter.dx || [], (dx:string)=>`dimension=${dx}` ), '&');
-    const url = `analytics/events/query/${programId}.json?dimension=pe:${pe}&dimension=ou:${ou}&${dataDimension}&stage=${stage}&displayProperty=NAME&outputType=EVENT&desc=eventdate&pageSize=100&page=1`;
+    //@TODO update pagination dynamically
+    const pageSize = 500;
+    const page = 1;
+    const url = `analytics/events/query/${programId}.json?dimension=pe:${pe}&dimension=ou:${ou}&${dataDimension}&stage=${stage}&displayProperty=NAME&outputType=EVENT&desc=eventdate`;
     return new Promise((resolve, reject)=>{
-      this.httpClient.get(url).subscribe(data=> resolve({
+      this.httpClient.get(`${url}&pageSize=${pageSize}&page=${page}`).subscribe(data=> resolve({
         data, stage
       }), error=> reject(error));
     })
@@ -76,17 +79,46 @@ export class ReportDataEffects {
       const analyticDataByBeneficiary = groupedAnalyticDataByBeneficiary[tei];
       const beneficiaryData = {};
       for(const dxConfig of reportConfig.dxConfig || []){
-        const{ id,name,programStage} = dxConfig;
+        const{ id,name,programStage,isBoolean,code,isDate} = dxConfig;
         const eventReportData = _.find(analyticDataByBeneficiary, (data:any)=> {
           return _.keys(data).includes(id) && data["programStage"] && data["programStage"] === programStage;
         });
-        //@TODO formatted output value based on type of element fields
         const value = eventReportData ? eventReportData[id] : "";
-        beneficiaryData[name] = value;
+        beneficiaryData[name] = value !== ""?  this.getSanitizesValue(value,code, isBoolean,isDate): value;
       }
       return beneficiaryData;
     }));
   }
+
+  getSanitizesValue(value :any, code:Array<string>, isBoolean :boolean, isDate:boolean){
+    let sanitizedValue = "";
+    if(code && code.length > 0){
+      sanitizedValue = code.includes(value) ? "Yes" : sanitizedValue;
+    }else if(isBoolean){
+      sanitizedValue = `${value}` === "1" ? "Yes" : sanitizedValue;
+    }else if(isDate){
+      sanitizedValue = this.getFormattedDate(value);
+    }
+    else{
+      sanitizedValue = value;
+    }
+    return sanitizedValue;
+  }
+
+  getFormattedDate(date :any) {
+    let dateObject = new Date(date);
+    if (isNaN(dateObject.getDate())) {
+      dateObject = new Date();
+    }
+    const day = dateObject.getDate();
+    const month = dateObject.getMonth() + 1;
+    const year = dateObject.getFullYear();
+    return (
+      year +
+      (month > 9 ? `-${month}` : `-0${month}`) +
+      (day > 9 ? `-${day}` : `-0${day}`)
+    );
+}
 
   getSanitizedAnalyticData(anlytics:any,programStage:string){
     const {headers, rows,metaData} = anlytics;
