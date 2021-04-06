@@ -20,7 +20,7 @@ export class PeSelectionComponent implements OnInit {
 
   ngOnInit(): void {
     this.periodFilterConfig = {
-      singleSelection: true,
+      singleSelection: false,
       emitOnSelection: false,
       allowDateRangeSelection: false,
       allowRelativePeriodSelection: true,
