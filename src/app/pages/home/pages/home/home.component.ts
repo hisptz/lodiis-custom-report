@@ -8,14 +8,14 @@ import {
 
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/store/reducers';
-import { loadDashboardData } from 'src/app/store/actions';
+import { LoadReportData } from 'src/app/store/actions';
 import { Observable } from 'rxjs';
 import { getAnlyticsParameters } from '../../helpers/get-anlytics-parameters';
 import {
   getCurrentAnalyticsLoadingStatus,
   getCurrentAnalytics,
   getCurrentAnalyticsError,
-} from 'src/app/store/selectors/dashboard-data.selectors';
+} from 'src/app/store/selectors/report-data.selectors';
 import { getCurrentUserOrganisationUnits } from 'src/app/store/selectors';
 
 @Component({
@@ -120,7 +120,7 @@ export class HomeComponent implements OnInit {
         this.selectedPeriods, 
         report.dxConfig
       );
-      this.store.dispatch(loadDashboardData({analyticParameters, reportConfig : report}));
+      this.store.dispatch(LoadReportData({analyticParameters, reportConfig : report}));
     }
     
   }
@@ -138,6 +138,6 @@ export class HomeComponent implements OnInit {
   //     this.selectedOrgUnitItems,
   //     this.selectedPeriods, []
   //   );
-  //   this.store.dispatch(loadDashboardData({ pe, dx, ou }));
+  //   this.store.dispatch(LoadReportData({ pe, dx, ou }));
   // }
 }

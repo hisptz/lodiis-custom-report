@@ -6,26 +6,26 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import {
-  loadDashboardData,
-  addDashboardData,
-  loadDashboardDataFail,
+  LoadReportData,
+  AddReportData,
+  LoadReportDataFail,
 } from '../actions';
 
 @Injectable()
-export class DashboardDataEffects {
-  loadDashboardData$ = createEffect(() =>
+export class ReportDataEffects {
+  LoadReportData$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loadDashboardData),
+      ofType(LoadReportData),
       switchMap((actions) =>
-        this.getDashboardAnalyticData(actions).pipe(
-          map((analytics: any) => addDashboardData({ analytics })),
-          catchError((error: any) => of(loadDashboardDataFail({ error })))
+        this.getReportAnalyticData(actions).pipe(
+          map((analytics: any) => AddReportData({ analytics })),
+          catchError((error: any) => of(LoadReportDataFail({ error })))
         )
       )
     )
   );
 
-  getDashboardAnalyticData(paremeters: any) {
+  getReportAnalyticData(paremeters: any) {
     console.log(paremeters);
     // const pe = _.join(paremeters.pe || [], ';');
     // const dx = _.join(paremeters.dx || [], ';');
