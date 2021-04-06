@@ -1,5 +1,7 @@
 .container {
   margin: 0 1vw !important;
+  width: 100vw !important;
+  padding: 0 !important;
 }
 
 .dashboard-chart {
@@ -8,4 +10,8 @@
 
 .analyticsError {
   text-align: center;
+}
+
+button {
+  height: 6vh;
 }
