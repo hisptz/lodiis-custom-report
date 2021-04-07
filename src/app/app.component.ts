@@ -20,7 +20,7 @@ export class AppComponent {
     this.translate.use('en');
 
     // Set application title
-    this.setTitle('KB custom report');
+    this.setTitle('Custom Report');
 
     if (Fn) {
       Fn.init({
