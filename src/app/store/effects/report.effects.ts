@@ -173,7 +173,7 @@ export class ReportDataEffects {
   updateProgressStatus(bufferProcessCount : number,overAllProcessCount: number, totalOverAllProcess: number){
     const bufferProgress = this.getProgressPercentage(bufferProcessCount, totalOverAllProcess);
     const overAllProgress = this.getProgressPercentage(overAllProcessCount, totalOverAllProcess);
-    console.log({bufferProcessCount,bufferProgress, overAllProcessCount,overAllProgress, totalOverAllProcess})
+    this.store.dispatch(UpdateReportProgress({overAllProgress,bufferProgress}));
   }
 
   getProgressPercentage(numerator:number, denominator:number){
