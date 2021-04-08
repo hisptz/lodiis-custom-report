@@ -1,11 +1,11 @@
-<div class="row">
+<div class="row" style="float: inline-end;">
   <div class="col">
     <div class="d-flex justify-content-end">
       <div class="items-per-page d-flex align-items-center m-3">
         <span class="fainted-text">Items per page</span>&nbsp;
         <mat-form-field class="page-selector" floatLabel="never">
           <mat-select
-            [(value)]="selectedItemsPerPage"
+            [(value)]="initialItemsPerPage"
             (selectionChange)="onChangeItemsPerPage($event)"
           >
             <mat-option value="{{ item }}" *ngFor="let item of itemsPerPage">{{

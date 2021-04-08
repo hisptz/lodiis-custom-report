@@ -1,4 +1,11 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { TablePagination } from 'src/app/shared/models/table-pagination.model';
 
 @Component({
@@ -11,19 +18,20 @@ export class PaginationComponent implements OnInit, AfterViewInit {
   @Output()
   paginate: EventEmitter<TablePagination> = new EventEmitter<TablePagination>();
   itemsPerPage: string[];
-  selectedItemsPerPage = '50';
+  selectedItemsPerPage: string;
   currentlySelectedPage: number;
+  initialItemsPerPage = '50';
 
   constructor() {}
 
   ngOnInit(): void {
     this.itemsPerPage = ['50', '100', '500', '1000', '5000', '10000'];
     this.currentlySelectedPage = 1;
+    this.selectedItemsPerPage = this.initialItemsPerPage;
     this.onPaginate();
   }
 
-  ngAfterViewInit(): void {
-  }
+  ngAfterViewInit(): void {}
 
   onPaginate(): void {
     const pagination = {
@@ -34,6 +42,14 @@ export class PaginationComponent implements OnInit, AfterViewInit {
   }
 
   onChangeItemsPerPage(event) {
+    const endValue =
+      this.currentlySelectedPage * Number(this.selectedItemsPerPage);
+    const startValue = endValue - Number(this.selectedItemsPerPage) + 1;
+    const itemsPerPage = Number(event.value);
+    this.currentlySelectedPage = Math.floor(
+      (startValue + itemsPerPage - 1) / itemsPerPage
+    );
+
     this.selectedItemsPerPage = event.value;
     this.onPaginate();
   }
@@ -51,11 +67,11 @@ export class PaginationComponent implements OnInit, AfterViewInit {
     const lastPage = Math.ceil(
       this.totalItems / Number(this.selectedItemsPerPage)
     );
-    return lastPage > this.currentlySelectedPage ;
+    return lastPage > this.currentlySelectedPage;
   }
 
   canPaginateBackward(): boolean {
-    return this.currentlySelectedPage  > 1;
+    return this.currentlySelectedPage > 1;
   }
 
   onOpenFirstPage(): void {
