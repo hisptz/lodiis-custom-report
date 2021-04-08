@@ -142,8 +142,7 @@ export class HomeComponent implements OnInit {
   }
 
   onViewErrors() {
-    const width = '700px';
-    const height = '600px';
+    const width = '800px';
     const selectionDialog = this.dialog.open(ReportErrorComponent, {
       width,
       height: 'auto',
