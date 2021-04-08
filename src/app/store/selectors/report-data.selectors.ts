@@ -12,7 +12,7 @@ export const getCurrentAnalytics = createSelector(
   (state: ReportDataState) => state.analytics
 );
 
-export const getCurrentBufferProgess = createSelector(
+export const getCurrentBufferProgress = createSelector(
   getReportState,
   (state: ReportDataState) => state.bufferProgress
 );
