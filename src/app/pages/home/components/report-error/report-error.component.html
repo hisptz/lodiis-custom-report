@@ -1,0 +1,7 @@
+<h2 mat-dialog-title color="warn" >Report Errors</h2>
+<mat-dialog-content>
+  {{reportErrors$ | async | json}}
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <button class="no-outline" mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

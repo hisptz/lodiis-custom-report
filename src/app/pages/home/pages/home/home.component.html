@@ -3,10 +3,10 @@
     <div class="col">
       <div class="d-flex justify-content-between">
         <div>
-          <button mat-stroked-button (click)="openOrganisationUnitFilter()">
+          <button class="no-outline" mat-stroked-button (click)="openOrganisationUnitFilter()">
             Location</button
           >&nbsp;&nbsp;
-          <button mat-stroked-button (click)="openPeriodFilter()">Period</button
+          <button class="no-outline" mat-stroked-button (click)="openPeriodFilter()">Period</button
           >&nbsp;&nbsp;
           <mat-form-field floatLabel="never">
             <mat-select
@@ -22,14 +22,22 @@
           </mat-form-field>
         </div>
         <div>
-          <button
+          <button class="no-outline"
+            mat-stroked-button
+            color="warn"
+            (click)="onViewErrors()"
+            *ngIf="(analyticsError$ | async)"
+          >
+            Errors</button
+          >&nbsp;&nbsp;
+          <button class="no-outline"
             mat-stroked-button
             (click)="onGenerateReport()"
             [disabled]="!getReportParameterSelectionStatus()"
           >
             Generate</button
           >&nbsp;&nbsp;
-          <button
+          <button class="no-outline"
             mat-stroked-button
             (click)="onDownloadReport()"
             [disabled]="(analyticsError$ | async) || !(analytics$ | async)"

@@ -14,6 +14,7 @@ import { TableHeadersPipe } from './pipes/table-headers.pipe';
 import { TableDataPipe } from './pipes/table-data.pipe';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { PaginationPipe } from './pipes/pagination.pipe';
+import { ReportErrorComponent } from './components/report-error/report-error.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,9 @@ import { PaginationPipe } from './pipes/pagination.pipe';
     TableDataPipe,
     PaginationComponent,
     PaginationPipe,
+    ReportErrorComponent,
   ],
   imports: [CommonModule, SharedModule, HomeRoutingModule],
+  entryComponents: [ReportErrorComponent]
 })
 export class HomeModule {}

@@ -20,6 +20,7 @@ import * as reportConfig from '../../../../core/config/report.config.json';
 import { Report } from 'src/app/shared/models/report.model';
 import { ExcelFileService } from 'src/app/core/services/excel-file.service';
 import { take } from 'rxjs/operators';
+import { ReportErrorComponent } from '../../components/report-error/report-error.component';
 
 @Component({
   selector: 'app-home',
@@ -137,6 +138,15 @@ export class HomeComponent implements OnInit {
       }`;
 
       this.excelFileService.writeToSingleSheetExcelFile(data, reportName);
+    });
+  }
+
+  onViewErrors() {
+    const width = '700px';
+    const height = '600px';
+    const selectionDialog = this.dialog.open(ReportErrorComponent, {
+      width,
+      height: 'auto',
     });
   }
 }

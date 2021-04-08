@@ -20,11 +20,13 @@ import { NgxDhis2OrgUnitFilterModule } from '@iapps/ngx-dhis2-org-unit-filter';
 import { NgxDhis2DataFilterModule } from '@iapps/ngx-dhis2-data-filter';
 import { NgxDhis2PeriodFilterModule } from '../ngx-dhis2-period-filter/ngx-dhis2-period-filter.module';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   imports: [
     CommonModule,
     MatButtonModule,
+    MatDialogModule,
     MatCardModule,
     MatChipsModule,
     MatTabsModule,
@@ -50,6 +52,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatChipsModule,
     MatTabsModule,
     MatSnackBarModule,
+    MatDialogModule,
     MatTooltipModule,
     MatPaginatorModule,
     MatTableModule,
