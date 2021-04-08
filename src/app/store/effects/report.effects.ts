@@ -10,6 +10,8 @@ import {
   AddReportData,
   LoadReportDataFail,
 } from '../actions';
+import { Store } from '@ngrx/store';
+import { State } from '../reducers';
 
 @Injectable()
 export class ReportDataEffects {
@@ -39,6 +41,13 @@ export class ReportDataEffects {
   }
 
   async getEventReportAnalyticData(analyticParameters :any,reportConfig:any ){
+    
+
+    // this.store.dispatch(
+    //   LoadReportData({ analyticParameters, reportConfig: this.selectedReport })
+    // );
+
+
     const eventReportAnalyticData = [];
     const programId = reportConfig.program;
     const analyticData = [];
@@ -176,6 +185,7 @@ export class ReportDataEffects {
 
   constructor(
     private actions$: Actions,
-    private httpClient: NgxDhis2HttpClientService
+    private httpClient: NgxDhis2HttpClientService,
+    private store: Store<State>,
   ) {}
 }
