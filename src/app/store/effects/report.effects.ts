@@ -42,6 +42,7 @@ export class ReportDataEffects {
     const eventReportAnalyticData = [];
     const programId = reportConfig.program;
     const analyticData = [];
+    // @TODO determine data paginations
     try {
       for(const analyticParameter of  analyticParameters){
         const response : any= await this.getSingleEventReportAnalyticData(analyticParameter,programId);
@@ -110,7 +111,10 @@ export class ReportDataEffects {
       const beneficiaryData = {};
       for(const dxConfig of reportConfig.dxConfig || []){
         const{ id,name,programStage,isBoolean,code,isDate} = dxConfig;
-        const eventReportData = _.find(analyticDataByBeneficiary, (data:any)=> {
+        const eventReportData = id !=="" && programStage === "" ? 
+        _.find(analyticDataByBeneficiary, (data:any)=> {
+          return _.keys(data).includes(id);
+        }) : _.find(analyticDataByBeneficiary, (data:any)=> {
           return _.keys(data).includes(id) && data["programStage"] && data["programStage"] === programStage;
         });
         let value = eventReportData ? eventReportData[id] : "";
