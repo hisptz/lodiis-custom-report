@@ -148,7 +148,7 @@
         {
           "programStage": "",
           "name": "Date of enrollment to the program",
-          "id": "",
+          "id": "enrollmentdate",
           "isBoolean": false,
           "isDate": true
         },
