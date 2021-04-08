@@ -9,6 +9,7 @@ import {
   LoadReportData,
   AddReportData,
   LoadReportDataFail,
+  UpdateReportProgress,
 } from '../actions';
 import { Store } from '@ngrx/store';
 import { State } from '../reducers';
@@ -41,30 +42,53 @@ export class ReportDataEffects {
   }
 
   async getEventReportAnalyticData(analyticParameters :any,reportConfig:any ){
-    
-
-    // this.store.dispatch(
-    //   LoadReportData({ analyticParameters, reportConfig: this.selectedReport })
-    // );
-
-
     const eventReportAnalyticData = [];
     const programId = reportConfig.program;
     const analyticData = [];
-    // @TODO determine data paginations
     try {
+      let totalOverAllProcess = 0;
+      let totalBufferProcess = 0;
+      let overAllProcessCount = 0;
+      let bufferProcessCount = 0;
       for(const analyticParameter of  analyticParameters){
-        const response : any= await this.getSingleEventReportAnalyticData(analyticParameter,programId);
-        const {data:anlytics, stage :programStage} = response;
-        const sanitizedResponse = this.getSanitizedAnalyticData(anlytics,programStage);
-        analyticData.push(sanitizedResponse);
+        const response :any = await this.getAnalyticParameterWithPaginationFilter(analyticParameter,programId);
+        totalBufferProcess ++;
+        totalOverAllProcess += response.paginationFilters.length;
+        console.log({response, totalBufferProcess, totalOverAllProcess});
       }
+      console.log({bufferProcessCount,overAllProcessCount, totalBufferProcess, totalOverAllProcess});
+      
+      // for(const analyticParameter of  analyticParameters){
+      //   const response : any= await this.getSingleEventReportAnalyticData(analyticParameter,programId);
+      //   const {data:anlytics, stage :programStage} = response;
+      //   const sanitizedResponse = this.getSanitizedAnalyticData(anlytics,programStage);
+      //   analyticData.push(sanitizedResponse);
+      // }
       const formattedEventReportData = this.getFormattedEventAnalyticDataForReport(_.flattenDeep(analyticData), reportConfig);
       eventReportAnalyticData.push(formattedEventReportData);
     } catch (error) {
       console.log({error});
     }
     return _.flattenDeep(eventReportAnalyticData);
+  }
+
+
+
+  async getAnalyticParameterWithPaginationFilter(analyticParameter : any, programId:string){
+    const paginationFilters = [];
+    const pe = _.join(analyticParameter.pe || [], ';');
+    const ou = _.join(analyticParameter.ou || [], ';');
+    const stage = _.map(analyticParameter.dx || [], (dx:string)=> dx.split('.')[0])[0];
+    const dataDimension = _.join(_.map(analyticParameter.dx || [], (dx:string)=>`dimension=${dx}` ), '&');
+    const pageSize = 500;
+    const url = `analytics/events/query/${programId}.json?dimension=pe:${pe}&dimension=ou:${ou}&${dataDimension}&stage=${stage}&displayProperty=NAME&outputType=EVENT&desc=eventdate`;
+    try {
+      const response :any = await this.getPaginatinationFilters(url,pageSize);
+      paginationFilters.push(response)
+    } catch (error) {
+      console.log({error});
+    }
+    return {...analyticParameter, url, paginationFilters : _.flattenDeep(paginationFilters)}
   }
 
   async getSingleEventReportAnalyticData(analyticParameter : any, programId:string){
@@ -150,6 +174,12 @@ export class ReportDataEffects {
     }
     return sanitizedValue;
   }
+
+  getProgressPercentage(numerator:number, denominator:number){
+    const percentageValue = ((numerator/denominator) *100).toFixed(0);
+    return parseInt(percentageValue,10);
+  }
+
 
   getFormattedDate(date :any) {
     let dateObject = new Date(date);
