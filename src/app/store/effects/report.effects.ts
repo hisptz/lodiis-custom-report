@@ -9,7 +9,10 @@ import {
   LoadReportData,
   AddReportData,
   LoadReportDataFail,
+  UpdateReportProgress,
 } from '../actions';
+import { Store } from '@ngrx/store';
+import { State } from '../reducers';
 
 @Injectable()
 export class ReportDataEffects {
@@ -42,10 +45,23 @@ export class ReportDataEffects {
     const eventReportAnalyticData = [];
     const programId = reportConfig.program;
     const analyticData = [];
+    const analyticParametersWithPaginationFilters = [];
     try {
+      let totalOverAllProcess = 0;
+      let overAllProcessCount = 0;
+      let bufferProcessCount = 0;
       for(const analyticParameter of  analyticParameters){
-        const response : any= await this.getSingleEventReportAnalyticData(analyticParameter,programId);
-        const {data:anlytics, stage :programStage} = response;
+        const response :any = await this.getAnalyticParameterWithPaginationFilter(analyticParameter,programId);
+        totalOverAllProcess += response.paginationFilters.length;
+        analyticParametersWithPaginationFilters.push(response);
+      }
+      for(const analyticParameter of  _.flattenDeep(analyticParametersWithPaginationFilters)){
+        const { url,stage, paginationFilters  } = analyticParameter;
+        bufferProcessCount += paginationFilters.length;
+        this.updateProgressStatus(bufferProcessCount,overAllProcessCount, totalOverAllProcess);
+        const response : any= await this.getSingleEventReportAnalyticData(url,stage,paginationFilters,bufferProcessCount,overAllProcessCount, totalOverAllProcess);
+        const {data:anlytics, stage :programStage, overAllProcessCount : currentOverAllProcessCount} = response;
+        overAllProcessCount = currentOverAllProcessCount;
         const sanitizedResponse = this.getSanitizedAnalyticData(anlytics,programStage);
         analyticData.push(sanitizedResponse);
       }
@@ -57,18 +73,14 @@ export class ReportDataEffects {
     return _.flattenDeep(eventReportAnalyticData);
   }
 
-  async getSingleEventReportAnalyticData(analyticParameter : any, programId:string){
+
+  async getSingleEventReportAnalyticData(url : string, stage:string, paginationFilters:any, bufferProcessCount : number,overAllProcessCount: number,  totalOverAllProcess: number){
     let analyticData = {};
-    const pe = _.join(analyticParameter.pe || [], ';');
-    const ou = _.join(analyticParameter.ou || [], ';');
-    const stage = _.map(analyticParameter.dx || [], (dx:string)=> dx.split('.')[0])[0];
-    const dataDimension = _.join(_.map(analyticParameter.dx || [], (dx:string)=>`dimension=${dx}` ), '&');
-    const pageSize = 500;
-    const url = `analytics/events/query/${programId}.json?dimension=pe:${pe}&dimension=ou:${ou}&${dataDimension}&stage=${stage}&displayProperty=NAME&outputType=EVENT&desc=eventdate`;
     try {
-      const paginationFilters:any = await this.getPaginatinationFilters(url,pageSize);
       for(const paginationFilter of paginationFilters){
         const data:any = await this.getAnalyticResult(url,paginationFilter);
+        overAllProcessCount ++;
+        this.updateProgressStatus(bufferProcessCount,overAllProcessCount, totalOverAllProcess);
         if(_.keys(analyticData).length === 0){
           analyticData = {...analyticData, ...data};
         }else{
@@ -79,7 +91,24 @@ export class ReportDataEffects {
     } catch (error) {
       console.log({error});
     }
-    return {data  : analyticData, stage};
+    return {data  : analyticData, stage, overAllProcessCount};
+  }
+
+  async getAnalyticParameterWithPaginationFilter(analyticParameter : any, programId:string){
+    const paginationFilters = [];
+    const pe = _.join(analyticParameter.pe || [], ';');
+    const ou = _.join(analyticParameter.ou || [], ';');
+    const stage = _.map(analyticParameter.dx || [], (dx:string)=> dx.split('.')[0])[0];
+    const dataDimension = _.join(_.map(analyticParameter.dx || [], (dx:string)=>`dimension=${dx}` ), '&');
+    const pageSize = 500;
+    const url = `analytics/events/query/${programId}.json?dimension=pe:${pe}&dimension=ou:${ou}&${dataDimension}&stage=${stage}&displayProperty=NAME&outputType=EVENT&desc=eventdate`;
+    try {
+      const response :any = await this.getPaginatinationFilters(url,pageSize);
+      paginationFilters.push(response)
+    } catch (error) {
+      console.log({error});
+    }
+    return {...analyticParameter, url,stage, paginationFilters : _.flattenDeep(paginationFilters)}
   }
 
   getAnalyticResult(url:string , paginationFilter:string ){
@@ -110,7 +139,10 @@ export class ReportDataEffects {
       const beneficiaryData = {};
       for(const dxConfig of reportConfig.dxConfig || []){
         const{ id,name,programStage,isBoolean,code,isDate} = dxConfig;
-        const eventReportData = _.find(analyticDataByBeneficiary, (data:any)=> {
+        const eventReportData = id !=="" && programStage === "" ? 
+        _.find(analyticDataByBeneficiary, (data:any)=> {
+          return _.keys(data).includes(id);
+        }) : _.find(analyticDataByBeneficiary, (data:any)=> {
           return _.keys(data).includes(id) && data["programStage"] && data["programStage"] === programStage;
         });
         let value = eventReportData ? eventReportData[id] : "";
@@ -137,6 +169,18 @@ export class ReportDataEffects {
     }
     return sanitizedValue;
   }
+
+  updateProgressStatus(bufferProcessCount : number,overAllProcessCount: number, totalOverAllProcess: number){
+    const bufferProgress = this.getProgressPercentage(bufferProcessCount, totalOverAllProcess);
+    const overAllProgress = this.getProgressPercentage(overAllProcessCount, totalOverAllProcess);
+    this.store.dispatch(UpdateReportProgress({overAllProgress,bufferProgress}));
+  }
+
+  getProgressPercentage(numerator:number, denominator:number){
+    const percentageValue = ((numerator/denominator) *100).toFixed(0);
+    return parseInt(percentageValue,10);
+  }
+
 
   getFormattedDate(date :any) {
     let dateObject = new Date(date);
@@ -172,6 +216,7 @@ export class ReportDataEffects {
 
   constructor(
     private actions$: Actions,
-    private httpClient: NgxDhis2HttpClientService
+    private httpClient: NgxDhis2HttpClientService,
+    private store: Store<State>,
   ) {}
 }
