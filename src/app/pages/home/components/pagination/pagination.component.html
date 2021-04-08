@@ -1,0 +1,70 @@
+<div class="row">
+  <div class="col">
+    <div class="d-flex justify-content-end">
+      <div class="items-per-page d-flex align-items-center m-3">
+        <span class="fainted-text">Items per page</span>&nbsp;
+        <mat-form-field class="page-selector" floatLabel="never">
+          <mat-select
+            [(value)]="selectedItemsPerPage"
+            (selectionChange)="onChangeItemsPerPage($event)"
+          >
+            <mat-option value="{{ item }}" *ngFor="let item of itemsPerPage">{{
+              item
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="current-page d-flex align-items-center m-3">
+        <span class="fainted-text"
+          >{{ getRangeOfCurrentItems() }} of {{ totalItems || 0 }}</span
+        >
+      </div>
+      <div class="pagination-buttons d-flex align-items-center m-3">
+        <button
+          mat-button
+          [disabled]="!canPaginateBackward()"
+          [matTooltipDisabled]="!canPaginateBackward()"
+          (click)="onOpenFirstPage()"
+          matTooltip="First Page"
+        >
+          <mat-icon class="material-icons-outlined">
+            first_page
+          </mat-icon></button
+        >&nbsp;&nbsp;
+        <button
+          mat-button
+          [disabled]="!canPaginateBackward()"
+          [matTooltipDisabled]="!canPaginateBackward()"
+          (click)="onOpenPreviousPage()"
+          matTooltip="Previous Page"
+        >
+          <mat-icon class="material-icons-outlined">
+            navigate_before
+          </mat-icon></button
+        >&nbsp;&nbsp;
+        <button
+          mat-button
+          [disabled]="!canPaginateForward()"
+          [matTooltipDisabled]="!canPaginateForward()"
+          (click)="onOpenNextPage()"
+          matTooltip="Next Page"
+        >
+          <mat-icon class="material-icons-outlined">
+            navigate_next
+          </mat-icon></button
+        >&nbsp;&nbsp;
+        <button
+          mat-button
+          [disabled]="!canPaginateForward()"
+          [matTooltipDisabled]="!canPaginateForward()"
+          (click)="onOpenLastPage()"
+          matTooltip="Last Page"
+        >
+          <mat-icon class="material-icons-outlined">
+            last_page
+          </mat-icon></button
+        >&nbsp;&nbsp;
+      </div>
+    </div>
+  </div>
+</div>

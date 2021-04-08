@@ -19,6 +19,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NgxDhis2OrgUnitFilterModule } from '@iapps/ngx-dhis2-org-unit-filter';
 import { NgxDhis2DataFilterModule } from '@iapps/ngx-dhis2-data-filter';
 import { NgxDhis2PeriodFilterModule } from '../ngx-dhis2-period-filter/ngx-dhis2-period-filter.module';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   imports: [
@@ -34,6 +35,7 @@ import { NgxDhis2PeriodFilterModule } from '../ngx-dhis2-period-filter/ngx-dhis2
     MatFormFieldModule,
     MatSelectModule,
     MatRadioModule,
+    MatIconModule,
     MatInputModule,
     MatCheckboxModule,
     MatSlideToggleModule,
@@ -54,6 +56,7 @@ import { NgxDhis2PeriodFilterModule } from '../ngx-dhis2-period-filter/ngx-dhis2
     MatFormFieldModule,
     MatSelectModule,
     MatRadioModule,
+    MatIconModule,
     MatInputModule,
     MatCheckboxModule,
     MatSlideToggleModule,

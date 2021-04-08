@@ -12,6 +12,8 @@ import { CurrentSelectionComponent } from './components/current-selection/curren
 import { SelectionNamePipe } from './pipes/selection-name.pipe';
 import { TableHeadersPipe } from './pipes/table-headers.pipe';
 import { TableDataPipe } from './pipes/table-data.pipe';
+import { PaginationComponent } from './components/pagination/pagination.component';
+import { PaginationPipe } from './pipes/pagination.pipe';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import { TableDataPipe } from './pipes/table-data.pipe';
     SelectionNamePipe,
     TableHeadersPipe,
     TableDataPipe,
+    PaginationComponent,
+    PaginationPipe,
   ],
   imports: [CommonModule, SharedModule, HomeRoutingModule],
 })
