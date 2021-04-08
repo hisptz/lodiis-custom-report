@@ -3,23 +3,38 @@
     !(currentAnalyticsError$ | async) && !(currentAnalyticsLoading$ | async)
   "
 >
-  <table class="table-responsive table-bordered">
-    <thead>
-      <tr>
-        <th
-          class="p-1"
-          scope="col"
-          *ngFor="let header of currentAnalytics$ | async | tableHeaders"
-        >
-          {{ header }}
-        </th>
-      </tr>
-    </thead>
+  <div class="table-responsive">
+    <table class="report-table table-bordered">
+      <thead>
+        <tr>
+          <th
+            class="p-1"
+            *ngFor="let header of currentAnalytics$ | async | tableHeaders"
+          >
+            {{ header }}
+          </th>
+        </tr>
+      </thead>
 
-    <tbody>
-      <tr *ngFor="let row of currentAnalytics$ | async | tableData">
-        <td class="p-1" *ngFor="let rowData of row">{{ rowData }}</td>
-      </tr>
-    </tbody>
-  </table>
+      <tbody>
+        <tr
+          *ngFor="
+            let row of currentAnalytics$
+              | async
+              | tableData
+              | pagination: tablePagination
+          "
+        >
+          <td class="p-1" *ngFor="let rowData of row">{{ rowData }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination" *ngIf="(currentAnalytics$ | async)">
+    <app-pagination
+      (paginate)="onApplyPagination($event)"
+      [totalItems]="(currentAnalytics$ | async).length"
+    ></app-pagination>
+  </div>
 </div>
