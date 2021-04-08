@@ -45,25 +45,26 @@ export class ReportDataEffects {
     const eventReportAnalyticData = [];
     const programId = reportConfig.program;
     const analyticData = [];
+    const analyticParametersWithPaginationFilters = [];
     try {
       let totalOverAllProcess = 0;
-      let totalBufferProcess = 0;
       let overAllProcessCount = 0;
       let bufferProcessCount = 0;
       for(const analyticParameter of  analyticParameters){
         const response :any = await this.getAnalyticParameterWithPaginationFilter(analyticParameter,programId);
-        totalBufferProcess ++;
         totalOverAllProcess += response.paginationFilters.length;
-        console.log({response, totalBufferProcess, totalOverAllProcess});
+        analyticParametersWithPaginationFilters.push(response);
       }
-      console.log({bufferProcessCount,overAllProcessCount, totalBufferProcess, totalOverAllProcess});
-      
-      // for(const analyticParameter of  analyticParameters){
-      //   const response : any= await this.getSingleEventReportAnalyticData(analyticParameter,programId);
-      //   const {data:anlytics, stage :programStage} = response;
-      //   const sanitizedResponse = this.getSanitizedAnalyticData(anlytics,programStage);
-      //   analyticData.push(sanitizedResponse);
-      // }
+      for(const analyticParameter of  _.flattenDeep(analyticParametersWithPaginationFilters)){
+        const { url,stage, paginationFilters  } = analyticParameter;
+        bufferProcessCount += paginationFilters.length;
+        this.updateProgressStatus(bufferProcessCount,overAllProcessCount, totalOverAllProcess);
+        const response : any= await this.getSingleEventReportAnalyticData(url,stage,paginationFilters,bufferProcessCount,overAllProcessCount, totalOverAllProcess);
+        const {data:anlytics, stage :programStage, overAllProcessCount : currentOverAllProcessCount} = response;
+        overAllProcessCount = currentOverAllProcessCount;
+        const sanitizedResponse = this.getSanitizedAnalyticData(anlytics,programStage);
+        analyticData.push(sanitizedResponse);
+      }
       const formattedEventReportData = this.getFormattedEventAnalyticDataForReport(_.flattenDeep(analyticData), reportConfig);
       eventReportAnalyticData.push(formattedEventReportData);
     } catch (error) {
@@ -73,6 +74,25 @@ export class ReportDataEffects {
   }
 
 
+  async getSingleEventReportAnalyticData(url : string, stage:string, paginationFilters:any, bufferProcessCount : number,overAllProcessCount: number,  totalOverAllProcess: number){
+    let analyticData = {};
+    try {
+      for(const paginationFilter of paginationFilters){
+        const data:any = await this.getAnalyticResult(url,paginationFilter);
+        overAllProcessCount ++;
+        this.updateProgressStatus(bufferProcessCount,overAllProcessCount, totalOverAllProcess);
+        if(_.keys(analyticData).length === 0){
+          analyticData = {...analyticData, ...data};
+        }else{
+          const rows = _.concat(analyticData["rows"] || [], data["rows"]||[]);
+          analyticData = {...analyticData,rows}
+        }
+      }
+    } catch (error) {
+      console.log({error});
+    }
+    return {data  : analyticData, stage, overAllProcessCount};
+  }
 
   async getAnalyticParameterWithPaginationFilter(analyticParameter : any, programId:string){
     const paginationFilters = [];
@@ -88,32 +108,7 @@ export class ReportDataEffects {
     } catch (error) {
       console.log({error});
     }
-    return {...analyticParameter, url, paginationFilters : _.flattenDeep(paginationFilters)}
-  }
-
-  async getSingleEventReportAnalyticData(analyticParameter : any, programId:string){
-    let analyticData = {};
-    const pe = _.join(analyticParameter.pe || [], ';');
-    const ou = _.join(analyticParameter.ou || [], ';');
-    const stage = _.map(analyticParameter.dx || [], (dx:string)=> dx.split('.')[0])[0];
-    const dataDimension = _.join(_.map(analyticParameter.dx || [], (dx:string)=>`dimension=${dx}` ), '&');
-    const pageSize = 500;
-    const url = `analytics/events/query/${programId}.json?dimension=pe:${pe}&dimension=ou:${ou}&${dataDimension}&stage=${stage}&displayProperty=NAME&outputType=EVENT&desc=eventdate`;
-    try {
-      const paginationFilters:any = await this.getPaginatinationFilters(url,pageSize);
-      for(const paginationFilter of paginationFilters){
-        const data:any = await this.getAnalyticResult(url,paginationFilter);
-        if(_.keys(analyticData).length === 0){
-          analyticData = {...analyticData, ...data};
-        }else{
-          const rows = _.concat(analyticData["rows"] || [], data["rows"]||[]);
-          analyticData = {...analyticData,rows}
-        }
-      }
-    } catch (error) {
-      console.log({error});
-    }
-    return {data  : analyticData, stage};
+    return {...analyticParameter, url,stage, paginationFilters : _.flattenDeep(paginationFilters)}
   }
 
   getAnalyticResult(url:string , paginationFilter:string ){
@@ -173,6 +168,12 @@ export class ReportDataEffects {
       sanitizedValue = value;
     }
     return sanitizedValue;
+  }
+
+  updateProgressStatus(bufferProcessCount : number,overAllProcessCount: number, totalOverAllProcess: number){
+    const bufferProgress = this.getProgressPercentage(bufferProcessCount, totalOverAllProcess);
+    const overAllProgress = this.getProgressPercentage(overAllProcessCount, totalOverAllProcess);
+    console.log({bufferProcessCount,bufferProgress, overAllProcessCount,overAllProgress, totalOverAllProcess})
   }
 
   getProgressPercentage(numerator:number, denominator:number){
