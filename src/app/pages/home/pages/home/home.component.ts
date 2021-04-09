@@ -136,7 +136,7 @@ export class HomeComponent implements OnInit {
       const reportName = `${this.selectedReport.name}_${
         date.toISOString().split('T')[0]
       }`;
-
+      console.log(`FILE NAME:: ${reportName}`);
       this.excelFileService.writeToSingleSheetExcelFile(data, reportName);
     });
   }
