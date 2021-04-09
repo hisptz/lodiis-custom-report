@@ -2,8 +2,11 @@
   align-self: center;
 }
 
+.row {
+  padding: 1vh 1vw;
+}
+
 .col-11,
 .col-1 {
   text-align: end;
-  padding: 1vh 1vw;
 }
