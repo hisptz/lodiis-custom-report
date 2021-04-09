@@ -2,11 +2,20 @@
   <div class="row">
     <div class="col">
       <div class="d-flex justify-content-between">
-        <div >
-          <button mat-stroked-button (click)="openOrganisationUnitFilter()">
+        <div>
+          <button
+            class="no-outline"
+            mat-stroked-button
+            (click)="openOrganisationUnitFilter()"
+          >
             Location</button
           >&nbsp;&nbsp;
-          <button mat-stroked-button (click)="openPeriodFilter()">Period</button
+          <button
+            class="no-outline"
+            mat-stroked-button
+            (click)="openPeriodFilter()"
+          >
+            Period</button
           >&nbsp;&nbsp;
           <mat-form-field floatLabel="never">
             <mat-select
@@ -21,8 +30,18 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div >
+        <div>
           <button
+            class="no-outline"
+            mat-stroked-button
+            color="warn"
+            (click)="onViewErrors()"
+            *ngIf="analyticsError$ | async"
+          >
+            Errors</button
+          >&nbsp;&nbsp;
+          <button
+            class="no-outline"
             mat-stroked-button
             (click)="onGenerateReport()"
             [disabled]="!getReportParameterSelectionStatus()"
@@ -30,6 +49,7 @@
             Generate</button
           >&nbsp;&nbsp;
           <button
+            class="no-outline"
             mat-stroked-button
             (click)="onDownloadReport()"
             [disabled]="(analyticsError$ | async) || !(analytics$ | async)"
@@ -50,12 +70,12 @@
           <app-loader></app-loader>
         </div>
         <div *ngIf="!(isLoading$ | async)">
-          <div *ngIf="analyticsError$ | async">
+          <!-- <div *ngIf="analyticsError$ | async">
             <div class="analyticsError">
               <mat-card>{{ analyticsError$ | async | json }}</mat-card>
             </div>
-          </div>
-          <div *ngIf="!(analyticsError$ | async) && analytics$ | async">
+          </div> -->
+          <div *ngIf="analytics$ | async">
             <mat-card>
               <app-report-view></app-report-view>
             </mat-card>

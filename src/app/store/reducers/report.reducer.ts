@@ -30,7 +30,7 @@ export const reducer = createReducer(
   })),
   on(UpdateReportProgress, (state, { bufferProgress, overAllProgress }) => ({
     ...state,
-    ...loadedBaseState,
+    // ...loadedBaseState,
     bufferProgress,
     overAllProgress
   })),

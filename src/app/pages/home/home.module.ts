@@ -12,6 +12,9 @@ import { CurrentSelectionComponent } from './components/current-selection/curren
 import { SelectionNamePipe } from './pipes/selection-name.pipe';
 import { TableHeadersPipe } from './pipes/table-headers.pipe';
 import { TableDataPipe } from './pipes/table-data.pipe';
+import { PaginationComponent } from './components/pagination/pagination.component';
+import { PaginationPipe } from './pipes/pagination.pipe';
+import { ReportErrorComponent } from './components/report-error/report-error.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,11 @@ import { TableDataPipe } from './pipes/table-data.pipe';
     SelectionNamePipe,
     TableHeadersPipe,
     TableDataPipe,
+    PaginationComponent,
+    PaginationPipe,
+    ReportErrorComponent,
   ],
   imports: [CommonModule, SharedModule, HomeRoutingModule],
+  entryComponents: [ReportErrorComponent]
 })
 export class HomeModule {}

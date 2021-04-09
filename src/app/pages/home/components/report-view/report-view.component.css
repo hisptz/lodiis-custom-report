@@ -1,0 +1,34 @@
+tbody {
+  display: block;
+  min-height: 10vh;
+  max-height: 50vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+thead, tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+thead {
+  width: calc( 100% - 1em );
+}
+
+th, td {
+  width: 10vw !important;
+  word-wrap: break-word;
+}
+
+th {
+  text-align: center;
+}
+
+table {
+  width: 100%;
+}
+
+.pagination {
+  justify-content: flex-end;
+  align-self: center;
+}
