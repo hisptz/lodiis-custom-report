@@ -13,7 +13,8 @@ import {
 } from '../actions';
 import { Store } from '@ngrx/store';
 import { State } from '../reducers';
-import { getSanitizesReportValue ,getSanitizedAnalyticData, getProgressPercentage} from 'src/app/shared/helpers/report-data.helper';
+import {  getSanitizedAnalyticData, getProgressPercentage} from 'src/app/shared/helpers/report-data.helper';
+import { getFormattedEventAnalyticDataForReport } from 'src/app/shared/helpers/get-formatted-analytica-data-for-report';
 
 @Injectable()
 export class ReportDataEffects {
@@ -51,6 +52,7 @@ export class ReportDataEffects {
       let totalOverAllProcess = 0;
       let overAllProcessCount = 0;
       let bufferProcessCount = 0;
+      const locations = await this.getAllLocations();
       for (const analyticParameter of analyticParameters) {
         const response: any = await this.getAnalyticParameterWithPaginationFilter(
           analyticParameter,
@@ -89,15 +91,33 @@ export class ReportDataEffects {
         );
         analyticData.push(sanitizedResponse);
       }
-      const formattedEventReportData = this.getFormattedEventAnalyticDataForReport(
+      const formattedEventReportData = getFormattedEventAnalyticDataForReport(
         _.flattenDeep(analyticData),
-        reportConfig
+        reportConfig,
+        locations
       );
       eventReportAnalyticData.push(formattedEventReportData);
     } catch (error) {
       console.log({ error });
     }
     return _.flattenDeep(eventReportAnalyticData);
+  }
+
+  getAllLocations(){
+    const url = "organisationUnits.json?fields=id,name,level,ancestors[name,level]&paging=false";
+    return new Promise((resolve, reject) => {
+      this.httpClient.get(url).subscribe(
+        (data) =>{
+          const loctions = _.map(data["organisationUnits"]||[], (location:any)=>{
+            const {level, name, ancestors} = location;
+            ancestors.push({name,level});
+            return {...location, ancestors};
+          });
+          resolve(loctions);
+        },
+        (error) => reject([])
+      );
+    });
   }
 
   async getSingleEventReportAnalyticData(
@@ -189,54 +209,6 @@ export class ReportDataEffects {
     });
   }
 
-  getFormattedEventAnalyticDataForReport(
-    analyticData: Array<any>,
-    reportConfig: any
-  ) {
-    const groupedAnalyticDataByBeneficiary = _.groupBy(analyticData, 'tei');
-    return _.flattenDeep(
-      _.map(_.keys(groupedAnalyticDataByBeneficiary), (tei: string) => {
-        const analyticDataByBeneficiary = groupedAnalyticDataByBeneficiary[tei];
-        const beneficiaryData = {};
-        for (const dxConfig of reportConfig.dxConfig || []) {
-          const { id, name, programStage, isBoolean, code, isDate } = dxConfig;
-          let value = "";
-          if(id === "last_service_community_council"){
-            console.log({key:"last_service_community_council",id, analyticDataByBeneficiary})
-          }else if(id === "district_of_service"){
-            console.log({key:"district_of_service",id, analyticDataByBeneficiary})
-          }else if(id === "date_of_last_service_received"){
-            console.log({key:"date_of_last_service_received",id, analyticDataByBeneficiary})
-          }else{
-            const eventReportData =
-            id !== '' && programStage === ''
-              ? _.find(analyticDataByBeneficiary, (data: any) => {
-                  return _.keys(data).includes(id);
-                })
-              : _.find(analyticDataByBeneficiary, (data: any) => {
-                  return (
-                    _.keys(data).includes(id) &&
-                    data['programStage'] &&
-                    data['programStage'] === programStage
-                  );
-                });
-          value = eventReportData ? eventReportData[id] : value;
-          }
-          if (
-            _.keys(beneficiaryData).includes(name) &&
-            beneficiaryData[name] !== ''
-          ) {
-            value = beneficiaryData[name];
-          }
-          beneficiaryData[name] =
-            value !== ''
-              ? getSanitizesReportValue(value, code, isBoolean, isDate)
-              : value;
-        }
-        return beneficiaryData;
-      })
-    );
-  }
 
   updateProgressStatus(
     bufferProcessCount: number,
