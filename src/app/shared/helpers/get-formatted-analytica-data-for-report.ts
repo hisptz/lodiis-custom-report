@@ -35,8 +35,8 @@ export function getFormattedEventAnalyticDataForReport(
               : _.find(analyticDataByBeneficiary, (data: any) => {
                   return (
                     _.keys(data).includes(id) &&
-                    data['programStage'] &&
-                    data['programStage'] === programStage
+                    data.programStage &&
+                    data.programStage === programStage
                   );
                 });
           value = eventReportData ? eventReportData[id] : value;
@@ -67,13 +67,17 @@ export function getFormattedEventAnalyticDataForReport(
   }
 
   function getDistrictOfService(analyticDataByBeneficiary : Array<any>, locations : Array<any>){        
-      const ouIds  = _.uniq(_.flattenDeep(_.map(analyticDataByBeneficiary, data=> data["ou"] || [])));
+      const ouIds  = _.uniq(_.flattenDeep(_.map(analyticDataByBeneficiary, (data:any)=> data.ou || [])));
       const locationId = ouIds.length > 0 ? ouIds[0] : "";
       return getLocationNameById(locations,districtLevel, locationId);
   }
 
   function getLocationNameById(locations : Array<any>, level : number,locationId :string){
       let locationName = "";
-      console.log({locationId, locations,level});
-      return locationId;
+      const locationObj = _.find(locations, (data:any)=>data && data.id && data.id === locationId);
+      if(locationObj && locationObj.ancestors){
+          const location = _.find(locationObj.ancestors||[], (data:any)=>data && data.level === level);
+          locationName = location? location.name || locationName : locationName;
+      }
+      return locationName;
   }

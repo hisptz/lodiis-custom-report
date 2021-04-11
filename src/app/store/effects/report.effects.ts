@@ -111,7 +111,7 @@ export class ReportDataEffects {
           const loctions = _.map(data["organisationUnits"]||[], (location:any)=>{
             const {level, name, ancestors} = location;
             ancestors.push({name,level});
-            return {...location, ancestors};
+            return _.omit({...location, ancestors}, ["level","name"]);
           });
           resolve(loctions);
         },
