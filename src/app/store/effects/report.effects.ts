@@ -13,10 +13,10 @@ import {
 } from '../actions';
 import { Store } from '@ngrx/store';
 import { State } from '../reducers';
+import { getSanitizesReportValue ,getSanitizedAnalyticData, getProgressPercentage} from 'src/app/shared/helpers/report-data.helper';
 
 @Injectable()
 export class ReportDataEffects {
-  defaultAnalyticKeys = ['eventdate', 'enrollmentdate', 'tei', 'ouname', 'ou'];
 
   LoadReportData$ = createEffect(() =>
     this.actions$.pipe(
@@ -83,7 +83,7 @@ export class ReportDataEffects {
           overAllProcessCount: currentOverAllProcessCount,
         } = response;
         overAllProcessCount = currentOverAllProcessCount;
-        const sanitizedResponse = this.getSanitizedAnalyticData(
+        const sanitizedResponse = getSanitizedAnalyticData(
           anlytics,
           programStage
         );
@@ -230,7 +230,7 @@ export class ReportDataEffects {
           }
           beneficiaryData[name] =
             value !== ''
-              ? this.getSanitizesValue(value, code, isBoolean, isDate)
+              ? getSanitizesReportValue(value, code, isBoolean, isDate)
               : value;
         }
         return beneficiaryData;
@@ -238,85 +238,21 @@ export class ReportDataEffects {
     );
   }
 
-  getSanitizesValue(
-    value: any,
-    code: Array<string>,
-    isBoolean: boolean,
-    isDate: boolean
-  ) {
-    let sanitizedValue = '';
-    if (code && code.length > 0) {
-      sanitizedValue = code.includes(value) ? 'Yes' : sanitizedValue;
-    } else if (isBoolean) {
-      sanitizedValue = `${value}` === '1' ? 'Yes' : sanitizedValue;
-    } else if (isDate) {
-      sanitizedValue = this.getFormattedDate(value);
-    } else {
-      sanitizedValue = value;
-    }
-    return sanitizedValue;
-  }
-
   updateProgressStatus(
     bufferProcessCount: number,
     overAllProcessCount: number,
     totalOverAllProcess: number
   ) {
-    const bufferProgress = this.getProgressPercentage(
+    const bufferProgress = getProgressPercentage(
       bufferProcessCount,
       totalOverAllProcess
     );
-    const overAllProgress = this.getProgressPercentage(
+    const overAllProgress = getProgressPercentage(
       overAllProcessCount,
       totalOverAllProcess
     );
     this.store.dispatch(
       UpdateReportProgress({ overAllProgress, bufferProgress })
-    );
-  }
-
-  getProgressPercentage(numerator: number, denominator: number) {
-    const percentageValue = ((numerator / denominator) * 100).toFixed(0);
-    return parseInt(percentageValue, 10);
-  }
-
-  getFormattedDate(date: any) {
-    let dateObject = new Date(date);
-    if (isNaN(dateObject.getDate())) {
-      dateObject = new Date();
-    }
-    const day = dateObject.getDate();
-    const month = dateObject.getMonth() + 1;
-    const year = dateObject.getFullYear();
-    return (
-      year +
-      (month > 9 ? `-${month}` : `-0${month}`) +
-      (day > 9 ? `-${day}` : `-0${day}`)
-    );
-  }
-
-  getSanitizedAnalyticData(anlytics: any, programStage: string) {
-    const { headers, rows, metaData } = anlytics;
-    const dimensions =
-      metaData && metaData.dimensions ? metaData.dimensions : {};
-    const defaultKeys = _.flattenDeep(
-      _.concat(
-        this.defaultAnalyticKeys,
-        _.keys(_.omit(dimensions, _.concat(['ou', 'pe'], dimensions.ou || [])))
-      )
-    );
-    return _.flattenDeep(
-      _.map(rows, (rowData: any) => {
-        const dataObject = { programStage: programStage };
-        for (const key of defaultKeys) {
-          const keyIndex = _.findIndex(
-            headers || [],
-            (header: any) => header && header.name === key
-          );
-          dataObject[key] = rowData[keyIndex] || '';
-        }
-        return dataObject;
-      })
     );
   }
 
