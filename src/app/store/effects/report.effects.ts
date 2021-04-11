@@ -200,7 +200,15 @@ export class ReportDataEffects {
         const beneficiaryData = {};
         for (const dxConfig of reportConfig.dxConfig || []) {
           const { id, name, programStage, isBoolean, code, isDate } = dxConfig;
-          const eventReportData =
+          let value = "";
+          if(id === "last_service_community_council"){
+            console.log({key:"last_service_community_council",id, analyticDataByBeneficiary})
+          }else if(id === "district_of_service"){
+            console.log({key:"district_of_service",id, analyticDataByBeneficiary})
+          }else if(id === "date_of_last_service_received"){
+            console.log({key:"date_of_last_service_received",id, analyticDataByBeneficiary})
+          }else{
+            const eventReportData =
             id !== '' && programStage === ''
               ? _.find(analyticDataByBeneficiary, (data: any) => {
                   return _.keys(data).includes(id);
@@ -212,7 +220,8 @@ export class ReportDataEffects {
                     data['programStage'] === programStage
                   );
                 });
-          let value = eventReportData ? eventReportData[id] : '';
+          value = eventReportData ? eventReportData[id] : value;
+          }
           if (
             _.keys(beneficiaryData).includes(name) &&
             beneficiaryData[name] !== ''
