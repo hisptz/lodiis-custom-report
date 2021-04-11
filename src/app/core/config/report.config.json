@@ -1100,21 +1100,21 @@
         {
           "programStage": "",
           "name": "Date Of Last Service Received",
-          "id": "",
+          "id": "date_of_last_service_received",
           "isBoolean": false,
           "isDate": true
         },
         {
           "programStage": "",
           "name": "District of Service",
-          "id": "",
+          "id": "district_of_service",
           "isBoolean": false,
           "isDate": false
         },
         {
           "programStage": "",
           "name": "Last Service Community Council",
-          "id": "ouname",
+          "id": "last_service_community_council",
           "isBoolean": false,
           "isDate": false
         },
