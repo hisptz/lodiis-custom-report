@@ -13,10 +13,11 @@ import {
 } from '../actions';
 import { Store } from '@ngrx/store';
 import { State } from '../reducers';
+import {  getSanitizedAnalyticData, getProgressPercentage} from 'src/app/shared/helpers/report-data.helper';
+import { getFormattedEventAnalyticDataForReport } from 'src/app/shared/helpers/get-formatted-analytica-data-for-report';
 
 @Injectable()
 export class ReportDataEffects {
-  defaultAnalyticKeys = ['eventdate', 'enrollmentdate', 'tei', 'ouname', 'ou'];
 
   LoadReportData$ = createEffect(() =>
     this.actions$.pipe(
@@ -51,6 +52,7 @@ export class ReportDataEffects {
       let totalOverAllProcess = 0;
       let overAllProcessCount = 0;
       let bufferProcessCount = 0;
+      const locations = await this.getAllLocations();
       for (const analyticParameter of analyticParameters) {
         const response: any = await this.getAnalyticParameterWithPaginationFilter(
           analyticParameter,
@@ -83,21 +85,39 @@ export class ReportDataEffects {
           overAllProcessCount: currentOverAllProcessCount,
         } = response;
         overAllProcessCount = currentOverAllProcessCount;
-        const sanitizedResponse = this.getSanitizedAnalyticData(
+        const sanitizedResponse = getSanitizedAnalyticData(
           anlytics,
           programStage
         );
         analyticData.push(sanitizedResponse);
       }
-      const formattedEventReportData = this.getFormattedEventAnalyticDataForReport(
+      const formattedEventReportData = getFormattedEventAnalyticDataForReport(
         _.flattenDeep(analyticData),
-        reportConfig
+        reportConfig,
+        locations
       );
       eventReportAnalyticData.push(formattedEventReportData);
     } catch (error) {
       console.log({ error });
     }
     return _.flattenDeep(eventReportAnalyticData);
+  }
+
+  getAllLocations(){
+    const url = "organisationUnits.json?fields=id,name,level,ancestors[name,level]&paging=false";
+    return new Promise((resolve, reject) => {
+      this.httpClient.get(url).subscribe(
+        (data) =>{
+          const loctions = _.map(data["organisationUnits"]||[], (location:any)=>{
+            const {level, name, ancestors} = location;
+            ancestors.push({name,level});
+            return _.omit({...location, ancestors}, ["level","name"]);
+          });
+          resolve(loctions);
+        },
+        (error) => reject([])
+      );
+    });
   }
 
   async getSingleEventReportAnalyticData(
@@ -189,125 +209,22 @@ export class ReportDataEffects {
     });
   }
 
-  getFormattedEventAnalyticDataForReport(
-    analyticData: Array<any>,
-    reportConfig: any
-  ) {
-    const groupedAnalyticDataByBeneficiary = _.groupBy(analyticData, 'tei');
-    return _.flattenDeep(
-      _.map(_.keys(groupedAnalyticDataByBeneficiary), (tei: string) => {
-        const analyticDataByBeneficiary = groupedAnalyticDataByBeneficiary[tei];
-        const beneficiaryData = {};
-        for (const dxConfig of reportConfig.dxConfig || []) {
-          const { id, name, programStage, isBoolean, code, isDate } = dxConfig;
-          const eventReportData =
-            id !== '' && programStage === ''
-              ? _.find(analyticDataByBeneficiary, (data: any) => {
-                  return _.keys(data).includes(id);
-                })
-              : _.find(analyticDataByBeneficiary, (data: any) => {
-                  return (
-                    _.keys(data).includes(id) &&
-                    data['programStage'] &&
-                    data['programStage'] === programStage
-                  );
-                });
-          let value = eventReportData ? eventReportData[id] : '';
-          if (
-            _.keys(beneficiaryData).includes(name) &&
-            beneficiaryData[name] !== ''
-          ) {
-            value = beneficiaryData[name];
-          }
-          beneficiaryData[name] =
-            value !== ''
-              ? this.getSanitizesValue(value, code, isBoolean, isDate)
-              : value;
-        }
-        return beneficiaryData;
-      })
-    );
-  }
-
-  getSanitizesValue(
-    value: any,
-    code: Array<string>,
-    isBoolean: boolean,
-    isDate: boolean
-  ) {
-    let sanitizedValue = '';
-    if (code && code.length > 0) {
-      sanitizedValue = code.includes(value) ? 'Yes' : sanitizedValue;
-    } else if (isBoolean) {
-      sanitizedValue = `${value}` === '1' ? 'Yes' : sanitizedValue;
-    } else if (isDate) {
-      sanitizedValue = this.getFormattedDate(value);
-    } else {
-      sanitizedValue = value;
-    }
-    return sanitizedValue;
-  }
 
   updateProgressStatus(
     bufferProcessCount: number,
     overAllProcessCount: number,
     totalOverAllProcess: number
   ) {
-    const bufferProgress = this.getProgressPercentage(
+    const bufferProgress = getProgressPercentage(
       bufferProcessCount,
       totalOverAllProcess
     );
-    const overAllProgress = this.getProgressPercentage(
+    const overAllProgress = getProgressPercentage(
       overAllProcessCount,
       totalOverAllProcess
     );
     this.store.dispatch(
       UpdateReportProgress({ overAllProgress, bufferProgress })
-    );
-  }
-
-  getProgressPercentage(numerator: number, denominator: number) {
-    const percentageValue = ((numerator / denominator) * 100).toFixed(0);
-    return parseInt(percentageValue, 10);
-  }
-
-  getFormattedDate(date: any) {
-    let dateObject = new Date(date);
-    if (isNaN(dateObject.getDate())) {
-      dateObject = new Date();
-    }
-    const day = dateObject.getDate();
-    const month = dateObject.getMonth() + 1;
-    const year = dateObject.getFullYear();
-    return (
-      year +
-      (month > 9 ? `-${month}` : `-0${month}`) +
-      (day > 9 ? `-${day}` : `-0${day}`)
-    );
-  }
-
-  getSanitizedAnalyticData(anlytics: any, programStage: string) {
-    const { headers, rows, metaData } = anlytics;
-    const dimensions =
-      metaData && metaData.dimensions ? metaData.dimensions : {};
-    const defaultKeys = _.flattenDeep(
-      _.concat(
-        this.defaultAnalyticKeys,
-        _.keys(_.omit(dimensions, _.concat(['ou', 'pe'], dimensions.ou || [])))
-      )
-    );
-    return _.flattenDeep(
-      _.map(rows, (rowData: any) => {
-        const dataObject = { programStage: programStage };
-        for (const key of defaultKeys) {
-          const keyIndex = _.findIndex(
-            headers || [],
-            (header: any) => header && header.name === key
-          );
-          dataObject[key] = rowData[keyIndex] || '';
-        }
-        return dataObject;
-      })
     );
   }
 
