@@ -1335,17 +1335,17 @@
           "isDate": false
         },
         {
-          "programStage": "PGFt6IwdZLM",
+          "programStage": "",
           "name": "HIV Prevention Messaging",
-          "id": "qFwm4RM45gi",
+          "id": "",
           "isBoolean": true,
           "isDate": false
         },
         {
-          "programStage": "",
+          "programStage": "PGFt6IwdZLM",
           "name": "HIV Risk Assessment and Messaging",
-          "id": "",
-          "isBoolean": false,
+          "id": "qFwm4RM45gi",
+          "isBoolean": true,
           "isDate": false
         },
         {
