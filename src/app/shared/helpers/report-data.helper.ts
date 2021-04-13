@@ -16,9 +16,9 @@ export function getSanitizesReportValue(
   ) {
     let sanitizedValue = '';
     if (code && code.length > 0) {
-      sanitizedValue = code.includes(value) ? 'Yes' : sanitizedValue;
+      sanitizedValue = code.includes(value) || value == "Yes" ? 'Yes' : sanitizedValue;
     } else if (isBoolean) {
-      sanitizedValue = `${value}` === '1' ? 'Yes' : sanitizedValue;
+      sanitizedValue = `${value}` === '1' ||  value == "Yes" ? 'Yes' : sanitizedValue;
     } else if (isDate) {
       sanitizedValue = getFormattedDate(value);
     } else {
