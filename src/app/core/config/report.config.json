@@ -1241,7 +1241,8 @@
           "programStage": "kq6qeEgbDVY",
           "name": "HIV Testing and Counseling",
           "id": "N8tlZl91pBY",
-          "isBoolean": false,
+          "code": ["Positive", "Negative", "Indeterminate"],
+          "isBoolean": true,
           "isDate": false
         },
         {
