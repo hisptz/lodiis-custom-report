@@ -1242,7 +1242,7 @@
           "name": "HIV Testing and Counseling",
           "id": "N8tlZl91pBY",
           "code": ["Positive", "Negative", "Indeterminate"],
-          "isBoolean": true,
+          "isBoolean": false,
           "isDate": false
         },
         {
