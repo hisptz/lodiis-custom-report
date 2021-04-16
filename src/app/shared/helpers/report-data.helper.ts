@@ -43,8 +43,8 @@ export function getSanitizesReportValue(
   }
 
 
-  export function getSanitizedAnalyticData(anlytics: any, programStage: string) {
-    const { headers, rows, metaData } = anlytics;
+  export function getSanitizedAnalyticData(Analytics: any, programStage: string) {
+    const { headers, rows, metaData } = Analytics;
     const dimensions =
       metaData && metaData.dimensions ? metaData.dimensions : {};
     const defaultKeys = _.flattenDeep(

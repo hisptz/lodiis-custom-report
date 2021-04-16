@@ -80,13 +80,13 @@ export class ReportDataEffects {
           totalOverAllProcess
         );
         const {
-          data: anlytics,
+          data: Analytics,
           stage: programStage,
           overAllProcessCount: currentOverAllProcessCount,
         } = response;
         overAllProcessCount = currentOverAllProcessCount;
         const sanitizedResponse = getSanitizedAnalyticData(
-          anlytics,
+          Analytics,
           programStage
         );
         analyticData.push(sanitizedResponse);
@@ -195,8 +195,8 @@ export class ReportDataEffects {
     const paginationFilters = [];
     return new Promise((resolve, reject) => {
       this.httpClient.get(`${url}&pageSize=1&page=1`).subscribe(
-        (anlytics) => {
-          const { metaData } = anlytics;
+        (Analytics) => {
+          const { metaData } = Analytics;
           const pager = metaData && metaData.pager ? metaData.pager : {};
           const total = pager.total || pageSize;
           for (let page = 1; page <= Math.ceil(total / pageSize); page++) {
