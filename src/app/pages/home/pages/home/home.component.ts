@@ -9,7 +9,7 @@ import { OuSelectionComponent } from '../../components/ou-selection/ou-selection
 import { getDefaultOrganisationUnitSelections } from '../../helpers/get-dafault-selections';
 import { State } from 'src/app/store/reducers';
 import { LoadReportData } from 'src/app/store/actions';
-import { getAnlyticsParameters } from '../../helpers/get-anlytics-parameters';
+import { getAnalyticsParameters } from '../../helpers/get-anlytics-parameters';
 import {
   getCurrentAnalyticsLoadingStatus,
   getCurrentAnalytics,
@@ -29,6 +29,7 @@ import { ReportErrorComponent } from '../../components/report-error/report-error
 })
 export class HomeComponent implements OnInit {
   selectedPeriods: Array<any>;
+  disablePeriodSelection: boolean;
   selectedOrgUnitItems: Array<any>;
   selectedReport: Report;
   reports: Array<Report>;
@@ -50,14 +51,14 @@ export class HomeComponent implements OnInit {
     this.reports = reportConfig.report || [];
     this.store
       .select(getCurrentUserOrganisationUnits)
-      .subscribe((userOrgnisationUnits) => {
+      .subscribe((userOrganisationUnits) => {
         if (
           !this.selectedOrgUnitItems &&
-          userOrgnisationUnits &&
-          userOrgnisationUnits.length > 0
+          userOrganisationUnits &&
+          userOrganisationUnits.length > 0
         ) {
           this.selectedOrgUnitItems = getDefaultOrganisationUnitSelections(
-            userOrgnisationUnits
+            userOrganisationUnits
           );
         }
       });
@@ -106,24 +107,25 @@ export class HomeComponent implements OnInit {
     );
     if (report) {
       this.selectedReport = report;
+      this.disablePeriodSelection = report.disablePeriodSelection ?? false;
     }
   }
 
   getReportParameterSelectionStatus() {
     return (
       this.selectedOrgUnitItems &&
-      this.selectedPeriods &&
       this.selectedReport &&
-      this.selectedPeriods.length > 0 &&
+      (this.disablePeriodSelection ||
+        (this.selectedPeriods && this.selectedPeriods.length > 0)) &&
       this.selectedOrgUnitItems.length > 0
     );
   }
 
   onGenerateReport() {
-    const analyticParameters = getAnlyticsParameters(
+    const analyticParameters = getAnalyticsParameters(
       this.selectedOrgUnitItems,
       this.selectedPeriods,
-      this.selectedReport.dxConfig
+      this.selectedReport.dxConfigs
     );
     this.store.dispatch(
       LoadReportData({ analyticParameters, reportConfig: this.selectedReport })
@@ -136,7 +138,6 @@ export class HomeComponent implements OnInit {
       const reportName = `${this.selectedReport.name}_${
         date.toISOString().split('T')[0]
       }`;
-      console.log(`FILE NAME:: ${reportName}`);
       this.excelFileService.writeToSingleSheetExcelFile(data, reportName);
     });
   }

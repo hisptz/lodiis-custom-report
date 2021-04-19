@@ -3,20 +3,6 @@
     <div class="col">
       <div class="d-flex justify-content-between">
         <div>
-          <button
-            class="no-outline"
-            mat-stroked-button
-            (click)="openOrganisationUnitFilter()"
-          >
-            Location</button
-          >&nbsp;&nbsp;
-          <button
-            class="no-outline"
-            mat-stroked-button
-            (click)="openPeriodFilter()"
-          >
-            Period</button
-          >&nbsp;&nbsp;
           <mat-form-field floatLabel="never">
             <mat-select
               placeholder="Choose report"
@@ -29,6 +15,22 @@
               >
             </mat-select>
           </mat-form-field>
+          &nbsp;&nbsp;
+          <button
+            class="no-outline"
+            mat-stroked-button
+            (click)="openOrganisationUnitFilter()"
+          >
+            Location</button
+          >&nbsp;&nbsp;
+          <button
+            class="no-outline"
+            mat-stroked-button
+            [disabled] = "!selectedReport || disablePeriodSelection"
+            (click)="openPeriodFilter()"
+          >
+            Period</button
+          >&nbsp;&nbsp;
         </div>
         <div>
           <button
@@ -64,6 +66,7 @@
             [selectedReport]="selectedReport"
             [selectedPeriods]="selectedPeriods"
             [selectedOrgUnitItems]="selectedOrgUnitItems"
+            [reportHasPeriod] = "!(!selectedReport || disablePeriodSelection)"
           ></app-current-selection>
         </div>
         <div *ngIf="isLoading$ | async">
