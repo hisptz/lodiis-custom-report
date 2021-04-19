@@ -2,8 +2,9 @@
   "report": [
     {
       "id": "PSI_Layering",
-      "name": "PSI DREAMS Layering Dataset",
+      "name": "DREAMS Layering Dataset",
       "program": "hOEIHJDrrvz",
+      "disablePeriodSelection": false,
       "dxConfig": [
         {
           "programStage": "",

@@ -29,6 +29,7 @@ import { ReportErrorComponent } from '../../components/report-error/report-error
 })
 export class HomeComponent implements OnInit {
   selectedPeriods: Array<any>;
+  disablePeriodSelection: boolean;
   selectedOrgUnitItems: Array<any>;
   selectedReport: Report;
   reports: Array<Report>;
@@ -106,15 +107,16 @@ export class HomeComponent implements OnInit {
     );
     if (report) {
       this.selectedReport = report;
+      this.disablePeriodSelection = report.disablePeriodSelection ?? false;
     }
   }
 
   getReportParameterSelectionStatus() {
     return (
       this.selectedOrgUnitItems &&
-      this.selectedPeriods &&
       this.selectedReport &&
-      this.selectedPeriods.length > 0 &&
+      (this.disablePeriodSelection ||
+        (this.selectedPeriods && this.selectedPeriods.length > 0)) &&
       this.selectedOrgUnitItems.length > 0
     );
   }

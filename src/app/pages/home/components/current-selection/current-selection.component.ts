@@ -10,9 +10,12 @@ export class CurrentSelectionComponent implements OnInit {
   @Input() selectedPeriods: Array<any>;
   @Input() selectedOrgUnitItems: Array<any>;
   @Input() selectedReport: Report;
+  @Input() reportHasPeriod: boolean;
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.reportHasPeriod = false;
+  }
   getReportParameterSelectionStatus() {
     return (
       this.selectedReport ||
