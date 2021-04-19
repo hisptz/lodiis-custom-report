@@ -1,12 +1,12 @@
 import * as _ from 'lodash';
-import { getSanitizesReportValue } from './report-data.helper';
+import { getSanitizesReportValue, getSanitizedDisplayValue } from './report-data.helper';
 
 const districtLevel = 2;
 const commmunityCouncilLevel = 3;
 
 export function getFormattedEventAnalyticDataForReport(
     analyticData: Array<any>,
-    reportConfig: any, 
+    reportConfig: any,
     locations : any,
   ) {
     const groupedAnalyticDataByBeneficiary = _.groupBy(analyticData, 'tei');
@@ -14,8 +14,8 @@ export function getFormattedEventAnalyticDataForReport(
       _.map(_.keys(groupedAnalyticDataByBeneficiary), (tei: string) => {
         const analyticDataByBeneficiary = groupedAnalyticDataByBeneficiary[tei];
         const beneficiaryData = {};
-        for (const dxConfig of reportConfig.dxConfig || []) {
-          const { id, name, programStage, isBoolean, code, isDate } = dxConfig;
+        for (const dxConfigs of reportConfig.dxConfigs || []) {
+          const { id, name, programStage, isBoolean, codes, isDate, displayValues } = dxConfigs;
           let value = "";
           if(id === "last_service_community_council"){
               const lastService = getLastServiceFromAnalyticData(analyticDataByBeneficiary)
@@ -49,8 +49,8 @@ export function getFormattedEventAnalyticDataForReport(
           }
           beneficiaryData[name] =
             value !== ''
-              ? getSanitizesReportValue(value, code, isBoolean, isDate)
-              : value;
+              ? getSanitizesReportValue(value, codes, isBoolean, isDate, displayValues)
+              : getSanitizedDisplayValue(value, displayValues);
         }
         return beneficiaryData;
       })
@@ -66,7 +66,7 @@ export function getFormattedEventAnalyticDataForReport(
     return lastService;
   }
 
-  function getDistrictOfService(analyticDataByBeneficiary : Array<any>, locations : Array<any>){        
+  function getDistrictOfService(analyticDataByBeneficiary : Array<any>, locations : Array<any>){
       const ouIds  = _.uniq(_.flattenDeep(_.map(analyticDataByBeneficiary, (data:any)=> data.ou || [])));
       const locationId = ouIds.length > 0 ? ouIds[0] : "";
       return getLocationNameById(locations,districtLevel, locationId);
@@ -81,3 +81,4 @@ export function getFormattedEventAnalyticDataForReport(
       }
       return locationName;
   }
+

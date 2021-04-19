@@ -5,7 +5,7 @@
       "name": "DREAMS Layering Dataset",
       "program": "hOEIHJDrrvz",
       "disablePeriodSelection": false,
-      "dxConfig": [
+      "dxConfigs": [
         {
           "programStage": "",
           "name": "First Name",
@@ -81,7 +81,17 @@
           "id": "LNaNh7kvh4X",
           "isAttribute": true,
           "isBoolean": true,
-          "isDate": false
+          "isDate": false,
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "PREGNANT"
+            },
+            {
+              "value": "",
+              "displayName": "NOT PREGNANT"
+            }
+          ]
         },
         {
           "programStage": "",
@@ -112,7 +122,17 @@
           "isAttribute": true,
           "id": "rh881j2vfvT",
           "isBoolean": true,
-          "isDate": false
+          "isDate": false,
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "Yes"
+            },
+            {
+              "value": "",
+              "displayName": "No"
+            }
+          ]
         },
         {
           "programStage": "PGFt6IwdZLM",
@@ -120,7 +140,17 @@
           "isAttribute": true,
           "id": "iY67qYnywgS",
           "isBoolean": true,
-          "isDate": false
+          "isDate": false,
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "Yes"
+            },
+            {
+              "value": "",
+              "displayName": "No"
+            }
+          ]
         },
         {
           "programStage": "",
@@ -128,7 +158,17 @@
           "id": "p33MrrhsQRz",
           "isAttribute": true,
           "isBoolean": true,
-          "isDate": false
+          "isDate": false,
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "Yes"
+            },
+            {
+              "value": "",
+              "displayName": "No"
+            }
+          ]
         },
         {
           "programStage": "",
@@ -136,15 +176,35 @@
           "isAttribute": true,
           "id": "yc3BlUIEup3",
           "isBoolean": true,
-          "isDate": false
+          "isDate": false,
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "Yes"
+            },
+            {
+              "value": "",
+              "displayName": "No"
+            }
+          ]
         },
         {
           "programStage": "",
           "name": "School Enrollment",
           "isAttribute": true,
-          "id": "",
-          "isBoolean": false,
-          "isDate": false
+          "id": "bApA6X6TVvJ",
+          "isBoolean": true,
+          "isDate": false,
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "NOT ENROLLED IN SCHOOL"
+            },
+            {
+              "value": "",
+              "displayName": "ENROLLED IN SCHOOL"
+            }
+          ]
         },
         {
           "programStage": "",
@@ -152,7 +212,17 @@
           "isAttribute": true,
           "id": "HJIHPjOf5s1",
           "isBoolean": true,
-          "isDate": false
+          "isDate": false,
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "Yes"
+            },
+            {
+              "value": "",
+              "displayName": "No"
+            }
+          ]
         },
         {
           "programStage": "",
@@ -160,7 +230,17 @@
           "isAttribute": true,
           "id": "B4ojlzKypUF",
           "isBoolean": true,
-          "isDate": false
+          "isDate": false,
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "Yes"
+            },
+            {
+              "value": "",
+              "displayName": "No"
+            }
+          ]
         },
         {
           "programStage": "",
@@ -208,7 +288,7 @@
           "programStage": "MkyTrLeBG8I",
           "name": "VMMC",
           "id": "rsh5Kvx6qAU",
-          "code": ["VMMC"],
+          "codes": ["VMMC"],
           "isBoolean": true,
           "isDate": false
         },
@@ -216,7 +296,7 @@
           "programStage": "MkyTrLeBG8I",
           "name": "VMMC",
           "id": "OrC9Bh2bcFz",
-          "code": ["VMMC"],
+          "codes": ["VMMC"],
           "isBoolean": true,
           "isDate": false
         },
@@ -245,7 +325,7 @@
           "programStage": "kq6qeEgbDVY",
           "name": "HIV Testing and Counseling",
           "id": "N8tlZl91pBY",
-          "code": ["Positive", "Negative", "Indeterminate"],
+          "codes": ["Positive", "Negative", "Indeterminate"],
           "isBoolean": false,
           "isDate": false
         },
@@ -260,7 +340,7 @@
           "programStage": "bDJq2JWVTbC",
           "name": "School-Based HIV and Violence Prevention",
           "id": "Eug4BXDFLym",
-          "code": ["LBSE"],
+          "codes": ["LBSE"],
           "isBoolean": true,
           "isDate": false
         },
@@ -268,7 +348,7 @@
           "programStage": "bDJq2JWVTbC",
           "name": "Social Assets Building",
           "id": "Eug4BXDFLym",
-          "code": [
+          "codes": [
             "Go Girls",
             "PTS 4-GRADS",
             "PTS 4 NON-GRADS",
@@ -281,7 +361,7 @@
           "programStage": "bDJq2JWVTbC",
           "name": "Stepping Stones",
           "id": "Eug4BXDFLym",
-          "code": ["STEPPING STONES"],
+          "codes": ["STEPPING STONES"],
           "isBoolean": true,
           "isDate": false
         },
@@ -289,7 +369,7 @@
           "programStage": "bDJq2JWVTbC",
           "name": "GBV Messaging",
           "id": "Eug4BXDFLym",
-          "code": ["GBV Legal Messaging"],
+          "codes": ["GBV Legal Messaging"],
           "isBoolean": true,
           "isDate": false
         },
@@ -297,7 +377,7 @@
           "programStage": "bDJq2JWVTbC",
           "name": "GBV Legal Protection",
           "id": "Eug4BXDFLym",
-          "code": ["GBV Legal"],
+          "codes": ["GBV Legal"],
           "isBoolean": true,
           "isDate": false
         },
@@ -312,7 +392,7 @@
           "programStage": "bDJq2JWVTbC",
           "name": "Parenting/Caregiver Programs",
           "id": "Eug4BXDFLym",
-          "code": ["PARENTING"],
+          "codes": ["PARENTING"],
           "isBoolean": true,
           "isDate": false
         },
@@ -327,7 +407,7 @@
           "programStage": "bDJq2JWVTbC",
           "name": "Socio-Economic Services",
           "id": "Eug4BXDFLym",
-          "code": ["SILC", "SAVING GROUP", "FINANCIAL EDUCATION"],
+          "codes": ["SILC", "SAVING GROUP", "FINANCIAL EDUCATION"],
           "isBoolean": true,
           "isDate": false
         },

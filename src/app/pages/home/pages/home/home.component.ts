@@ -125,7 +125,7 @@ export class HomeComponent implements OnInit {
     const analyticParameters = getAnalyticsParameters(
       this.selectedOrgUnitItems,
       this.selectedPeriods,
-      this.selectedReport.dxConfig
+      this.selectedReport.dxConfigs
     );
     this.store.dispatch(
       LoadReportData({ analyticParameters, reportConfig: this.selectedReport })
@@ -138,7 +138,6 @@ export class HomeComponent implements OnInit {
       const reportName = `${this.selectedReport.name}_${
         date.toISOString().split('T')[0]
       }`;
-      console.log(`FILE NAME:: ${reportName}`);
       this.excelFileService.writeToSingleSheetExcelFile(data, reportName);
     });
   }
