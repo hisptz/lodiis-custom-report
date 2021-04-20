@@ -21,6 +21,7 @@ import { Report } from 'src/app/shared/models/report.model';
 import { ExcelFileService } from 'src/app/core/services/excel-file.service';
 import { take } from 'rxjs/operators';
 import { ReportErrorComponent } from '../../components/report-error/report-error.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-home',
@@ -34,19 +35,22 @@ export class HomeComponent implements OnInit {
   selectedReport: Report;
   reports: Array<Report>;
   isLoading$: Observable<boolean>;
+  downloading: boolean;
   analytics$: Observable<any>;
   analyticsError$: Observable<any>;
 
   constructor(
     private dialog: MatDialog,
     private store: Store<State>,
-    private excelFileService: ExcelFileService
+    private excelFileService: ExcelFileService,
+    private snackbar: MatSnackBar,
   ) {}
 
   ngOnInit() {
     this.isLoading$ = this.store.select(getCurrentAnalyticsLoadingStatus);
     this.analytics$ = this.store.select(getCurrentAnalytics);
     this.analyticsError$ = this.store.select(getCurrentAnalyticsError);
+    this.downloading = false;
     this.selectedPeriods = [];
     this.reports = reportConfig.report || [];
     this.store
@@ -133,14 +137,23 @@ export class HomeComponent implements OnInit {
   }
 
   onDownloadReport() {
+    this.downloading = true;
+    this.presentSnackBar('Downloading report', 'OK');
     this.analytics$.pipe(take(1)).subscribe((data) => {
       const date = new Date();
       const reportName = `${this.selectedReport.name}_${
         date.toISOString().split('T')[0]
       }`;
       this.excelFileService.writeToSingleSheetExcelFile(data, reportName);
+      this.downloading = false;
     });
   }
+
+  presentSnackBar(message: string, action = '') {
+    this.snackbar.open(message, _.upperCase(action), {
+        duration: 1000,
+    });
+}
 
   onViewErrors() {
     const width = '800px';
