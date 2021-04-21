@@ -2,286 +2,39 @@
   "report": [
     {
       "id": "PSI_Layering",
-      "name": "PSI DREAMS Layering Dataset",
+      "name": "DREAMS Layering Dataset",
       "program": "hOEIHJDrrvz",
-      "dxConfig": [
+      "disablePeriodSelection": false,
+      "dxConfigs": [
         {
-          "programStage": "PGFt6IwdZLM",
+          "programStage": "",
           "name": "First Name",
+          "isAttribute": true,
           "id": "WTZ7GLTrE8Q",
           "isBoolean": false,
           "isDate": false
         },
         {
-          "programStage": "Gk494qKQP8B",
-          "name": "First Name",
-          "id": "WTZ7GLTrE8Q",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "NXsIkG9Q1BA",
-          "name": "First Name",
-          "id": "WTZ7GLTrE8Q",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "kq6qeEgbDVY",
-          "name": "First Name",
-          "id": "WTZ7GLTrE8Q",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "vAMc8n0YB6m",
-          "name": "First Name",
-          "id": "WTZ7GLTrE8Q",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "bDJq2JWVTbC",
-          "name": "First Name",
-          "id": "WTZ7GLTrE8Q",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "yK0ENCuwPqh",
-          "name": "First Name",
-          "id": "WTZ7GLTrE8Q",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "A7Tl3vML6as",
-          "name": "First Name",
-          "id": "WTZ7GLTrE8Q",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "mMjGlK1W0Xo",
-          "name": "First Name",
-          "id": "WTZ7GLTrE8Q",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "MkyTrLeBG8I",
-          "name": "First Name",
-          "id": "WTZ7GLTrE8Q",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "PGFt6IwdZLM",
+          "programStage": "",
           "name": "Surname",
+          "isAttribute": true,
           "id": "rSP9c21JsfC",
           "isBoolean": false,
           "isDate": false
         },
         {
-          "programStage": "Gk494qKQP8B",
-          "name": "Surname",
-          "id": "rSP9c21JsfC",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "NXsIkG9Q1BA",
-          "name": "Surname",
-          "id": "rSP9c21JsfC",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "kq6qeEgbDVY",
-          "name": "Surname",
-          "id": "rSP9c21JsfC",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "vAMc8n0YB6m",
-          "name": "Surname",
-          "id": "rSP9c21JsfC",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "bDJq2JWVTbC",
-          "name": "Surname",
-          "id": "rSP9c21JsfC",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "yK0ENCuwPqh",
-          "name": "Surname",
-          "id": "rSP9c21JsfC",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "A7Tl3vML6as",
-          "name": "Surname",
-          "id": "rSP9c21JsfC",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "mMjGlK1W0Xo",
-          "name": "Surname",
-          "id": "rSP9c21JsfC",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "MkyTrLeBG8I",
-          "name": "Surname",
-          "id": "rSP9c21JsfC",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "PGFt6IwdZLM",
+          "programStage": "",
           "name": "Date of Birth",
+          "isAttribute": true,
           "id": "qZP982qpSPS",
           "isBoolean": false,
           "isDate": true
         },
         {
-          "programStage": "Gk494qKQP8B",
-          "name": "Date of Birth",
-          "id": "qZP982qpSPS",
-          "isBoolean": false,
-          "isDate": true
-        },
-        {
-          "programStage": "NXsIkG9Q1BA",
-          "name": "Date of Birth",
-          "id": "qZP982qpSPS",
-          "isBoolean": false,
-          "isDate": true
-        },
-        {
-          "programStage": "kq6qeEgbDVY",
-          "name": "Date of Birth",
-          "id": "qZP982qpSPS",
-          "isBoolean": false,
-          "isDate": true
-        },
-        {
-          "programStage": "vAMc8n0YB6m",
-          "name": "Date of Birth",
-          "id": "qZP982qpSPS",
-          "isBoolean": false,
-          "isDate": true
-        },
-        {
-          "programStage": "bDJq2JWVTbC",
-          "name": "Date of Birth",
-          "id": "qZP982qpSPS",
-          "isBoolean": false,
-          "isDate": true
-        },
-        {
-          "programStage": "yK0ENCuwPqh",
-          "name": "Date of Birth",
-          "id": "qZP982qpSPS",
-          "isBoolean": false,
-          "isDate": true
-        },
-        {
-          "programStage": "A7Tl3vML6as",
-          "name": "Date of Birth",
-          "id": "qZP982qpSPS",
-          "isBoolean": false,
-          "isDate": true
-        },
-        {
-          "programStage": "mMjGlK1W0Xo",
-          "name": "Date of Birth",
-          "id": "qZP982qpSPS",
-          "isBoolean": false,
-          "isDate": true
-        },
-        {
-          "programStage": "MkyTrLeBG8I",
-          "name": "Date of Birth",
-          "id": "qZP982qpSPS",
-          "isBoolean": false,
-          "isDate": true
-        },
-        {
-          "programStage": "PGFt6IwdZLM",
+          "programStage": "",
           "name": "Age",
           "id": "ls9hlz2tyol",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "Gk494qKQP8B",
-          "name": "Age",
-          "id": "ls9hlz2tyol",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "NXsIkG9Q1BA",
-          "name": "Age",
-          "id": "ls9hlz2tyol",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "kq6qeEgbDVY",
-          "name": "Age",
-          "id": "ls9hlz2tyol",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "vAMc8n0YB6m",
-          "name": "Age",
-          "id": "ls9hlz2tyol",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "bDJq2JWVTbC",
-          "name": "Age",
-          "id": "ls9hlz2tyol",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "yK0ENCuwPqh",
-          "name": "Age",
-          "id": "ls9hlz2tyol",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "A7Tl3vML6as",
-          "name": "Age",
-          "id": "ls9hlz2tyol",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "mMjGlK1W0Xo",
-          "name": "Age",
-          "id": "ls9hlz2tyol",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "MkyTrLeBG8I",
-          "name": "Age",
-          "id": "ls9hlz2tyol",
+          "isAttribute": true,
           "isBoolean": false,
           "isDate": false
         },
@@ -300,141 +53,17 @@
           "isDate": false
         },
         {
-          "programStage": "PGFt6IwdZLM",
+          "programStage": "",
           "name": "Sex",
           "id": "VJiWumvINR6",
+          "isAttribute": true,
           "isBoolean": false,
           "isDate": false
         },
         {
-          "programStage": "Gk494qKQP8B",
-          "name": "Sex",
-          "id": "VJiWumvINR6",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "NXsIkG9Q1BA",
-          "name": "Sex",
-          "id": "VJiWumvINR6",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "kq6qeEgbDVY",
-          "name": "Sex",
-          "id": "VJiWumvINR6",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "vAMc8n0YB6m",
-          "name": "Sex",
-          "id": "VJiWumvINR6",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "bDJq2JWVTbC",
-          "name": "Sex",
-          "id": "VJiWumvINR6",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "yK0ENCuwPqh",
-          "name": "Sex",
-          "id": "VJiWumvINR6",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "A7Tl3vML6as",
-          "name": "Sex",
-          "id": "VJiWumvINR6",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "mMjGlK1W0Xo",
-          "name": "Sex",
-          "id": "VJiWumvINR6",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "MkyTrLeBG8I",
-          "name": "Sex",
-          "id": "VJiWumvINR6",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "PGFt6IwdZLM",
+          "programStage": "",
           "name": "Contact Numbers",
-          "id": "tNdoR0jYr7R",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "Gk494qKQP8B",
-          "name": "Contact Numbers",
-          "id": "tNdoR0jYr7R",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "NXsIkG9Q1BA",
-          "name": "Contact Numbers",
-          "id": "tNdoR0jYr7R",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "kq6qeEgbDVY",
-          "name": "Contact Numbers",
-          "id": "tNdoR0jYr7R",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "vAMc8n0YB6m",
-          "name": "Contact Numbers",
-          "id": "tNdoR0jYr7R",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "bDJq2JWVTbC",
-          "name": "Contact Numbers",
-          "id": "tNdoR0jYr7R",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "yK0ENCuwPqh",
-          "name": "Contact Numbers",
-          "id": "tNdoR0jYr7R",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "A7Tl3vML6as",
-          "name": "Contact Numbers",
-          "id": "tNdoR0jYr7R",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "mMjGlK1W0Xo",
-          "name": "Contact Numbers",
-          "id": "tNdoR0jYr7R",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "MkyTrLeBG8I",
-          "name": "Contact Numbers",
+          "isAttribute": true,
           "id": "tNdoR0jYr7R",
           "isBoolean": false,
           "isDate": false
@@ -447,142 +76,28 @@
           "isDate": false
         },
         {
-          "programStage": "PGFt6IwdZLM",
+          "programStage": "",
           "name": "Current Pregnancy status",
           "id": "LNaNh7kvh4X",
+          "isAttribute": true,
           "isBoolean": true,
-          "isDate": false
+          "isDate": false,
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "PREGNANT"
+            },
+            {
+              "value": "",
+              "displayName": "NOT PREGNANT"
+            }
+          ]
         },
         {
-          "programStage": "Gk494qKQP8B",
-          "name": "Current Pregnancy status",
-          "id": "LNaNh7kvh4X",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "NXsIkG9Q1BA",
-          "name": "Current Pregnancy status",
-          "id": "LNaNh7kvh4X",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "kq6qeEgbDVY",
-          "name": "Current Pregnancy status",
-          "id": "LNaNh7kvh4X",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "vAMc8n0YB6m",
-          "name": "Current Pregnancy status",
-          "id": "LNaNh7kvh4X",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "bDJq2JWVTbC",
-          "name": "Current Pregnancy status",
-          "id": "LNaNh7kvh4X",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "yK0ENCuwPqh",
-          "name": "Current Pregnancy status",
-          "id": "LNaNh7kvh4X",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "A7Tl3vML6as",
-          "name": "Current Pregnancy status",
-          "id": "LNaNh7kvh4X",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "mMjGlK1W0Xo",
-          "name": "Current Pregnancy status",
-          "id": "LNaNh7kvh4X",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "MkyTrLeBG8I",
-          "name": "Current Pregnancy status",
-          "id": "LNaNh7kvh4X",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "PGFt6IwdZLM",
+          "programStage": "",
           "name": "ID number",
           "id": "fTSAY18LgCF",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "Gk494qKQP8B",
-          "name": "ID number",
-          "id": "fTSAY18LgCF",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "NXsIkG9Q1BA",
-          "name": "ID number",
-          "id": "fTSAY18LgCF",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "kq6qeEgbDVY",
-          "name": "ID number",
-          "id": "fTSAY18LgCF",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "vAMc8n0YB6m",
-          "name": "ID number",
-          "id": "fTSAY18LgCF",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "bDJq2JWVTbC",
-          "name": "ID number",
-          "id": "fTSAY18LgCF",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "yK0ENCuwPqh",
-          "name": "ID number",
-          "id": "fTSAY18LgCF",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "A7Tl3vML6as",
-          "name": "ID number",
-          "id": "fTSAY18LgCF",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "mMjGlK1W0Xo",
-          "name": "ID number",
-          "id": "fTSAY18LgCF",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "MkyTrLeBG8I",
-          "name": "ID number",
-          "id": "fTSAY18LgCF",
+          "isAttribute": true,
           "isBoolean": false,
           "isDate": false
         },
@@ -594,501 +109,138 @@
           "isDate": false
         },
         {
-          "programStage": "PGFt6IwdZLM",
+          "programStage": "",
           "name": "Number of Sex Partners",
           "id": "q8qPtzanSTU",
+          "isAttribute": true,
           "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "Gk494qKQP8B",
-          "name": "Number of Sex Partners",
-          "id": "q8qPtzanSTU",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "NXsIkG9Q1BA",
-          "name": "Number of Sex Partners",
-          "id": "q8qPtzanSTU",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "kq6qeEgbDVY",
-          "name": "Number of Sex Partners",
-          "id": "q8qPtzanSTU",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "vAMc8n0YB6m",
-          "name": "Number of Sex Partners",
-          "id": "q8qPtzanSTU",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "bDJq2JWVTbC",
-          "name": "Number of Sex Partners",
-          "id": "q8qPtzanSTU",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "yK0ENCuwPqh",
-          "name": "Number of Sex Partners",
-          "id": "q8qPtzanSTU",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "A7Tl3vML6as",
-          "name": "Number of Sex Partners",
-          "id": "q8qPtzanSTU",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "mMjGlK1W0Xo",
-          "name": "Number of Sex Partners",
-          "id": "q8qPtzanSTU",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "MkyTrLeBG8I",
-          "name": "Number of Sex Partners",
-          "id": "q8qPtzanSTU",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "PGFt6IwdZLM",
-          "name": "STIs (Past or Present)",
-          "id": "rh881j2vfvT",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "Gk494qKQP8B",
-          "name": "STIs (Past or Present)",
-          "id": "rh881j2vfvT",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "NXsIkG9Q1BA",
-          "name": "STIs (Past or Present)",
-          "id": "rh881j2vfvT",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "kq6qeEgbDVY",
-          "name": "STIs (Past or Present)",
-          "id": "rh881j2vfvT",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "vAMc8n0YB6m",
-          "name": "STIs (Past or Present)",
-          "id": "rh881j2vfvT",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "bDJq2JWVTbC",
-          "name": "STIs (Past or Present)",
-          "id": "rh881j2vfvT",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "yK0ENCuwPqh",
-          "name": "STIs (Past or Present)",
-          "id": "rh881j2vfvT",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "A7Tl3vML6as",
-          "name": "STIs (Past or Present)",
-          "id": "rh881j2vfvT",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "mMjGlK1W0Xo",
-          "name": "STIs (Past or Present)",
-          "id": "rh881j2vfvT",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "MkyTrLeBG8I",
-          "name": "STIs (Past or Present)",
-          "id": "rh881j2vfvT",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "PGFt6IwdZLM",
-          "name": "Regular Condom Use",
-          "id": "iY67qYnywgS",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "Gk494qKQP8B",
-          "name": "Regular Condom Use",
-          "id": "iY67qYnywgS",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "NXsIkG9Q1BA",
-          "name": "Regular Condom Use",
-          "id": "iY67qYnywgS",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "kq6qeEgbDVY",
-          "name": "Regular Condom Use",
-          "id": "iY67qYnywgS",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "vAMc8n0YB6m",
-          "name": "Regular Condom Use",
-          "id": "iY67qYnywgS",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "bDJq2JWVTbC",
-          "name": "Regular Condom Use",
-          "id": "iY67qYnywgS",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "yK0ENCuwPqh",
-          "name": "Regular Condom Use",
-          "id": "iY67qYnywgS",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "A7Tl3vML6as",
-          "name": "Regular Condom Use",
-          "id": "iY67qYnywgS",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "mMjGlK1W0Xo",
-          "name": "Regular Condom Use",
-          "id": "iY67qYnywgS",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "MkyTrLeBG8I",
-          "name": "Regular Condom Use",
-          "id": "iY67qYnywgS",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "PGFt6IwdZLM",
-          "name": "Transactional Sex",
-          "id": "p33MrrhsQRz",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "Gk494qKQP8B",
-          "name": "Transactional Sex",
-          "id": "p33MrrhsQRz",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "NXsIkG9Q1BA",
-          "name": "Transactional Sex",
-          "id": "p33MrrhsQRz",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "kq6qeEgbDVY",
-          "name": "Transactional Sex",
-          "id": "p33MrrhsQRz",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "vAMc8n0YB6m",
-          "name": "Transactional Sex",
-          "id": "p33MrrhsQRz",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "bDJq2JWVTbC",
-          "name": "Transactional Sex",
-          "id": "p33MrrhsQRz",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "yK0ENCuwPqh",
-          "name": "Transactional Sex",
-          "id": "p33MrrhsQRz",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "A7Tl3vML6as",
-          "name": "Transactional Sex",
-          "id": "p33MrrhsQRz",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "mMjGlK1W0Xo",
-          "name": "Transactional Sex",
-          "id": "p33MrrhsQRz",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "MkyTrLeBG8I",
-          "name": "Transactional Sex",
-          "id": "p33MrrhsQRz",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "PGFt6IwdZLM",
-          "name": "Experiences of Violence",
-          "id": "yc3BlUIEup3",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "Gk494qKQP8B",
-          "name": "Experiences of Violence",
-          "id": "yc3BlUIEup3",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "NXsIkG9Q1BA",
-          "name": "Experiences of Violence",
-          "id": "yc3BlUIEup3",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "kq6qeEgbDVY",
-          "name": "Experiences of Violence",
-          "id": "yc3BlUIEup3",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "vAMc8n0YB6m",
-          "name": "Experiences of Violence",
-          "id": "yc3BlUIEup3",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "bDJq2JWVTbC",
-          "name": "Experiences of Violence",
-          "id": "yc3BlUIEup3",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "yK0ENCuwPqh",
-          "name": "Experiences of Violence",
-          "id": "yc3BlUIEup3",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "A7Tl3vML6as",
-          "name": "Experiences of Violence",
-          "id": "yc3BlUIEup3",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "mMjGlK1W0Xo",
-          "name": "Experiences of Violence",
-          "id": "yc3BlUIEup3",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "MkyTrLeBG8I",
-          "name": "Experiences of Violence",
-          "id": "yc3BlUIEup3",
-          "isBoolean": true,
           "isDate": false
         },
         {
           "programStage": "",
+          "name": "STIs (Past or Present)",
+          "isAttribute": true,
+          "id": "rh881j2vfvT",
+          "isBoolean": true,
+          "isDate": false,
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "Yes"
+            },
+            {
+              "value": "",
+              "displayName": "No"
+            }
+          ]
+        },
+        {
+          "programStage": "PGFt6IwdZLM",
+          "name": "Regular Condom Use",
+          "isAttribute": true,
+          "id": "iY67qYnywgS",
+          "isBoolean": true,
+          "isDate": false,
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "Yes"
+            },
+            {
+              "value": "",
+              "displayName": "No"
+            }
+          ]
+        },
+        {
+          "programStage": "",
+          "name": "Transactional Sex",
+          "id": "p33MrrhsQRz",
+          "isAttribute": true,
+          "isBoolean": true,
+          "isDate": false,
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "Yes"
+            },
+            {
+              "value": "",
+              "displayName": "No"
+            }
+          ]
+        },
+        {
+          "programStage": "",
+          "name": "Experiences of Violence",
+          "isAttribute": true,
+          "id": "yc3BlUIEup3",
+          "isBoolean": true,
+          "isDate": false,
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "Yes"
+            },
+            {
+              "value": "",
+              "displayName": "No"
+            }
+          ]
+        },
+        {
+          "programStage": "",
           "name": "School Enrollment",
-          "id": "",
-          "isBoolean": false,
-          "isDate": false
+          "isAttribute": true,
+          "id": "bApA6X6TVvJ",
+          "isBoolean": true,
+          "isDate": false,
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "NOT ENROLLED IN SCHOOL"
+            },
+            {
+              "value": "",
+              "displayName": "ENROLLED IN SCHOOL"
+            }
+          ]
         },
         {
-          "programStage": "PGFt6IwdZLM",
+          "programStage": "",
           "name": "Alcohol Use",
+          "isAttribute": true,
           "id": "HJIHPjOf5s1",
           "isBoolean": true,
-          "isDate": false
+          "isDate": false,
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "Yes"
+            },
+            {
+              "value": "",
+              "displayName": "No"
+            }
+          ]
         },
         {
-          "programStage": "Gk494qKQP8B",
-          "name": "Alcohol Use",
-          "id": "HJIHPjOf5s1",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "NXsIkG9Q1BA",
-          "name": "Alcohol Use",
-          "id": "HJIHPjOf5s1",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "kq6qeEgbDVY",
-          "name": "Alcohol Use",
-          "id": "HJIHPjOf5s1",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "vAMc8n0YB6m",
-          "name": "Alcohol Use",
-          "id": "HJIHPjOf5s1",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "bDJq2JWVTbC",
-          "name": "Alcohol Use",
-          "id": "HJIHPjOf5s1",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "yK0ENCuwPqh",
-          "name": "Alcohol Use",
-          "id": "HJIHPjOf5s1",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "A7Tl3vML6as",
-          "name": "Alcohol Use",
-          "id": "HJIHPjOf5s1",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "mMjGlK1W0Xo",
-          "name": "Alcohol Use",
-          "id": "HJIHPjOf5s1",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "MkyTrLeBG8I",
-          "name": "Alcohol Use",
-          "id": "HJIHPjOf5s1",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "PGFt6IwdZLM",
+          "programStage": "",
           "name": "Orphanhood",
+          "isAttribute": true,
           "id": "B4ojlzKypUF",
           "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "Gk494qKQP8B",
-          "name": "Orphanhood",
-          "id": "B4ojlzKypUF",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "NXsIkG9Q1BA",
-          "name": "Orphanhood",
-          "id": "B4ojlzKypUF",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "kq6qeEgbDVY",
-          "name": "Orphanhood",
-          "id": "B4ojlzKypUF",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "vAMc8n0YB6m",
-          "name": "Orphanhood",
-          "id": "B4ojlzKypUF",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "bDJq2JWVTbC",
-          "name": "Orphanhood",
-          "id": "B4ojlzKypUF",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "yK0ENCuwPqh",
-          "name": "Orphanhood",
-          "id": "B4ojlzKypUF",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "A7Tl3vML6as",
-          "name": "Orphanhood",
-          "id": "B4ojlzKypUF",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "mMjGlK1W0Xo",
-          "name": "Orphanhood",
-          "id": "B4ojlzKypUF",
-          "isBoolean": true,
-          "isDate": false
-        },
-        {
-          "programStage": "MkyTrLeBG8I",
-          "name": "Orphanhood",
-          "id": "B4ojlzKypUF",
-          "isBoolean": true,
-          "isDate": false
+          "isDate": false,
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "Yes"
+            },
+            {
+              "value": "",
+              "displayName": "No"
+            }
+          ]
         },
         {
           "programStage": "",
@@ -1136,41 +288,7 @@
           "programStage": "MkyTrLeBG8I",
           "name": "VMMC",
           "id": "rsh5Kvx6qAU",
-          "code": [
-            "STI Screening",
-            "STI Treatment",
-            "HIV Testing and counselling",
-            "Evaluation for ARVs/HAART",
-            "Post abuse case management",
-            "ART and Adherence",
-            "PMTCT Services",
-            "Cervical Cancer Screening",
-            "FamilyPlanningSRH",
-            "Condom supply",
-            "TB screening",
-            "TB treatment",
-            "Nutrition",
-            "HTS",
-            "ANC",
-            "VMMC",
-            "EID Testing",
-            "PrEP/PEP",
-            "PMTCT",
-            "Treatment Support (TB/ARV)",
-            "Youth friendly services",
-            "Gender Based Violence",
-            "Domestic Violence Support group",
-            "Income generating activity",
-            "Orphan Care & Support",
-            "Psycho-social Support",
-            "PLHIV support group",
-            "Referral to post abuse care services",
-            "Violence Against Children",
-            "CAG",
-            "Home based care visits",
-            "Educational and vocational support",
-            "Social grants"
-          ],
+          "codes": ["VMMC"],
           "isBoolean": true,
           "isDate": false
         },
@@ -1178,41 +296,7 @@
           "programStage": "MkyTrLeBG8I",
           "name": "VMMC",
           "id": "OrC9Bh2bcFz",
-          "code": [
-            "STI Screening",
-            "STI Treatment",
-            "HIV Testing and counselling",
-            "Evaluation for ARVs/HAART",
-            "Post abuse case management",
-            "ART and Adherence",
-            "PMTCT Services",
-            "Cervical Cancer Screening",
-            "FamilyPlanningSRH",
-            "Condom supply",
-            "TB screening",
-            "TB treatment",
-            "Nutrition",
-            "HTS",
-            "ANC",
-            "VMMC",
-            "EID Testing",
-            "PrEP/PEP",
-            "PMTCT",
-            "Treatment Support (TB/ARV)",
-            "Youth friendly services",
-            "Gender Based Violence",
-            "Domestic Violence Support group",
-            "Income generating activity",
-            "Orphan Care & Support",
-            "Psycho-social Support",
-            "PLHIV support group",
-            "Referral to post abuse care services",
-            "Violence Against Children",
-            "CAG",
-            "Home based care visits",
-            "Educational and vocational support",
-            "Social grants"
-          ],
+          "codes": ["VMMC"],
           "isBoolean": true,
           "isDate": false
         },
@@ -1241,7 +325,7 @@
           "programStage": "kq6qeEgbDVY",
           "name": "HIV Testing and Counseling",
           "id": "N8tlZl91pBY",
-          "code": ["Positive", "Negative", "Indeterminate"],
+          "codes": ["Positive", "Negative", "Indeterminate"],
           "isBoolean": false,
           "isDate": false
         },
@@ -1256,7 +340,7 @@
           "programStage": "bDJq2JWVTbC",
           "name": "School-Based HIV and Violence Prevention",
           "id": "Eug4BXDFLym",
-          "code": ["LBSE"],
+          "codes": ["LBSE"],
           "isBoolean": true,
           "isDate": false
         },
@@ -1264,7 +348,7 @@
           "programStage": "bDJq2JWVTbC",
           "name": "Social Assets Building",
           "id": "Eug4BXDFLym",
-          "code": [
+          "codes": [
             "Go Girls",
             "PTS 4-GRADS",
             "PTS 4 NON-GRADS",
@@ -1277,7 +361,7 @@
           "programStage": "bDJq2JWVTbC",
           "name": "Stepping Stones",
           "id": "Eug4BXDFLym",
-          "code": ["STEPPING STONES"],
+          "codes": ["STEPPING STONES"],
           "isBoolean": true,
           "isDate": false
         },
@@ -1285,7 +369,7 @@
           "programStage": "bDJq2JWVTbC",
           "name": "GBV Messaging",
           "id": "Eug4BXDFLym",
-          "code": ["GBV Legal Messaging"],
+          "codes": ["GBV Legal Messaging"],
           "isBoolean": true,
           "isDate": false
         },
@@ -1293,7 +377,7 @@
           "programStage": "bDJq2JWVTbC",
           "name": "GBV Legal Protection",
           "id": "Eug4BXDFLym",
-          "code": ["GBV Legal"],
+          "codes": ["GBV Legal"],
           "isBoolean": true,
           "isDate": false
         },
@@ -1308,7 +392,7 @@
           "programStage": "bDJq2JWVTbC",
           "name": "Parenting/Caregiver Programs",
           "id": "Eug4BXDFLym",
-          "code": ["PARENTING"],
+          "codes": ["PARENTING"],
           "isBoolean": true,
           "isDate": false
         },
@@ -1323,7 +407,7 @@
           "programStage": "bDJq2JWVTbC",
           "name": "Socio-Economic Services",
           "id": "Eug4BXDFLym",
-          "code": ["SILC", "SAVING GROUP", "FINANCIAL EDUCATION"],
+          "codes": ["SILC", "SAVING GROUP", "FINANCIAL EDUCATION"],
           "isBoolean": true,
           "isDate": false
         },
@@ -1349,72 +433,10 @@
           "isDate": false
         },
         {
-          "programStage": "PGFt6IwdZLM",
+          "programStage": "",
           "name": "Implementing Mechanism Name",
           "id": "klLkGxy328c",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "Gk494qKQP8B",
-          "name": "Implementing Mechanism Name",
-          "id": "klLkGxy328c",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "NXsIkG9Q1BA",
-          "name": "Implementing Mechanism Name",
-          "id": "klLkGxy328c",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "kq6qeEgbDVY",
-          "name": "Implementing Mechanism Name",
-          "id": "klLkGxy328c",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "vAMc8n0YB6m",
-          "name": "Implementing Mechanism Name",
-          "id": "klLkGxy328c",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "bDJq2JWVTbC",
-          "name": "Implementing Mechanism Name",
-          "id": "klLkGxy328c",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "yK0ENCuwPqh",
-          "name": "Implementing Mechanism Name",
-          "id": "klLkGxy328c",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "A7Tl3vML6as",
-          "name": "Implementing Mechanism Name",
-          "id": "klLkGxy328c",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "mMjGlK1W0Xo",
-          "name": "Implementing Mechanism Name",
-          "id": "klLkGxy328c",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "MkyTrLeBG8I",
-          "name": "Implementing Mechanism Name",
-          "id": "klLkGxy328c",
+          "isAttribute": true,
           "isBoolean": false,
           "isDate": false
         }

@@ -15,6 +15,7 @@ import { Store } from '@ngrx/store';
 import { State } from '../reducers';
 import {  getSanitizedAnalyticData, getProgressPercentage} from 'src/app/shared/helpers/report-data.helper';
 import { getFormattedEventAnalyticDataForReport } from 'src/app/shared/helpers/get-formatted-analytica-data-for-report';
+import { getFormattedDate } from 'src/app/core/utils/date-formatter.util';
 
 @Injectable()
 export class ReportDataEffects {
@@ -56,7 +57,8 @@ export class ReportDataEffects {
       for (const analyticParameter of analyticParameters) {
         const response: any = await this.getAnalyticParameterWithPaginationFilter(
           analyticParameter,
-          programId
+          programId,
+          reportConfig
         );
         totalOverAllProcess += response.paginationFilters.length;
         analyticParametersWithPaginationFilters.push(response);
@@ -80,13 +82,13 @@ export class ReportDataEffects {
           totalOverAllProcess
         );
         const {
-          data: anlytics,
+          data: Analytics,
           stage: programStage,
           overAllProcessCount: currentOverAllProcessCount,
         } = response;
         overAllProcessCount = currentOverAllProcessCount;
         const sanitizedResponse = getSanitizedAnalyticData(
-          anlytics,
+          Analytics,
           programStage
         );
         analyticData.push(sanitizedResponse);
@@ -153,11 +155,14 @@ export class ReportDataEffects {
 
   async getAnalyticParameterWithPaginationFilter(
     analyticParameter: any,
-    programId: string
+    programId: string,
+    reportConfig: any
   ) {
     const paginationFilters = [];
     const pe = _.join(analyticParameter.pe || [], ';');
     const ou = _.join(analyticParameter.ou || [], ';');
+    const startDate = getFormattedDate(new Date('1990-01-01'));
+    const endDate = getFormattedDate(new Date());
     const stage = _.map(
       analyticParameter.dx || [],
       (dx: string) => dx.split('.')[0]
@@ -166,8 +171,9 @@ export class ReportDataEffects {
       _.map(analyticParameter.dx || [], (dx: string) => `dimension=${dx}`),
       '&'
     );
+    const periodDimension = reportConfig && reportConfig.disablePeriodSelection ? `startDate=${startDate}&endDate=${endDate}` : `dimension=pe:${pe}`;
     const pageSize = 500;
-    const url = `analytics/events/query/${programId}.json?dimension=pe:${pe}&dimension=ou:${ou}&${dataDimension}&stage=${stage}&displayProperty=NAME&outputType=EVENT&desc=eventdate`;
+    const url = `analytics/events/query/${programId}.json?${periodDimension}&dimension=ou:${ou}&${dataDimension}&stage=${stage}&displayProperty=NAME&outputType=EVENT&desc=eventdate`;
     try {
       const response: any = await this.getPaginatinationFilters(url, pageSize);
       paginationFilters.push(response);
@@ -195,8 +201,8 @@ export class ReportDataEffects {
     const paginationFilters = [];
     return new Promise((resolve, reject) => {
       this.httpClient.get(`${url}&pageSize=1&page=1`).subscribe(
-        (anlytics) => {
-          const { metaData } = anlytics;
+        (Analytics) => {
+          const { metaData } = Analytics;
           const pager = metaData && metaData.pager ? metaData.pager : {};
           const total = pager.total || pageSize;
           for (let page = 1; page <= Math.ceil(total / pageSize); page++) {

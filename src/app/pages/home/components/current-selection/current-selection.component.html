@@ -6,21 +6,20 @@
         <span>{{ selectedOrgUnitItems | selectionName }}</span>
       </div>
       <div class="card-item">
-        <span class="item-title">Periods: </span>
-        <span>{{ selectedPeriods | selectionName }}</span>
-      </div>
-      <div class="card-item">
         <span class="item-title">Report: </span>
         <span>{{ selectedReport ? selectedReport.name : '' }}</span>
       </div>
+      <div class="card-item" *ngIf="reportHasPeriod">
+        <span class="item-title">Periods: </span>
+        <span>{{ selectedPeriods | selectionName }}</span>
+      </div>
     </div>
     <div
-      class="no-selection-message"
       *ngIf="!getReportParameterSelectionStatus()"
     >
       <p>
         There are no current selections! <br />
-        Choose Location, Period and Report above.
+        Choose Location, Report and Period above.
       </p>
     </div>
   </mat-card-content>
