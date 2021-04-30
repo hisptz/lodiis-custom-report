@@ -1,0 +1,20 @@
+<div>
+  <div class="report-item">
+    <span class="report-item-title">Name:</span>&nbsp;
+    {{ report.reportName }}
+  </div>
+  <div class="report-item">
+    <span class="report-item-title">Created:</span>&nbsp;
+    {{ report.created | date }}
+  </div>
+  <div class="report-item">
+    <a
+      style="text-decoration: none"
+      class="no-outline download-button"
+      mat-stroked-button
+      download="dummy.txt"
+      href="assets/reports/test.txt"
+      >Download <mat-icon class="icon">file_download</mat-icon></a
+    >
+  </div>
+</div>
