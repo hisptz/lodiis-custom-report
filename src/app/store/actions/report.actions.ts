@@ -10,12 +10,12 @@ export enum ReportActionTypes {
 
 export const LoadReportData = createAction(
   ReportActionTypes.LoadReportData,
-  props<{ analyticParameters : Array<any>, reportConfig:any }>()
+  props<{ analyticParameters: Array<any>; reportConfig: any }>()
 );
 
 export const UpdateReportProgress = createAction(
   ReportActionTypes.UpdateReportProgress,
-  props<{ overAllProgress : number, bufferProgress : number }>()
+  props<{ overAllProgress: number; bufferProgress: number }>()
 );
 
 export const AddReportData = createAction(
