@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-content>
     <div *ngIf="getReportParameterSelectionStatus()">
-      <div class="card-item">
+      <div class="card-item" *ngIf="reportHasLocation">
         <span class="item-title">Locations: </span>
         <span>{{ selectedOrgUnitItems | selectionName }}</span>
       </div>
@@ -14,9 +14,7 @@
         <span>{{ selectedPeriods | selectionName }}</span>
       </div>
     </div>
-    <div
-      *ngIf="!getReportParameterSelectionStatus()"
-    >
+    <div *ngIf="!getReportParameterSelectionStatus()">
       <p>
         There are no current selections! <br />
         Choose Location, Report and Period above.

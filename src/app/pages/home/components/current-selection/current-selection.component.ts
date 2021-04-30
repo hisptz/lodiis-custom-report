@@ -11,6 +11,7 @@ export class CurrentSelectionComponent implements OnInit {
   @Input() selectedOrgUnitItems: Array<any>;
   @Input() selectedReport: Report;
   @Input() reportHasPeriod: boolean;
+  @Input() reportHasLocation: boolean;
   constructor() {}
 
   ngOnInit(): void {

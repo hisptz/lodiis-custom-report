@@ -3,6 +3,7 @@ export interface Report {
   name: string;
   program: string;
   disablePeriodSelection?: boolean;
+  disableOrgUnitSelection?: boolean;
   dxConfigs: DxConfig[];
 }
 
