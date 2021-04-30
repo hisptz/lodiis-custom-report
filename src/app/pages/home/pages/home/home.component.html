@@ -20,6 +20,7 @@
           <button
             class="no-outline"
             mat-stroked-button
+            [disabled]="!selectedReport || disableOrgUnitSelection"
             (click)="openOrganisationUnitFilter()"
           >
             Location</button
@@ -69,21 +70,22 @@
             [selectedReport]="selectedReport"
             [selectedPeriods]="selectedPeriods"
             [selectedOrgUnitItems]="selectedOrgUnitItems"
-            [reportHasPeriod]="!(!selectedReport || disablePeriodSelection)"
+            [reportHasPeriod]="!selectedReport || disablePeriodSelection"
+            [reportHasLocation]="!selectedReport || disableOrgUnitSelection"
           ></app-current-selection>
         </div>
         <div *ngIf="isLoading$ | async">
           <app-loader></app-loader>
         </div>
         <div *ngIf="!(isLoading$ | async)">
-          <!-- <div *ngIf="analyticsError$ | async">
-            <div class="analyticsError">
-              <mat-card>{{ analyticsError$ | async | json }}</mat-card>
-            </div>
-          </div> -->
-          <div *ngIf="analytics$ | async">
-            <mat-card>
+          <div *ngIf="selectedReport && !selectedReport.disablePeriodSelection">
+            <mat-card *ngIf="analytics$ | async">
               <app-report-view></app-report-view>
+            </mat-card>
+          </div>
+          <div *ngIf="selectedReport && selectedReport.disablePeriodSelection">
+            <mat-card>
+              <app-report-download></app-report-download>
             </mat-card>
           </div>
         </div>

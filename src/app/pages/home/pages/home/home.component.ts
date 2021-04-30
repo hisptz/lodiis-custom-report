@@ -31,6 +31,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class HomeComponent implements OnInit {
   selectedPeriods: Array<any>;
   disablePeriodSelection: boolean;
+  disableOrgUnitSelection: boolean;
   selectedOrgUnitItems: Array<any>;
   selectedReport: Report;
   reports: Array<Report>;
@@ -43,7 +44,7 @@ export class HomeComponent implements OnInit {
     private dialog: MatDialog,
     private store: Store<State>,
     private excelFileService: ExcelFileService,
-    private snackbar: MatSnackBar,
+    private snackbar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -112,6 +113,7 @@ export class HomeComponent implements OnInit {
     if (report) {
       this.selectedReport = report;
       this.disablePeriodSelection = report.disablePeriodSelection ?? false;
+      this.disableOrgUnitSelection = report.disableOrgUnitSelection ?? false;
     }
   }
 
@@ -126,14 +128,21 @@ export class HomeComponent implements OnInit {
   }
 
   onGenerateReport() {
-    const analyticParameters = getAnalyticsParameters(
-      this.selectedOrgUnitItems,
-      this.selectedPeriods,
-      this.selectedReport.dxConfigs
-    );
-    this.store.dispatch(
-      LoadReportData({ analyticParameters, reportConfig: this.selectedReport })
-    );
+    if (!this.selectedReport && this.selectedReport.disablePeriodSelection) {
+      const analyticParameters = getAnalyticsParameters(
+        this.selectedOrgUnitItems,
+        this.selectedPeriods,
+        this.selectedReport.dxConfigs
+      );
+      this.store.dispatch(
+        LoadReportData({
+          analyticParameters,
+          reportConfig: this.selectedReport,
+        })
+      );
+    } else {
+      // get report from data store
+    }
   }
 
   onDownloadReport() {
@@ -151,9 +160,9 @@ export class HomeComponent implements OnInit {
 
   presentSnackBar(message: string, action = '') {
     this.snackbar.open(message, _.upperCase(action), {
-        duration: 1000,
+      duration: 1000,
     });
-}
+  }
 
   onViewErrors() {
     const width = '800px';
