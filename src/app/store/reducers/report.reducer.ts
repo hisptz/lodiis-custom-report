@@ -5,6 +5,7 @@ import {
   AddReportData,
   LoadReportDataFail,
   UpdateReportProgress,
+  ClearReportData,
 } from '../actions/report.actions';
 import {
   initialReportDataState,
@@ -23,6 +24,7 @@ export const reducer = createReducer(
     ...initialReportDataState,
     ...loadingBaseState,
   })),
+  on(ClearReportData, (state) => ({ ...state, ...initialReportDataState })),
   on(AddReportData, (state, { analytics }) => ({
     ...state,
     ...loadedBaseState,
@@ -32,7 +34,7 @@ export const reducer = createReducer(
     ...state,
     // ...loadedBaseState,
     bufferProgress,
-    overAllProgress
+    overAllProgress,
   })),
   on(LoadReportDataFail, (state, { error }) => ({
     ...state,
@@ -41,9 +43,6 @@ export const reducer = createReducer(
   }))
 );
 
-export function reportDataReducer(
-  state: any,
-  action: any
-): ReportDataState {
+export function reportDataReducer(state: any, action: any): ReportDataState {
   return reducer(state, action);
 }

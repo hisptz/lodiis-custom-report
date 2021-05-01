@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { NgxDhis2HttpClientService } from '@iapps/ngx-dhis2-http-client';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap, take } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import {
@@ -108,7 +108,7 @@ export class ReportDataEffects {
   getAllLocations(){
     const url = "organisationUnits.json?fields=id,name,level,ancestors[name,level]&paging=false";
     return new Promise((resolve, reject) => {
-      this.httpClient.get(url).subscribe(
+      this.httpClient.get(url).pipe(take(1)).subscribe(
         (data) =>{
           const loctions = _.map(data["organisationUnits"]||[], (location:any)=>{
             const {level, name, ancestors} = location;
@@ -172,7 +172,7 @@ export class ReportDataEffects {
       '&'
     );
     const periodDimension = reportConfig && reportConfig.disablePeriodSelection ? `startDate=${startDate}&endDate=${endDate}` : `dimension=pe:${pe}`;
-    const pageSize = 500;
+    const pageSize = 1000;
     const url = `analytics/events/query/${programId}.json?${periodDimension}&dimension=ou:${ou}&${dataDimension}&stage=${stage}&displayProperty=NAME&outputType=EVENT&desc=eventdate`;
     try {
       const response: any = await this.getPaginatinationFilters(url, pageSize);
@@ -190,7 +190,7 @@ export class ReportDataEffects {
 
   getAnalyticResult(url: string, paginationFilter: string) {
     return new Promise((resolve, reject) => {
-      this.httpClient.get(`${url}&${paginationFilter}`).subscribe(
+      this.httpClient.get(`${url}&${paginationFilter}`).pipe(take(1)).subscribe(
         (data) => resolve(data),
         (error) => reject(error)
       );
@@ -200,7 +200,7 @@ export class ReportDataEffects {
   getPaginatinationFilters(url: string, pageSize: number) {
     const paginationFilters = [];
     return new Promise((resolve, reject) => {
-      this.httpClient.get(`${url}&pageSize=1&page=1`).subscribe(
+      this.httpClient.get(`${url}&pageSize=1&page=1`).pipe(take(1)).subscribe(
         (Analytics) => {
           const { metaData } = Analytics;
           const pager = metaData && metaData.pager ? metaData.pager : {};

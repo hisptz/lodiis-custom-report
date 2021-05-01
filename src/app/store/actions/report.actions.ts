@@ -6,16 +6,17 @@ export enum ReportActionTypes {
   AddReportData = '[Report] Add Report data',
   UpdateReportProgress = '[Report] Update Report progress status',
   LoadReportDataFail = '[Report] Load Report data fail',
+  ClearReportData = '[Report] Clear Report data',
 }
 
 export const LoadReportData = createAction(
   ReportActionTypes.LoadReportData,
-  props<{ analyticParameters : Array<any>, reportConfig:any }>()
+  props<{ analyticParameters: Array<any>; reportConfig: any }>()
 );
 
 export const UpdateReportProgress = createAction(
   ReportActionTypes.UpdateReportProgress,
-  props<{ overAllProgress : number, bufferProgress : number }>()
+  props<{ overAllProgress: number; bufferProgress: number }>()
 );
 
 export const AddReportData = createAction(
@@ -27,3 +28,5 @@ export const LoadReportDataFail = createAction(
   ReportActionTypes.LoadReportDataFail,
   props<{ error: ErrorMessage }>()
 );
+
+export const ClearReportData = createAction(ReportActionTypes.ClearReportData);

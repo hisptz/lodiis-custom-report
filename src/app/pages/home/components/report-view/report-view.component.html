@@ -3,44 +3,23 @@
     !(currentAnalyticsError$ | async) && !(currentAnalyticsLoading$ | async)
   "
 >
-  <div *ngIf="(currentAnalytics$ | async) && (currentAnalytics$ | async).length > 0">
-    <div class="table-responsive">
-      <table class="report-table table-bordered">
-        <thead>
-          <tr>
-            <th
-              class="p-1"
-              *ngFor="let header of currentAnalytics$ | async | tableHeaders"
-            >
-              {{ header }}
-            </th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr
-            *ngFor="
-              let row of currentAnalytics$
-                | async
-                | tableData
-                | pagination: tablePagination
-            "
-          >
-            <td class="p-1" *ngFor="let rowData of row">{{ rowData }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="pagination" *ngIf="(currentAnalytics$ | async)">
-      <app-pagination
-        (paginate)="onApplyPagination($event)"
-        [totalItems]="(currentAnalytics$ | async).length"
-      ></app-pagination>
-    </div>
+  <div
+    *ngIf="
+      (currentAnalytics$ | async) && (currentAnalytics$ | async).length > 0
+    "
+  >
+    <app-report-table
+      [currentAnalytics]="currentAnalytics$ | async"
+    ></app-report-table>
   </div>
 
-  <div *ngIf="(currentAnalytics$ | async) && (currentAnalytics$ | async).length === 0">
-    <p style="text-align: center;">There are no available data for the selections!</p>
+  <div
+    *ngIf="
+      (currentAnalytics$ | async) && (currentAnalytics$ | async).length === 0
+    "
+  >
+    <p style="text-align: center">
+      There are no available data for the selections!
+    </p>
   </div>
 </div>

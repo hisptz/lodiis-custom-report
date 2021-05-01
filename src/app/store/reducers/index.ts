@@ -9,12 +9,15 @@ import { systemInfoReducer } from './system-info.reducer';
 import { userReducer } from './user.reducer';
 import { ReportDataState } from '../states/report.state';
 import { reportDataReducer } from './report.reducer';
+import { GeneratedReportsState } from '../states/generated-reports.state';
+import { generatedReportReducer } from './generated-report.reducer';
 
 export interface State {
   user: UserState;
   systemInfo: SystemInfoState;
   router: RouterReducerState;
   reportData: ReportDataState;
+  generatedReports: GeneratedReportsState;
 }
 
 export const reducers: ActionReducerMap<State> = {
@@ -22,6 +25,7 @@ export const reducers: ActionReducerMap<State> = {
   systemInfo: systemInfoReducer,
   router: routerReducer,
   reportData: reportDataReducer,
+  generatedReports: generatedReportReducer,
 };
 
 export const metaReducers: MetaReducer<State>[] = !environment.production
