@@ -8,7 +8,7 @@ import { PeSelectionComponent } from '../../components/pe-selection/pe-selection
 import { OuSelectionComponent } from '../../components/ou-selection/ou-selection.component';
 import { getDefaultOrganisationUnitSelections } from '../../helpers/get-dafault-selections';
 import { State } from 'src/app/store/reducers';
-import { LoadReportData } from 'src/app/store/actions';
+import { ClearReportData, LoadReportData } from 'src/app/store/actions';
 import { getAnalyticsParameters } from '../../helpers/get-anlytics-parameters';
 import {
   getCurrentAnalyticsLoadingStatus,
@@ -122,6 +122,7 @@ export class HomeComponent implements OnInit {
     }
 
     if (this.disableOrgUnitSelection && this.disablePeriodSelection) {
+      this.store.dispatch(ClearReportData());
       this.generatedReport$ = this.store.select(
         getSelectedGeneratedReport(report.id ?? '')
       );

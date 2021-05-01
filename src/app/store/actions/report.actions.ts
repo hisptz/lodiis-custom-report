@@ -6,6 +6,7 @@ export enum ReportActionTypes {
   AddReportData = '[Report] Add Report data',
   UpdateReportProgress = '[Report] Update Report progress status',
   LoadReportDataFail = '[Report] Load Report data fail',
+  ClearReportData = '[Report] Clear Report data',
 }
 
 export const LoadReportData = createAction(
@@ -27,3 +28,5 @@ export const LoadReportDataFail = createAction(
   ReportActionTypes.LoadReportDataFail,
   props<{ error: ErrorMessage }>()
 );
+
+export const ClearReportData = createAction(ReportActionTypes.ClearReportData);
