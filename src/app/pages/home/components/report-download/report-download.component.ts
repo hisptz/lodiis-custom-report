@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { GeneratedReport } from 'src/app/shared/models/generated-report.model';
+import { Report } from 'src/app/shared/models/report.model';
 
 @Component({
   selector: 'app-report-download',
@@ -6,12 +8,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./report-download.component.css'],
 })
 export class ReportDownloadComponent implements OnInit {
-  report = {
-    id: 'cumulative_DREAMS_Layering',
-    reportName: 'cumulative_DREAMS_Layering.xlsx',
-    path: 'assets/reports/cumulative_DREAMS_Layering.xlsx',
-    created: '2021-04-29T12:51:35.599Z',
-  };
+  @Input() selectedReport: Report;
+  @Input() generatedReport: GeneratedReport;
   constructor() {}
 
   ngOnInit(): void {}

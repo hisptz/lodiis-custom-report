@@ -15,13 +15,17 @@ import {
   getCurrentAnalytics,
   getCurrentAnalyticsError,
 } from 'src/app/store/selectors/report-data.selectors';
-import { getCurrentUserOrganisationUnits } from 'src/app/store/selectors';
+import {
+  getCurrentUserOrganisationUnits,
+  getSelectedGeneratedReport,
+} from 'src/app/store/selectors';
 import * as reportConfig from '../../../../core/config/report.config.json';
 import { Report } from 'src/app/shared/models/report.model';
 import { ExcelFileService } from 'src/app/core/services/excel-file.service';
 import { take } from 'rxjs/operators';
 import { ReportErrorComponent } from '../../components/report-error/report-error.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { GeneratedReport } from 'src/app/shared/models/generated-report.model';
 
 @Component({
   selector: 'app-home',
@@ -39,6 +43,7 @@ export class HomeComponent implements OnInit {
   downloading: boolean;
   analytics$: Observable<any>;
   analyticsError$: Observable<any>;
+  generatedReport$: Observable<GeneratedReport>;
 
   constructor(
     private dialog: MatDialog,
@@ -106,7 +111,7 @@ export class HomeComponent implements OnInit {
   }
 
   onSelectReport(e) {
-    const report = _.find(
+    const report: Report = _.find(
       this.reports || [],
       (reportObject) => reportObject.id === e.value
     );
@@ -114,6 +119,12 @@ export class HomeComponent implements OnInit {
       this.selectedReport = report;
       this.disablePeriodSelection = report.disablePeriodSelection ?? false;
       this.disableOrgUnitSelection = report.disableOrgUnitSelection ?? false;
+    }
+
+    if (this.disableOrgUnitSelection && this.disablePeriodSelection) {
+      this.generatedReport$ = this.store.select(
+        getSelectedGeneratedReport(report.id ?? '')
+      );
     }
   }
 
@@ -140,8 +151,6 @@ export class HomeComponent implements OnInit {
           reportConfig: this.selectedReport,
         })
       );
-    } else {
-      // get report from data store
     }
   }
 

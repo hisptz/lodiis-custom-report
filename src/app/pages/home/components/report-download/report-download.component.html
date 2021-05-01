@@ -1,20 +1,25 @@
-<div>
+<div *ngIf="generatedReport">
   <div class="report-item">
     <span class="report-item-title">Name:</span>&nbsp;
-    {{ report.reportName }}
+    {{ selectedReport.name }}
   </div>
   <div class="report-item">
     <span class="report-item-title">Created:</span>&nbsp;
-    {{ report.created | date }}
+    {{ generatedReport.created | date }}
   </div>
   <div class="report-item">
     <a
       style="text-decoration: none"
       class="no-outline download-button"
       mat-stroked-button
-      download="dummy.txt"
-      href="assets/reports/test.txt"
-      >Download <mat-icon class="icon">file_download</mat-icon></a
+      [download]="
+        generatedReport.reportName | reportName: generatedReport.created
+      "
+      [href]="generatedReport.path"
+      >Download</a
     >
   </div>
+</div>
+<div *ngIf="!generatedReport">
+  <p>There are no report generated, Try again later!</p>
 </div>

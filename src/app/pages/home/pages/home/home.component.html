@@ -48,7 +48,10 @@
             class="no-outline"
             mat-stroked-button
             (click)="onGenerateReport()"
-            [disabled]="!getReportParameterSelectionStatus()"
+            [disabled]="
+              !getReportParameterSelectionStatus() ||
+              (disableOrgUnitSelection && disablePeriodSelection)
+            "
           >
             Generate</button
           >&nbsp;&nbsp;
@@ -65,13 +68,20 @@
         </div>
       </div>
       <div class="report-container">
-        <div class="current-selection">
+        <div
+          class="current-selection"
+          *ngIf="!(disableOrgUnitSelection && disablePeriodSelection)"
+        >
           <app-current-selection
             [selectedReport]="selectedReport"
             [selectedPeriods]="selectedPeriods"
             [selectedOrgUnitItems]="selectedOrgUnitItems"
-            [reportHasPeriod]="!selectedReport || disablePeriodSelection"
-            [reportHasLocation]="!selectedReport || disableOrgUnitSelection"
+            [reportHasPeriod]="
+              !selectedReport || selectedReport.disablePeriodSelection
+            "
+            [reportHasLocation]="
+              !selectedReport || selectedReport.disableOrgUnitSelection
+            "
           ></app-current-selection>
         </div>
         <div *ngIf="isLoading$ | async">
@@ -83,9 +93,18 @@
               <app-report-view></app-report-view>
             </mat-card>
           </div>
-          <div *ngIf="selectedReport && selectedReport.disablePeriodSelection">
+          <div
+            *ngIf="
+              selectedReport &&
+              disableOrgUnitSelection &&
+              disablePeriodSelection
+            "
+          >
             <mat-card>
-              <app-report-download></app-report-download>
+              <app-report-download
+                [selectedReport]="selectedReport"
+                [generatedReport]="generatedReport$ | async"
+              ></app-report-download>
             </mat-card>
           </div>
         </div>
