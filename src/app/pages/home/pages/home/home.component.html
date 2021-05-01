@@ -102,10 +102,12 @@
             "
           >
             <mat-card>
-              <app-report-download
-                [selectedReport]="selectedReport"
-                [generatedReport]="generatedReport$ | async"
-              ></app-report-download>
+              <mat-card-content>
+                <app-report-download
+                  [selectedReport]="selectedReport"
+                  [generatedReport]="generatedReport$ | async"
+                ></app-report-download>
+              </mat-card-content>
             </mat-card>
           </div>
         </div>
