@@ -139,7 +139,7 @@ export class HomeComponent implements OnInit {
   }
 
   onGenerateReport() {
-    if (!this.selectedReport && this.selectedReport.disablePeriodSelection) {
+    if (this.selectedReport && !this.selectedReport.disablePeriodSelection) {
       const analyticParameters = getAnalyticsParameters(
         this.selectedOrgUnitItems,
         this.selectedPeriods,

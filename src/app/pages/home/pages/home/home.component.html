@@ -10,6 +10,7 @@
               (selectionChange)="onSelectReport($event)"
             >
               <mat-option
+                class="mat-select-content"
                 value="{{ report.id }}"
                 *ngFor="let report of reports"
                 >{{ report.name }}</mat-option
