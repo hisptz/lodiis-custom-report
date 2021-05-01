@@ -1,7 +1,10 @@
 <mat-card>
   <mat-card-content>
     <div *ngIf="getReportParameterSelectionStatus()">
-      <div class="card-item" *ngIf="reportHasLocation">
+      <div
+        class="card-item"
+        *ngIf="!selectedReport || !selectedReport.disableOrgUnitSelection"
+      >
         <span class="item-title">Locations: </span>
         <span>{{ selectedOrgUnitItems | selectionName }}</span>
       </div>
@@ -9,7 +12,10 @@
         <span class="item-title">Report: </span>
         <span>{{ selectedReport ? selectedReport.name : '' }}</span>
       </div>
-      <div class="card-item" *ngIf="reportHasPeriod">
+      <div
+        class="card-item"
+        *ngIf="!selectedReport || !selectedReport.disablePeriodSelection"
+      >
         <span class="item-title">Periods: </span>
         <span>{{ selectedPeriods | selectionName }}</span>
       </div>

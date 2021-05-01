@@ -31,7 +31,6 @@ export class GeneratedReportEffects {
       mergeMap((action) =>
         this.getGeneratedReports().pipe(
           map((reports: GeneratedReport[]) => {
-            console.log(reports);
             return LoadGeneratedReportSuccess({ reports });
           }),
           catchError((error) => of(LoadGeneratedReportFail({ error })))
@@ -44,10 +43,6 @@ export class GeneratedReportEffects {
     return new Observable((observer) => {
       this.getReportsFromDataStore()
         .then((reportConfig) => {
-          console.log(
-            `Emitting observable for: ${JSON.stringify(reportConfig)}`
-          );
-
           observer.next(reportConfig);
           observer.complete();
         })
