@@ -244,20 +244,6 @@
         },
         {
           "programStage": "",
-          "name": "AGYW Enrolled",
-          "id": "",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "",
-          "name": "Reason for not enrolling",
-          "id": "",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "",
           "name": "Date of enrollment to the program",
           "id": "enrollmentdate",
           "isBoolean": false,
