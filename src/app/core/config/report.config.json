@@ -496,20 +496,6 @@
         },
         {
           "programStage": "",
-          "name": "District of Birth",
-          "id": "",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "",
-          "name": "Birth Order",
-          "id": "",
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "",
           "name": "Sex",
           "id": "VJiWumvINR6",
           "isAttribute": true,
@@ -554,13 +540,6 @@
           "name": "ID number",
           "id": "fTSAY18LgCF",
           "isAttribute": true,
-          "isBoolean": false,
-          "isDate": false
-        },
-        {
-          "programStage": "",
-          "name": "Passport Number",
-          "id": "",
           "isBoolean": false,
           "isDate": false
         },
@@ -895,6 +874,22 @@
         },
         {
           "programStage": "MkyTrLeBG8I",
+          "name": "TB Treatment",
+          "id": "OrC9Bh2bcFz",
+          "codes": ["TB treatment"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "TB Treatment",
+          "id": "rsh5Kvx6qAU",
+          "codes": ["TB treatment"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
           "name": "Nutrition",
           "id": "OrC9Bh2bcFz",
           "codes": ["Nutrition"],
@@ -1180,6 +1175,897 @@
       "name": "DREAMS Layering Dataset (Service and Referral)",
       "program": "hOEIHJDrrvz",
       "disablePeriodSelection": false,
+      "dxConfigs": [
+        {
+          "programStage": "",
+          "name": "First Name",
+          "isAttribute": true,
+          "id": "WTZ7GLTrE8Q",
+          "isBoolean": false,
+          "isDate": false
+        },
+        {
+          "programStage": "",
+          "name": "Surname",
+          "isAttribute": true,
+          "id": "rSP9c21JsfC",
+          "isBoolean": false,
+          "isDate": false
+        },
+        {
+          "programStage": "",
+          "name": "Date of Birth",
+          "isAttribute": true,
+          "id": "qZP982qpSPS",
+          "isBoolean": false,
+          "isDate": true
+        },
+        {
+          "programStage": "",
+          "name": "Age",
+          "id": "ls9hlz2tyol",
+          "isAttribute": true,
+          "isBoolean": false,
+          "isDate": false
+        },
+        {
+          "programStage": "",
+          "name": "Sex",
+          "id": "VJiWumvINR6",
+          "isAttribute": true,
+          "isBoolean": false,
+          "isDate": false
+        },
+        {
+          "programStage": "",
+          "name": "Contact Numbers",
+          "isAttribute": true,
+          "id": "tNdoR0jYr7R",
+          "isBoolean": false,
+          "isDate": false
+        },
+        {
+          "programStage": "",
+          "name": "Client Type",
+          "id": "",
+          "isBoolean": false,
+          "isDate": false
+        },
+        {
+          "programStage": "",
+          "name": "Current Pregnancy status",
+          "id": "LNaNh7kvh4X",
+          "isAttribute": true,
+          "isBoolean": true,
+          "isDate": false,
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "PREGNANT"
+            },
+            {
+              "value": "",
+              "displayName": "NOT PREGNANT"
+            }
+          ]
+        },
+        {
+          "programStage": "",
+          "name": "ID number",
+          "id": "fTSAY18LgCF",
+          "isAttribute": true,
+          "isBoolean": false,
+          "isDate": false
+        },
+        {
+          "programStage": "",
+          "name": "Number of Sex Partners",
+          "id": "q8qPtzanSTU",
+          "isAttribute": true,
+          "isBoolean": false,
+          "isDate": false
+        },
+        {
+          "programStage": "",
+          "name": "STIs (Past or Present)",
+          "isAttribute": true,
+          "id": "rh881j2vfvT",
+          "isBoolean": true,
+          "isDate": false,
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "Yes"
+            },
+            {
+              "value": "",
+              "displayName": "No"
+            }
+          ]
+        },
+        {
+          "programStage": "PGFt6IwdZLM",
+          "name": "Regular Condom Use",
+          "isAttribute": true,
+          "id": "iY67qYnywgS",
+          "isBoolean": true,
+          "isDate": false,
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "Yes"
+            },
+            {
+              "value": "",
+              "displayName": "No"
+            }
+          ]
+        },
+        {
+          "programStage": "",
+          "name": "Transactional Sex",
+          "id": "p33MrrhsQRz",
+          "isAttribute": true,
+          "isBoolean": true,
+          "isDate": false,
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "Yes"
+            },
+            {
+              "value": "",
+              "displayName": "No"
+            }
+          ]
+        },
+        {
+          "programStage": "",
+          "name": "Experiences of Violence",
+          "isAttribute": true,
+          "id": "yc3BlUIEup3",
+          "isBoolean": true,
+          "isDate": false,
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "Yes"
+            },
+            {
+              "value": "",
+              "displayName": "No"
+            }
+          ]
+        },
+        {
+          "programStage": "",
+          "name": "School Enrollment",
+          "isAttribute": true,
+          "id": "bApA6X6TVvJ",
+          "isBoolean": true,
+          "isDate": false,
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "NOT ENROLLED IN SCHOOL"
+            },
+            {
+              "value": "",
+              "displayName": "ENROLLED IN SCHOOL"
+            }
+          ]
+        },
+        {
+          "programStage": "",
+          "name": "Alcohol Use",
+          "isAttribute": true,
+          "id": "HJIHPjOf5s1",
+          "isBoolean": true,
+          "isDate": false,
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "Yes"
+            },
+            {
+              "value": "",
+              "displayName": "No"
+            }
+          ]
+        },
+        {
+          "programStage": "",
+          "name": "Orphanhood",
+          "isAttribute": true,
+          "id": "B4ojlzKypUF",
+          "isBoolean": true,
+          "isDate": false,
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "Yes"
+            },
+            {
+              "value": "",
+              "displayName": "No"
+            }
+          ]
+        },
+        {
+          "programStage": "",
+          "name": "AGYW Enrolled",
+          "id": "",
+          "isBoolean": false,
+          "isDate": false
+        },
+        {
+          "programStage": "",
+          "name": "Reason for not enrolling",
+          "id": "",
+          "isBoolean": false,
+          "isDate": false
+        },
+        {
+          "programStage": "",
+          "name": "Date of enrollment to the program",
+          "id": "enrollmentdate",
+          "isBoolean": false,
+          "isDate": true
+        },
+        {
+          "programStage": "",
+          "name": "Date Of Last Service Received",
+          "id": "date_of_last_service_received",
+          "isBoolean": false,
+          "isDate": true
+        },
+        {
+          "programStage": "",
+          "name": "District of Service",
+          "id": "district_of_service",
+          "isBoolean": false,
+          "isDate": false
+        },
+        {
+          "programStage": "",
+          "name": "Last Service Community Council",
+          "id": "last_service_community_council",
+          "isBoolean": false,
+          "isDate": false
+        },
+        {
+          "programStage": "",
+          "name": "Facility Name",
+          "id": "",
+          "isBoolean": false,
+          "isDate": false
+        },
+        {
+          "programStage": "",
+          "name": "Educational Subsidies ",
+          "id": "",
+          "isBoolean": false,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "VMMC",
+          "id": "rsh5Kvx6qAU",
+          "codes": ["VMMC"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "VMMC",
+          "id": "OrC9Bh2bcFz",
+          "codes": ["VMMC"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "",
+          "name": "Linkage to ART",
+          "id": "",
+          "isBoolean": false,
+          "isDate": false
+        },
+        {
+          "programStage": "Gk494qKQP8B",
+          "name": "ART",
+          "id": "uWKbFmG9ZWQ",
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "NXsIkG9Q1BA",
+          "name": "Condom Promotion and Provision",
+          "id": "uciT2F6ByYO",
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "kq6qeEgbDVY",
+          "name": "HIV Testing and Counseling",
+          "id": "N8tlZl91pBY",
+          "codes": ["Positive", "Negative", "Indeterminate"],
+          "isBoolean": false,
+          "isDate": false
+        },
+        {
+          "programStage": "vAMc8n0YB6m",
+          "name": "HIV Testing and Counseling",
+          "id": "zbHpXUjGv5H",
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "vAMc8n0YB6m",
+          "name": "Type of HIV Test",
+          "id": "GHfoqXKlK6o",
+          "isBoolean": false,
+          "isDate": false
+        },
+        {
+          "programStage": "bDJq2JWVTbC",
+          "name": "School-Based HIV and Violence Prevention",
+          "id": "Eug4BXDFLym",
+          "codes": ["LBSE"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "bDJq2JWVTbC",
+          "name": "Social Assets Building",
+          "id": "Eug4BXDFLym",
+          "codes": [
+            "Go Girls",
+            "PTS 4-GRADS",
+            "PTS 4 NON-GRADS",
+            "AFLATEEN/TOUN"
+          ],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "bDJq2JWVTbC",
+          "name": "Stepping Stones",
+          "id": "Eug4BXDFLym",
+          "codes": ["STEPPING STONES"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "bDJq2JWVTbC",
+          "name": "GBV Messaging",
+          "id": "Eug4BXDFLym",
+          "codes": ["GBV Legal Messaging"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "bDJq2JWVTbC",
+          "name": "GBV Legal Protection",
+          "id": "Eug4BXDFLym",
+          "codes": ["GBV Legal"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "yK0ENCuwPqh",
+          "name": "Post-Violence Care",
+          "id": "mnYT2rZyGgJ",
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "bDJq2JWVTbC",
+          "name": "Parenting/Caregiver Programs",
+          "id": "Eug4BXDFLym",
+          "codes": ["PARENTING"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "A7Tl3vML6as",
+          "name": "Contraceptive Provision",
+          "id": "uciT2F6ByYO",
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "bDJq2JWVTbC",
+          "name": "Socio-Economic Services",
+          "id": "Eug4BXDFLym",
+          "codes": ["SILC", "SAVING GROUP", "FINANCIAL EDUCATION"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "mMjGlK1W0Xo",
+          "name": "PrEP",
+          "id": "h0P6UfkUvLP",
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "",
+          "name": "HIV Prevention Messaging",
+          "id": "",
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "PGFt6IwdZLM",
+          "name": "HIV Risk Assessment and Messaging",
+          "id": "qFwm4RM45gi",
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "STI Treatment (Referral)",
+          "id": "rsh5Kvx6qAU",
+          "codes": ["STI Treatment"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "STI Treatment (Referral)",
+          "id": "OrC9Bh2bcFz",
+          "codes": ["STI Treatment"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "HIV Testing and Counselling (Referral)",
+          "id": "rsh5Kvx6qAU",
+          "codes": ["HIV Testing and counselling"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "HIV Testing and Counselling (Referral)",
+          "id": "OrC9Bh2bcFz",
+          "codes": ["HIV Testing and counselling"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Evaluation for ARVs/HAART (Referral)",
+          "id": "rsh5Kvx6qAU",
+          "codes": ["Evaluation for ARVs/HAART"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Evaluation for ARVs/HAART (Referral)",
+          "id": "OrC9Bh2bcFz",
+          "codes": ["Evaluation for ARVs/HAART"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Post Abuse Case Mngt (Referral)",
+          "id": "rsh5Kvx6qAU",
+          "codes": ["Post abuse case management"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Post Abuse Case Mngt (Referral)",
+          "id": "OrC9Bh2bcFz",
+          "codes": ["Post abuse case management"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "ART Adherence (Referral)",
+          "id": "OrC9Bh2bcFz",
+          "codes": ["ART and Adherence"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "ART Adherence (Referral)",
+          "id": "rsh5Kvx6qAU",
+          "codes": ["ART and Adherence"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "PMTCT (Referral)",
+          "id": "OrC9Bh2bcFz",
+          "codes": ["PMTCT"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "PMTCT (Referral)",
+          "id": "rsh5Kvx6qAU",
+          "codes": ["PMTCT"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Cervical Cancer Screening (Referral)",
+          "id": "OrC9Bh2bcFz",
+          "codes": ["Cervical Cancer Screening"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Cervical Cancer Screening (Referral)",
+          "id": "rsh5Kvx6qAU",
+          "codes": ["Cervical Cancer Screening"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "ECD (Referral)",
+          "id": "OrC9Bh2bcFz",
+          "codes": ["ECD"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "ECD (Referral)",
+          "id": "rsh5Kvx6qAU",
+          "codes": ["ECD"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Family Planning/SRH (Referral)",
+          "id": "OrC9Bh2bcFz",
+          "codes": ["FamilyPlanningSRH"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Family Planning/SRH (Referral)",
+          "id": "rsh5Kvx6qAU",
+          "codes": ["FamilyPlanningSRH"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Condoms Provision (Referral)",
+          "id": "OrC9Bh2bcFz",
+          "codes": ["Condom supply"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Condoms Provision (Referral)",
+          "id": "rsh5Kvx6qAU",
+          "codes": ["Condom supply"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "TB Treatment (Referral)",
+          "id": "OrC9Bh2bcFz",
+          "codes": ["TB treatment"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "TB Treatment (Referral)",
+          "id": "rsh5Kvx6qAU",
+          "codes": ["TB treatment"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Nutrition (Referral)",
+          "id": "OrC9Bh2bcFz",
+          "codes": ["Nutrition"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Nutrition (Referral)",
+          "id": "rsh5Kvx6qAU",
+          "codes": ["Nutrition"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "ANC (Referral)",
+          "id": "OrC9Bh2bcFz",
+          "codes": ["ANC"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "ANC (Referral)",
+          "id": "rsh5Kvx6qAU",
+          "codes": ["ANC"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "PrEP/PEP (Referral)",
+          "id": "OrC9Bh2bcFz",
+          "codes": ["PrEP/PEP"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "PrEP/PEP (Referral)",
+          "id": "rsh5Kvx6qAU",
+          "codes": ["PrEP/PEP"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "EID Testing (Referral)",
+          "id": "OrC9Bh2bcFz",
+          "codes": ["EID Testing"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "EID Testing (Referral)",
+          "id": "rsh5Kvx6qAU",
+          "codes": ["EID Testing"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "TB/ART Treatment Support (Referral)",
+          "id": "OrC9Bh2bcFz",
+          "codes": ["Treatment Support (TB/ARV)"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "TB/ART Treatment Support (Referral)",
+          "id": "rsh5Kvx6qAU",
+          "codes": ["Treatment Support (TB/ARV)"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Gender Based Violence (Referral)",
+          "id": "OrC9Bh2bcFz",
+          "codes": ["Gender Based Violence"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Gender Based Violence (Referral)",
+          "id": "rsh5Kvx6qAU",
+          "codes": ["Gender Based Violence"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Domestic Violence Support (Referral)",
+          "id": "OrC9Bh2bcFz",
+          "codes": ["Domestic Violence Support group"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Domestic Violence Support (Referral)",
+          "id": "rsh5Kvx6qAU",
+          "codes": ["Domestic Violence Support group"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Post Abuse Care Services (Referral)",
+          "id": "OrC9Bh2bcFz",
+          "codes": ["Referral to post abuse care services"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Post Abuse Care Services (Referral)",
+          "id": "rsh5Kvx6qAU",
+          "codes": ["Referral to post abuse care services"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Violence Against Children (Referral)",
+          "id": "OrC9Bh2bcFz",
+          "codes": ["Violence Against Children"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Violence Against Children (Referral)",
+          "id": "rsh5Kvx6qAU",
+          "codes": ["Violence Against Children"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Youth friendly services (Referral)",
+          "id": "OrC9Bh2bcFz",
+          "codes": ["Youth friendly services"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Youth friendly services (Referral)",
+          "id": "rsh5Kvx6qAU",
+          "codes": ["Youth friendly services"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Income generating activities (Referral)",
+          "id": "OrC9Bh2bcFz",
+          "codes": ["Income generating activity"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Income generating activities (Referral)",
+          "id": "rsh5Kvx6qAU",
+          "codes": ["Income generating activity"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Orphan Care (Referral)",
+          "id": "OrC9Bh2bcFz",
+          "codes": ["Orphan Care & Support"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Orphan Care (Referral)",
+          "id": "rsh5Kvx6qAU",
+          "codes": ["Orphan Care & Support"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Psycho-social (Referral)",
+          "id": "OrC9Bh2bcFz",
+          "codes": ["Psycho-social Support"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Psycho-social (Referral)",
+          "id": "rsh5Kvx6qAU",
+          "codes": ["Psycho-social Support"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "CAG (Referral)",
+          "id": "OrC9Bh2bcFz",
+          "codes": ["CAG"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "CAG (Referral)",
+          "id": "rsh5Kvx6qAU",
+          "codes": ["CAG"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Home based care visits (Referral)",
+          "id": "OrC9Bh2bcFz",
+          "codes": ["Home based care visits"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Home based care visits (Referral)",
+          "id": "rsh5Kvx6qAU",
+          "codes": ["Home based care visits"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Educational & Vocational Support (Referral)",
+          "id": "OrC9Bh2bcFz",
+          "codes": ["Educational and vocational support"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Educational & Vocational Support (Referral)",
+          "id": "rsh5Kvx6qAU",
+          "codes": ["Educational and vocational support"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Social Grants (Referral)",
+          "id": "OrC9Bh2bcFz",
+          "codes": ["Social grants"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "MkyTrLeBG8I",
+          "name": "Social Grants (Referral)",
+          "id": "rsh5Kvx6qAU",
+          "codes": ["Social grants"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "",
+          "name": "Implementing Mechanism Name",
+          "id": "klLkGxy328c",
+          "isAttribute": true,
+          "isBoolean": false,
+          "isDate": false
+        }
+      ]
+    },
+    {
+      "id": "cumulative_DREAMS_Layering",
+      "name": "Cumulative DREAMS Layering Dataset",
+      "program": "hOEIHJDrrvz",
+      "disablePeriodSelection": true,
+      "disableOrgUnitSelection": true,
       "dxConfigs": [
         {
           "programStage": "",
@@ -2062,14 +2948,6 @@
           "isDate": false
         }
       ]
-    },
-    {
-      "id": "cumulative_DREAMS_Layering",
-      "name": "Cumulative DREAMS Layering Dataset",
-      "program": "hOEIHJDrrvz",
-      "disablePeriodSelection": true,
-      "disableOrgUnitSelection": true,
-      "dxConfigs": []
     }
   ]
 }
