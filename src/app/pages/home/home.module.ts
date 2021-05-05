@@ -15,6 +15,9 @@ import { TableDataPipe } from './pipes/table-data.pipe';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { PaginationPipe } from './pipes/pagination.pipe';
 import { ReportErrorComponent } from './components/report-error/report-error.component';
+import { ReportTableComponent } from './components/report-table/report-table.component';
+import { ReportDownloadComponent } from './components/report-download/report-download.component';
+import { ReportNamePipe } from './pipes/report-name.pipe';
 
 @NgModule({
   declarations: [
@@ -30,6 +33,9 @@ import { ReportErrorComponent } from './components/report-error/report-error.com
     PaginationComponent,
     PaginationPipe,
     ReportErrorComponent,
+    ReportTableComponent,
+    ReportDownloadComponent,
+    ReportNamePipe,
   ],
   imports: [CommonModule, SharedModule, HomeRoutingModule],
   entryComponents: [ReportErrorComponent]

@@ -1,0 +1,18 @@
+.report-item {
+  margin: 0.5vh 0;
+}
+
+.report-item-title {
+  font-weight: bold;
+}
+
+.icon {
+  display: inline-flex;
+  vertical-align: sub;
+}
+
+.download-button:hover,
+.download-button:active,
+.download-button:visited {
+  color: #212529;
+}

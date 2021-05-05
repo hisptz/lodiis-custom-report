@@ -1,0 +1,32 @@
+<div class="table-responsive">
+  <table class="report-table table-bordered">
+    <thead>
+      <tr>
+        <th
+          class="p-1"
+          *ngFor="let header of currentAnalytics | tableHeaders"
+        >
+          {{ header }}
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr
+        *ngFor="
+          let row of currentAnalytics
+            | tableData
+            | pagination: tablePagination
+        "
+      >
+        <td class="p-1" *ngFor="let rowData of row">{{ rowData }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="pagination" *ngIf="(currentAnalytics)">
+  <app-pagination
+    (paginate)="onApplyPagination($event)"
+    [totalItems]="(currentAnalytics).length"
+  ></app-pagination>
+</div>
