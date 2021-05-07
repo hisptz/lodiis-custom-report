@@ -5,6 +5,7 @@ const defaultAnalyticKeys = [
   'eventdate',
   'enrollmentdate',
   'tei',
+  "psi",
   'ouname',
   'ou',
 ];
@@ -14,14 +15,14 @@ export function getProgressPercentage(numerator: number, denominator: number) {
   return parseInt(percentageValue, 10);
 }
 
-export function getSanitizedDisplayValue(sanitizedValue: string, displayValues) {
+export function getSanitizedDisplayValue(sanitizedValue: string, displayValues :any,skipSanitizationOfDisplayName:boolean) {
   const valueObject = _.find(displayValues || [], (displayValue: any) => {
     return _.isEqual(
       displayValue.value.toLowerCase(),
       sanitizedValue.toLowerCase()
     );
   });
-  const sanitizedDisplayName = valueObject
+  const sanitizedDisplayName = valueObject && !skipSanitizationOfDisplayName
     ? valueObject.displayName
     : sanitizedValue;
   return sanitizedDisplayName;
@@ -32,13 +33,13 @@ export function getSanitizesReportValue(
   codes: Array<string>,
   isBoolean: boolean,
   isDate: boolean,
-  displayValues: Array<any>
+  displayValues: Array<any>,
+  skipSanitizationOfDisplayName:boolean
 ) {
   const displayNames = _.flattenDeep(
     _.map(displayValues || [], (displayValue) => displayValue.displayName)
   );
   displayNames.push('Yes', '1');
-
   let sanitizedValue = '';
   if (codes && codes.length > 0) {
     sanitizedValue =
@@ -52,12 +53,9 @@ export function getSanitizesReportValue(
   } else {
     sanitizedValue = value;
   }
-
   return displayValues && displayValues.length > 0
-    ? getSanitizedDisplayValue(sanitizedValue, displayValues)
+    ? getSanitizedDisplayValue(sanitizedValue, displayValues,skipSanitizationOfDisplayName)
     : sanitizedValue;
-
-  // return sanitizedValue;
 }
 
 export function getSanitizedAnalyticData(Analytics: any, programStage: string) {
@@ -69,7 +67,7 @@ export function getSanitizedAnalyticData(Analytics: any, programStage: string) {
       _.keys(_.omit(dimensions, _.concat(['ou', 'pe'], dimensions.ou || [])))
     )
   );
-  return _.flattenDeep(
+  return _.map(_.flattenDeep(
     _.map(rows, (rowData: any) => {
       const dataObject = { programStage: programStage };
       for (const key of defaultKeys) {
@@ -77,9 +75,13 @@ export function getSanitizedAnalyticData(Analytics: any, programStage: string) {
           headers || [],
           (header: any) => header && header.name === key
         );
-        dataObject[key] = rowData[keyIndex] || '';
+        if(keyIndex > -1){
+          dataObject[key] = rowData[keyIndex] || '';
+        }
       }
       return dataObject;
     })
-  );
+  ), (dataObject:any)=>{
+    return _.keys(dataObject).includes("psi") ? _.omit({...dataObject,tei : dataObject["psi"] },["psi"]) : dataObject; 
+  });
 }
