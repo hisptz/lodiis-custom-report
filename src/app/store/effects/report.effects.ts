@@ -171,12 +171,14 @@ export class ReportDataEffects {
       _.map(analyticParameter.dx || [], (dx: string) => `dimension=${dx}`),
       '&'
     );
+    const programUid = analyticParameter.programId === ""?programId : analyticParameter.programId;
     const periodDimension = reportConfig && reportConfig.disablePeriodSelection ? `startDate=${startDate}&endDate=${endDate}` : `dimension=pe:${pe}`;
     const pageSize = 1000;
-    const url = `analytics/events/query/${programId}.json?${periodDimension}&dimension=ou:${ou}&${dataDimension}&stage=${stage}&displayProperty=NAME&outputType=EVENT&desc=eventdate`;
+    const url = `analytics/events/query/${programUid}.json?${periodDimension}&dimension=ou:${ou}&${dataDimension}&stage=${stage}&displayProperty=NAME&outputType=EVENT&desc=eventdate`;
     try {
       const response: any = await this.getPaginatinationFilters(url, pageSize);
       paginationFilters.push(response);
+      
     } catch (error) {
       console.log({ error });
     }

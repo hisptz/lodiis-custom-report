@@ -27,11 +27,15 @@ export function getAnalyticsParameters(
         programStageDataElements.length > 0
           ? programStageDataElements[0].programStage
           : '';
-      const configs = [
+      const programId = programStageDataElements.length > 0
+      ? programStageDataElements[0].program || ""
+      : '';
+      const configs = programId && programId !==""? [...programStageDataElements] : [
         ...programStageDataElements,
         ..._.map(attributes, (attribute: any) => ({
           ...attribute,
           programStage,
+          program:programId
         })),
       ];
       return configs;
@@ -52,11 +56,7 @@ export function getAnalyticsParameters(
             _.flattenDeep(
               _.map(
                 groupedDxConfigs[programStage] || [],
-                (groupedDxConfig: {
-                  id: string;
-                  name: string;
-                  programStage: string;
-                }) =>
+                (groupedDxConfig:any) =>
                   groupedDxConfig.id !== '' &&
                   groupedDxConfig.programStage !== ''
                     ? `${groupedDxConfig.programStage}.${groupedDxConfig.id}`
@@ -65,7 +65,11 @@ export function getAnalyticsParameters(
             )
           );
           if (dx.length > 0) {
-            return { ou, pe, dx };
+            const programIds = _.uniq(_.flattenDeep(_.map(groupedDxConfigs[programStage] || [],(groupedDxConfig:any)=>{
+              return groupedDxConfig.program && groupedDxConfig.program !== "" ? groupedDxConfig.program : []
+            })))
+            const programId = programIds.length > 0 ? programIds[0] : ""
+            return { ou, pe, dx,programId };
           } else {
             return [];
           }
