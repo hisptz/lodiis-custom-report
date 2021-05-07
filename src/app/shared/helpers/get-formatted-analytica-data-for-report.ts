@@ -3,6 +3,7 @@ import { getSanitizesReportValue, getSanitizedDisplayValue } from './report-data
 
 const districtLevel = 2;
 const commmunityCouncilLevel = 3;
+const noneAgywParticipationProgramStages = ["uctHRP6BBXP"];
 
 export function getFormattedEventAnalyticDataForReport(
     analyticData: Array<any>,
@@ -13,6 +14,18 @@ export function getFormattedEventAnalyticDataForReport(
     return _.flattenDeep(
       _.map(_.keys(groupedAnalyticDataByBeneficiary), (tei: string) => {
         const analyticDataByBeneficiary = groupedAnalyticDataByBeneficiary[tei];
+        const isNotAgywBeneficiary =
+        _.filter(
+          _.uniq(
+            _.flatMapDeep(
+              _.map(
+                analyticDataByBeneficiary,
+                (data) => data.programStage || []
+              )
+            )
+          ),
+          (stage : string) => noneAgywParticipationProgramStages.includes(stage)
+        ).length > 0;
         const beneficiaryData = {};
         for (const dxConfigs of reportConfig.dxConfigs || []) {
           const { id, name, programStage, isBoolean, codes, isDate, displayValues } = dxConfigs;
@@ -26,7 +39,9 @@ export function getFormattedEventAnalyticDataForReport(
           }else if(id === "date_of_last_service_received"){
             const lastService = getLastServiceFromAnalyticData(analyticDataByBeneficiary);
             value = lastService ? lastService["eventdate"] ||value : value;
-          }else{
+          }else if (id === "isAgywBeneficiary") {
+            value = !isNotAgywBeneficiary ? "Yes" : "No";
+          } else {
             const eventReportData =
             id !== '' && programStage === ''
               ? _.find(analyticDataByBeneficiary, (data: any) => {
@@ -49,8 +64,8 @@ export function getFormattedEventAnalyticDataForReport(
           }
           beneficiaryData[name] =
             value !== ''
-              ? getSanitizesReportValue(value, codes, isBoolean, isDate, displayValues)
-              : getSanitizedDisplayValue(value, displayValues);
+              ? getSanitizesReportValue(value, codes, isBoolean, isDate, displayValues,isNotAgywBeneficiary)
+              : getSanitizedDisplayValue(value, displayValues,isNotAgywBeneficiary);
         }
         return beneficiaryData;
       })
