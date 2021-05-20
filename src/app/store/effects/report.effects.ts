@@ -102,7 +102,7 @@ export class ReportDataEffects {
     } catch (error) {
       console.log({ error });
     }
-    return _.flattenDeep(eventReportAnalyticData);
+    return _.sortBy(_.flattenDeep(eventReportAnalyticData), ["district_of_service", "last_service_community_council"]);
   }
 
   getAllLocations(){
