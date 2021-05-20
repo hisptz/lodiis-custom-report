@@ -3,6 +3,8 @@ import { getSanitizesReportValue, getSanitizedDisplayValue } from './report-data
 
 const districtLevel = 2;
 const commmunityCouncilLevel = 3;
+const facilityLevel = 4;
+
 const noneAgywParticipationProgramStages = ["uctHRP6BBXP"];
 
 export function getFormattedEventAnalyticDataForReport(
@@ -20,7 +22,7 @@ export function getFormattedEventAnalyticDataForReport(
             _.flatMapDeep(
               _.map(
                 analyticDataByBeneficiary,
-                (data) => data.programStage || []
+                (data:any) => data.programStage || []
               )
             )
           ),
@@ -34,8 +36,10 @@ export function getFormattedEventAnalyticDataForReport(
               const lastService = getLastServiceFromAnalyticData(analyticDataByBeneficiary)
               const locationId = lastService? lastService['ou'] || "" : "";
               value = getLocationNameById(locations,commmunityCouncilLevel,locationId);
+          }else if(id === "facility_name"){
+            value = getLocationNameByLevel(analyticDataByBeneficiary, locations, facilityLevel);
           }else if(id === "district_of_service"){
-              value = getDistrictOfService(analyticDataByBeneficiary, locations);
+              value = getLocationNameByLevel(analyticDataByBeneficiary, locations, districtLevel);
           }else if(id === "date_of_last_service_received"){
             const lastService = getLastServiceFromAnalyticData(analyticDataByBeneficiary);
             value = lastService ? lastService["eventdate"] ||value : value;
@@ -81,10 +85,12 @@ export function getFormattedEventAnalyticDataForReport(
     return lastService;
   }
 
-  function getDistrictOfService(analyticDataByBeneficiary : Array<any>, locations : Array<any>){
-      const ouIds  = _.uniq(_.flattenDeep(_.map(analyticDataByBeneficiary, (data:any)=> data.ou || [])));
-      const locationId = ouIds.length > 0 ? ouIds[0] : "";
-      return getLocationNameById(locations,districtLevel, locationId);
+  function getLocationNameByLevel(analyticDataByBeneficiary :Array<any>, locations :Array<any>, level :any){
+    const ouIds = _.uniq(
+      _.flattenDeep(_.map(analyticDataByBeneficiary, (data) => data.ou || []))
+    );
+    const locationId = ouIds.length > 0 ? ouIds[0] : "";
+    return getLocationNameById(locations, level, locationId);
   }
 
   function getLocationNameById(locations : Array<any>, level : number,locationId :string){
