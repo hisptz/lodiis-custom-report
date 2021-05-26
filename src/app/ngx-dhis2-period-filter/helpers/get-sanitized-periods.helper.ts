@@ -18,7 +18,7 @@ export function getSanitizedPeriods(
       name:
         period.name ||
         getPeriodName(periodId, periodType, periodConfig, calendar),
-      type: periodType
+      type: periodType,
     };
   });
 }

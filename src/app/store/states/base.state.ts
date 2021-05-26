@@ -11,22 +11,22 @@ export const initialBaseState: BaseState = {
   loading: false,
   loaded: false,
   hasError: false,
-  error: null
+  error: null,
 };
 
 export const loadingBaseState: BaseState = {
   ...initialBaseState,
-  loading: true
+  loading: true,
 };
 
 export const loadedBaseState: BaseState = {
   ...loadingBaseState,
   loading: false,
-  loaded: true
+  loaded: true,
 };
 
 export const errorBaseState: BaseState = {
   ...loadingBaseState,
   loading: false,
-  hasError: true
+  hasError: true,
 };

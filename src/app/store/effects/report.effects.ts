@@ -13,13 +13,15 @@ import {
 } from '../actions';
 import { Store } from '@ngrx/store';
 import { State } from '../reducers';
-import {  getSanitizedAnalyticData, getProgressPercentage} from 'src/app/shared/helpers/report-data.helper';
+import {
+  getSanitizedAnalyticData,
+  getProgressPercentage,
+} from 'src/app/shared/helpers/report-data.helper';
 import { getFormattedEventAnalyticDataForReport } from 'src/app/shared/helpers/get-formatted-analytica-data-for-report';
 import { getFormattedDate } from 'src/app/core/utils/date-formatter.util';
 
 @Injectable()
 export class ReportDataEffects {
-
   LoadReportData$ = createEffect(() =>
     this.actions$.pipe(
       ofType(LoadReportData),
@@ -55,11 +57,12 @@ export class ReportDataEffects {
       let bufferProcessCount = 0;
       const locations = await this.getAllLocations();
       for (const analyticParameter of analyticParameters) {
-        const response: any = await this.getAnalyticParameterWithPaginationFilter(
-          analyticParameter,
-          programId,
-          reportConfig
-        );
+        const response: any =
+          await this.getAnalyticParameterWithPaginationFilter(
+            analyticParameter,
+            programId,
+            reportConfig
+          );
         totalOverAllProcess += response.paginationFilters.length;
         analyticParametersWithPaginationFilters.push(response);
       }
@@ -103,25 +106,32 @@ export class ReportDataEffects {
       console.log({ error });
     }
     return _.sortBy(_.flattenDeep(eventReportAnalyticData), [
-      "District of Service",
-      "Last Service Community Council",
+      'District of Service',
+      'Last Service Community Council',
     ]);
   }
 
-  getAllLocations(){
-    const url = "organisationUnits.json?fields=id,name,level,ancestors[name,level]&paging=false";
+  getAllLocations() {
+    const url =
+      'organisationUnits.json?fields=id,name,level,ancestors[name,level]&paging=false';
     return new Promise((resolve, reject) => {
-      this.httpClient.get(url).pipe(take(1)).subscribe(
-        (data) =>{
-          const loctions = _.map(data["organisationUnits"]||[], (location:any)=>{
-            const {level, name, ancestors} = location;
-            ancestors.push({name,level});
-            return _.omit({...location, ancestors}, ["level","name"]);
-          });
-          resolve(loctions);
-        },
-        (error) => reject([])
-      );
+      this.httpClient
+        .get(url)
+        .pipe(take(1))
+        .subscribe(
+          (data) => {
+            const loctions = _.map(
+              data['organisationUnits'] || [],
+              (location: any) => {
+                const { level, name, ancestors } = location;
+                ancestors.push({ name, level });
+                return _.omit({ ...location, ancestors }, ['level', 'name']);
+              }
+            );
+            resolve(loctions);
+          },
+          (error) => reject([])
+        );
     });
   }
 
@@ -174,14 +184,19 @@ export class ReportDataEffects {
       _.map(analyticParameter.dx || [], (dx: string) => `dimension=${dx}`),
       '&'
     );
-    const programUid = analyticParameter.programId === ""?programId : analyticParameter.programId;
-    const periodDimension = reportConfig && reportConfig.disablePeriodSelection ? `startDate=${startDate}&endDate=${endDate}` : `dimension=pe:${pe}`;
+    const programUid =
+      analyticParameter.programId === ''
+        ? programId
+        : analyticParameter.programId;
+    const periodDimension =
+      reportConfig && reportConfig.disablePeriodSelection
+        ? `startDate=${startDate}&endDate=${endDate}`
+        : `dimension=pe:${pe}`;
     const pageSize = 1000;
     const url = `analytics/events/query/${programUid}.json?${periodDimension}&dimension=ou:${ou}&${dataDimension}&stage=${stage}&displayProperty=NAME&outputType=EVENT&desc=eventdate`;
     try {
       const response: any = await this.getPaginatinationFilters(url, pageSize);
       paginationFilters.push(response);
-      
     } catch (error) {
       console.log({ error });
     }
@@ -195,31 +210,36 @@ export class ReportDataEffects {
 
   getAnalyticResult(url: string, paginationFilter: string) {
     return new Promise((resolve, reject) => {
-      this.httpClient.get(`${url}&${paginationFilter}`).pipe(take(1)).subscribe(
-        (data) => resolve(data),
-        (error) => reject(error)
-      );
+      this.httpClient
+        .get(`${url}&${paginationFilter}`)
+        .pipe(take(1))
+        .subscribe(
+          (data) => resolve(data),
+          (error) => reject(error)
+        );
     });
   }
 
   getPaginatinationFilters(url: string, pageSize: number) {
     const paginationFilters = [];
     return new Promise((resolve, reject) => {
-      this.httpClient.get(`${url}&pageSize=1&page=1`).pipe(take(1)).subscribe(
-        (Analytics) => {
-          const { metaData } = Analytics;
-          const pager = metaData && metaData.pager ? metaData.pager : {};
-          const total = pager.total || pageSize;
-          for (let page = 1; page <= Math.ceil(total / pageSize); page++) {
-            paginationFilters.push(`pageSize=${pageSize}&page=${page}`);
-          }
-          resolve(paginationFilters);
-        },
-        (error) => reject(error)
-      );
+      this.httpClient
+        .get(`${url}&pageSize=1&page=1`)
+        .pipe(take(1))
+        .subscribe(
+          (Analytics) => {
+            const { metaData } = Analytics;
+            const pager = metaData && metaData.pager ? metaData.pager : {};
+            const total = pager.total || pageSize;
+            for (let page = 1; page <= Math.ceil(total / pageSize); page++) {
+              paginationFilters.push(`pageSize=${pageSize}&page=${page}`);
+            }
+            resolve(paginationFilters);
+          },
+          (error) => reject(error)
+        );
     });
   }
-
 
   updateProgressStatus(
     bufferProcessCount: number,

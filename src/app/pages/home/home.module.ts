@@ -38,6 +38,6 @@ import { ReportNamePipe } from './pipes/report-name.pipe';
     ReportNamePipe,
   ],
   imports: [CommonModule, SharedModule, HomeRoutingModule],
-  entryComponents: [ReportErrorComponent]
+  entryComponents: [ReportErrorComponent],
 })
 export class HomeModule {}

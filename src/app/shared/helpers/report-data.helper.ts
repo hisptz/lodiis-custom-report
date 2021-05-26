@@ -5,7 +5,7 @@ const defaultAnalyticKeys = [
   'eventdate',
   'enrollmentdate',
   'tei',
-  "psi",
+  'psi',
   'ouname',
   'ou',
 ];
@@ -15,16 +15,21 @@ export function getProgressPercentage(numerator: number, denominator: number) {
   return parseInt(percentageValue, 10);
 }
 
-export function getSanitizedDisplayValue(sanitizedValue: string, displayValues :any,skipSanitizationOfDisplayName:boolean) {
+export function getSanitizedDisplayValue(
+  sanitizedValue: string,
+  displayValues: any,
+  skipSanitizationOfDisplayName: boolean
+) {
   const valueObject = _.find(displayValues || [], (displayValue: any) => {
     return _.isEqual(
       displayValue.value.toLowerCase(),
       sanitizedValue.toLowerCase()
     );
   });
-  const sanitizedDisplayName = valueObject && !skipSanitizationOfDisplayName
-    ? valueObject.displayName
-    : sanitizedValue;
+  const sanitizedDisplayName =
+    valueObject && !skipSanitizationOfDisplayName
+      ? valueObject.displayName
+      : sanitizedValue;
   return sanitizedDisplayName;
 }
 
@@ -34,7 +39,7 @@ export function getSanitizesReportValue(
   isBoolean: boolean,
   isDate: boolean,
   displayValues: Array<any>,
-  skipSanitizationOfDisplayName:boolean
+  skipSanitizationOfDisplayName: boolean
 ) {
   const displayNames = _.flattenDeep(
     _.map(displayValues || [], (displayValue) => displayValue.displayName)
@@ -54,7 +59,11 @@ export function getSanitizesReportValue(
     sanitizedValue = value;
   }
   return displayValues && displayValues.length > 0
-    ? getSanitizedDisplayValue(sanitizedValue, displayValues,skipSanitizationOfDisplayName)
+    ? getSanitizedDisplayValue(
+        sanitizedValue,
+        displayValues,
+        skipSanitizationOfDisplayName
+      )
     : sanitizedValue;
 }
 
@@ -67,21 +76,26 @@ export function getSanitizedAnalyticData(Analytics: any, programStage: string) {
       _.keys(_.omit(dimensions, _.concat(['ou', 'pe'], dimensions.ou || [])))
     )
   );
-  return _.map(_.flattenDeep(
-    _.map(rows, (rowData: any) => {
-      const dataObject = { programStage: programStage };
-      for (const key of defaultKeys) {
-        const keyIndex = _.findIndex(
-          headers || [],
-          (header: any) => header && header.name === key
-        );
-        if(keyIndex > -1){
-          dataObject[key] = rowData[keyIndex] || '';
+  return _.map(
+    _.flattenDeep(
+      _.map(rows, (rowData: any) => {
+        const dataObject = { programStage: programStage };
+        for (const key of defaultKeys) {
+          const keyIndex = _.findIndex(
+            headers || [],
+            (header: any) => header && header.name === key
+          );
+          if (keyIndex > -1) {
+            dataObject[key] = rowData[keyIndex] || '';
+          }
         }
-      }
-      return dataObject;
-    })
-  ), (dataObject:any)=>{
-    return _.keys(dataObject).includes("psi") ? _.omit({...dataObject,tei : dataObject["psi"] },["psi"]) : dataObject; 
-  });
+        return dataObject;
+      })
+    ),
+    (dataObject: any) => {
+      return _.keys(dataObject).includes('psi')
+        ? _.omit({ ...dataObject, tei: dataObject['psi'] }, ['psi'])
+        : dataObject;
+    }
+  );
 }

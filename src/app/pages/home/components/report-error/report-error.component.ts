@@ -8,14 +8,13 @@ import { getCurrentAnalyticsError } from 'src/app/store/selectors/report-data.se
 @Component({
   selector: 'app-report-error',
   templateUrl: './report-error.component.html',
-  styleUrls: ['./report-error.component.css']
+  styleUrls: ['./report-error.component.css'],
 })
 export class ReportErrorComponent implements OnInit {
   reportErrors$: Observable<ErrorMessage>;
-  constructor(private store:Store<State>) { }
+  constructor(private store: Store<State>) {}
 
   ngOnInit(): void {
-    this.reportErrors$ = this.store.select(getCurrentAnalyticsError)
+    this.reportErrors$ = this.store.select(getCurrentAnalyticsError);
   }
-
 }

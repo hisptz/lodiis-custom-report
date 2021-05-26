@@ -8,9 +8,8 @@ describe('PeriodFilterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PeriodFilterComponent ]
-    })
-    .compileComponents();
+      declarations: [PeriodFilterComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

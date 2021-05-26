@@ -7,5 +7,5 @@ export interface UserState extends BaseState {
 
 export const initialUserState: UserState = {
   ...initialBaseState,
-  currentUser: null
+  currentUser: null,
 };

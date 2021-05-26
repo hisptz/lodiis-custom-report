@@ -3,29 +3,29 @@ import { createReducer, on } from '@ngrx/store';
 import { addSystemInfo, loadSystemInfo, loadSystemInfoFail } from '../actions';
 import {
   initialSystemInfoState,
-  SystemInfoState
+  SystemInfoState,
 } from '../states/system-info.state';
 import {
   loadingBaseState,
   loadedBaseState,
-  errorBaseState
+  errorBaseState,
 } from '../states/base.state';
 
 export const reducer = createReducer(
   initialSystemInfoState,
-  on(loadSystemInfo, state => ({
+  on(loadSystemInfo, (state) => ({
     ...state,
-    ...loadingBaseState
+    ...loadingBaseState,
   })),
   on(addSystemInfo, (state, { systemInfo }) => ({
     ...state,
     ...loadedBaseState,
-    systemInfo
+    systemInfo,
   })),
   on(loadSystemInfoFail, (state, { error }) => ({
     ...state,
     ...errorBaseState,
-    error
+    error,
   }))
 );
 
