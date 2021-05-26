@@ -18,6 +18,7 @@ import {
 import {
   getCurrentUserOrganisationUnits,
   getSelectedGeneratedReport,
+  isCurrentUserHasCountryLevelOrganisationUnit,
 } from 'src/app/store/selectors';
 import * as reportConfig from '../../../../core/config/report.config.json';
 import { Report } from 'src/app/shared/models/report.model';
@@ -44,6 +45,7 @@ export class HomeComponent implements OnInit {
   analytics$: Observable<any>;
   analyticsError$: Observable<any>;
   generatedReport$: Observable<GeneratedReport>;
+  hasCountryLevelOrganisationUnit$: Observable<boolean>;
 
   constructor(
     private dialog: MatDialog,
@@ -53,6 +55,9 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.hasCountryLevelOrganisationUnit$ = this.store.select(
+      isCurrentUserHasCountryLevelOrganisationUnit
+    );
     this.isLoading$ = this.store.select(getCurrentAnalyticsLoadingStatus);
     this.analytics$ = this.store.select(getCurrentAnalytics);
     this.analyticsError$ = this.store.select(getCurrentAnalyticsError);
@@ -72,6 +77,16 @@ export class HomeComponent implements OnInit {
           );
         }
       });
+  }
+
+  getSanitizedListOfReport(hasCountryLevelOrganisationUnit: boolean) {
+    return hasCountryLevelOrganisationUnit
+      ? this.reports
+      : _.filter(
+          this.reports,
+          (report: Report) =>
+            !(report.disableOrgUnitSelection && report.disablePeriodSelection)
+        );
   }
 
   openOrganisationUnitFilter() {

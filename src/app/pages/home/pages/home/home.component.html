@@ -12,7 +12,11 @@
               <mat-option
                 class="mat-select-content"
                 value="{{ report.id }}"
-                *ngFor="let report of reports"
+                *ngFor="
+                  let report of getSanitizedListOfReport(
+                    hasCountryLevelOrganisationUnit$ | async
+                  )
+                "
                 >{{ report.name }}</mat-option
               >
             </mat-select>

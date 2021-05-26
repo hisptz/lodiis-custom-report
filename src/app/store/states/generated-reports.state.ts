@@ -14,11 +14,10 @@ export const generatedReportAdapter = createEntityAdapter<GeneratedReport>({
   selectId: selectGeneratedReportsId,
 });
 
-export const initialGeneratedReportsState: GeneratedReportsState = generatedReportAdapter.getInitialState(
-  {
+export const initialGeneratedReportsState: GeneratedReportsState =
+  generatedReportAdapter.getInitialState({
     ...initialBaseState,
-  }
-);
+  });
 
 export const {
   selectAll: selectAllGeneratedReports,

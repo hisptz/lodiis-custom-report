@@ -23,7 +23,7 @@ export class RouterEffects {
         })
       ),
     {
-      dispatch: false
+      dispatch: false,
     }
   );
 
@@ -36,7 +36,7 @@ export class RouterEffects {
         })
       ),
     {
-      dispatch: false
+      dispatch: false,
     }
   );
 
@@ -49,7 +49,7 @@ export class RouterEffects {
         })
       ),
     {
-      dispatch: false
+      dispatch: false,
     }
   );
 }

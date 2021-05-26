@@ -7,5 +7,5 @@ export interface SystemInfoState extends BaseState {
 
 export const initialSystemInfoState: SystemInfoState = {
   ...initialBaseState,
-  systemInfo: null
+  systemInfo: null,
 };

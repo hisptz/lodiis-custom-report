@@ -15,8 +15,7 @@ export class PeSelectionComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<PeSelectionComponent>,
     @Inject(MAT_DIALOG_DATA) public selectionDialogData: any
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.periodFilterConfig = {

@@ -25,7 +25,7 @@ export function getPeriodName(
         .setCalendar(calendar)
         .setPreferences({
           childrenPeriodSortOrder:
-            (periodConfig && periodConfig.childrenPeriodSortOrder) || 'DESC'
+            (periodConfig && periodConfig.childrenPeriodSortOrder) || 'DESC',
         })
         .get();
       const period = (periodInstance.list() || []).find(
@@ -42,7 +42,7 @@ export function getPeriodName(
         .setCalendar(calendar)
         .setPreferences({
           childrenPeriodSortOrder:
-            (periodConfig && periodConfig.childrenPeriodSortOrder) || 'DESC'
+            (periodConfig && periodConfig.childrenPeriodSortOrder) || 'DESC',
         })
         .get();
       const period = (periodInstance.list() || []).find(
