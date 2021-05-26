@@ -33,11 +33,19 @@ export const isCurrentUserHasCountryLevelOrganisationUnit = createSelector(
   getCurrentUser,
   (currentUser: User) => {
     console.log();
-    const organisationUnits = currentUser ? _.flattenDeep(_.concat(
-      currentUser.organisationUnits || [],
-      currentUser.dataViewOrganisationUnits || []
-    )) : [];
-    const countryLevelOrganisationUnit = _.find(organisationUnits, organisationUnit=> organisationUnit.level && `${organisationUnit.level}` === "1");
+    const organisationUnits = currentUser
+      ? _.flattenDeep(
+          _.concat(
+            currentUser.organisationUnits || [],
+            currentUser.dataViewOrganisationUnits || []
+          )
+        )
+      : [];
+    const countryLevelOrganisationUnit = _.find(
+      organisationUnits,
+      (organisationUnit) =>
+        organisationUnit.level && `${organisationUnit.level}` === '1'
+    );
     return countryLevelOrganisationUnit ? true : false;
   }
 );

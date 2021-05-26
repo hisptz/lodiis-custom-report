@@ -1,4 +1,4 @@
-export function  getFormattedDate(date: any) {
+export function getFormattedDate(date: any) {
   let dateObject = new Date(date);
   if (isNaN(dateObject.getDate())) {
     dateObject = new Date();

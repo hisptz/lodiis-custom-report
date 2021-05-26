@@ -4,7 +4,7 @@ import { SystemInfo, ErrorMessage } from '@iapps/ngx-dhis2-http-client';
 export enum SystemInfoActionTypes {
   LoadSystemInfo = '[SystemInfo] Load System info',
   AddSystemInfo = '[SystemInfo] Add System info',
-  LoadSystemInfoFail = '[SystemInfo] Load System info fail'
+  LoadSystemInfoFail = '[SystemInfo] Load System info fail',
 }
 
 export const loadSystemInfo = createAction('[SystemInfo] Load System info');

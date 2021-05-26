@@ -12,7 +12,7 @@
     "e2e:travis": "ng e2e -- --protractor-config=e2e/protractor-ci.conf.js",
     "compodoc": "./node_modules/.bin/compodoc -p src/tsconfig.app.json",
     "serve-docs": "./node_modules/.bin/compodoc -s -d documentation",
-    "format": "prettier --write \"*.js\" \"src/**/*.ts\" \"test/**/*.ts\""
+    "format": "prettier --write  \"src/**/*.ts\""
   },
   "private": true,
   "dependencies": {

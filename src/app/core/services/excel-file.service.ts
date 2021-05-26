@@ -11,7 +11,6 @@ const EXCEL_EXTENSION = '.xlsx';
   providedIn: 'root',
 })
 export class ExcelFileService {
-
   constructor() {}
 
   async writeToSingleSheetExcelFile(
@@ -40,10 +39,7 @@ export class ExcelFileService {
   private async saveAsExcelFile(buffer: any, fileName: string) {
     try {
       const data: Blob = new Blob([buffer], { type: EXCEL_TYPE });
-      await saveAs(
-        data,
-        fileName + EXCEL_EXTENSION,
-      );
+      await saveAs(data, fileName + EXCEL_EXTENSION);
     } catch (e) {
       throw e;
     }

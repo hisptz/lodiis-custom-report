@@ -10,6 +10,9 @@ export function addPeriodToList(periodList: any[], period: any) {
   return (periodList || []).some(
     (periodItem: any) => periodItem.type === period.type
   )
-    ? uniqBy([...periodList, period].sort((a, b) => b.id - a.id), 'id')
+    ? uniqBy(
+        [...periodList, period].sort((a, b) => b.id - a.id),
+        'id'
+      )
     : periodList;
 }

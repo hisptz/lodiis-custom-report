@@ -1,4 +1,4 @@
-export interface TablePagination{
+export interface TablePagination {
   currentPage: number;
   itemsPerPage: number;
 }

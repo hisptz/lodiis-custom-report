@@ -7,7 +7,7 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import {
   addCurrentUser,
   loadCurrentUser,
-  loadCurrentUserFail
+  loadCurrentUserFail,
 } from '../actions';
 
 @Injectable()

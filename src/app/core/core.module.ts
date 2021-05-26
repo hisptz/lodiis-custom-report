@@ -6,7 +6,7 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
   imports: [CommonModule, HttpClientModule],
   declarations: [],
   providers: [],
-  exports: []
+  exports: [],
 })
 export class CoreModule {
   /* make sure CoreModule is imported only by one NgModule the AppModule */

@@ -3,30 +3,30 @@ import { createReducer, on } from '@ngrx/store';
 import {
   addCurrentUser,
   loadCurrentUser,
-  loadCurrentUserFail
+  loadCurrentUserFail,
 } from '../actions/user.actions';
 import { initialUserState, UserState } from '../states/user.state';
 import {
   loadingBaseState,
   loadedBaseState,
-  errorBaseState
+  errorBaseState,
 } from '../states/base.state';
 
 export const reducer = createReducer(
   initialUserState,
-  on(loadCurrentUser, state => ({
+  on(loadCurrentUser, (state) => ({
     ...state,
-    ...loadingBaseState
+    ...loadingBaseState,
   })),
   on(addCurrentUser, (state, { currentUser }) => ({
     ...state,
     ...loadedBaseState,
-    currentUser
+    currentUser,
   })),
   on(loadCurrentUserFail, (state, { error }) => ({
     ...state,
     ...errorBaseState,
-    error
+    error,
   }))
 );
 

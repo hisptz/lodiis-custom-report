@@ -8,9 +8,8 @@ describe('CurrentSelectionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CurrentSelectionComponent ]
-    })
-    .compileComponents();
+      declarations: [CurrentSelectionComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
