@@ -15,10 +15,26 @@
           "isDate": false
         },
         {
+          "program": "M4uWNFJNMIR",
+          "programStage": "uctHRP6BBXP",
+          "name": "First Name",
+          "id": "JhOvli80Qbx",
+          "isBoolean": false,
+          "isDate": false
+        },
+        {
           "programStage": "",
           "name": "Surname",
           "isAttribute": true,
           "id": "rSP9c21JsfC",
+          "isBoolean": false,
+          "isDate": false
+        },
+        {
+          "program": "M4uWNFJNMIR",
+          "programStage": "uctHRP6BBXP",
+          "name": "Surname",
+          "id": "jjZWuJfVStp",
           "isBoolean": false,
           "isDate": false
         },
@@ -31,10 +47,26 @@
           "isDate": true
         },
         {
+          "program": "M4uWNFJNMIR",
+          "programStage": "uctHRP6BBXP",
+          "name": "Date of Birth",
+          "id": "jVSwC6Ln95H",
+          "isBoolean": false,
+          "isDate": true
+        },
+        {
           "programStage": "",
           "name": "Age",
           "id": "ls9hlz2tyol",
           "isAttribute": true,
+          "isBoolean": false,
+          "isDate": false
+        },
+        {
+          "program": "M4uWNFJNMIR",
+          "programStage": "uctHRP6BBXP",
+          "name": "Age",
+          "id": "mZs1YsN56cR",
           "isBoolean": false,
           "isDate": false
         },
@@ -61,10 +93,26 @@
           "isDate": false
         },
         {
+          "program": "M4uWNFJNMIR",
+          "programStage": "uctHRP6BBXP",
+          "name": "Sex",
+          "id": "an7w8LYPZ7y",
+          "isBoolean": false,
+          "isDate": false
+        },
+        {
           "programStage": "",
           "name": "Contact Numbers",
           "isAttribute": true,
           "id": "tNdoR0jYr7R",
+          "isBoolean": false,
+          "isDate": false
+        },
+        {
+          "program": "M4uWNFJNMIR",
+          "programStage": "uctHRP6BBXP",
+          "name": "Contact Numbers",
+          "id": "ox6mydZjgC3",
           "isBoolean": false,
           "isDate": false
         },
@@ -250,9 +298,10 @@
           "isDate": false
         },
         {
-          "programStage": "",
+          "program": "M4uWNFJNMIR",
+          "programStage": "uctHRP6BBXP",
           "name": "Reason for not enrolling",
-          "id": "",
+          "id": "FHn0nJPumhO",
           "isBoolean": false,
           "isDate": false
         },
