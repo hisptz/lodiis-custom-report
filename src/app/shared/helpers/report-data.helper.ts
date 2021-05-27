@@ -5,10 +5,11 @@ const defaultAnalyticKeys = [
   'eventdate',
   'enrollmentdate',
   'tei',
-  'psi',
   'ouname',
   'ou',
 ];
+
+const noneAgywParticipationProgramStages = ['uctHRP6BBXP'];
 
 export function getProgressPercentage(numerator: number, denominator: number) {
   const percentageValue = ((numerator / denominator) * 100).toFixed(0);
@@ -76,6 +77,9 @@ export function getSanitizedAnalyticData(Analytics: any, programStage: string) {
       _.keys(_.omit(dimensions, _.concat(['ou', 'pe'], dimensions.ou || [])))
     )
   );
+  if(noneAgywParticipationProgramStages.includes(programStage)) {
+    defaultKeys.push('psi');
+  }
   return _.map(
     _.flattenDeep(
       _.map(rows, (rowData: any) => {
