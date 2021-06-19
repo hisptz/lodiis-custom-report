@@ -385,6 +385,14 @@
           "isDate": false
         },
         {
+          "programStage": "bDJq2JWVTbC",
+          "name": "Condom Promotion and Provision",
+          "id": "Eug4BXDFLym",
+          "codes": ["IPC"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
           "programStage": "kq6qeEgbDVY",
           "name": "HIV Testing and Counseling",
           "id": "N8tlZl91pBY",
@@ -1578,6 +1586,14 @@
           "isDate": false
         },
         {
+          "programStage": "bDJq2JWVTbC",
+          "name": "Condom Promotion and Provision",
+          "id": "Eug4BXDFLym",
+          "codes": ["IPC"],
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
           "programStage": "kq6qeEgbDVY",
           "name": "HIV Testing and Counseling",
           "id": "N8tlZl91pBY",
@@ -2509,6 +2525,14 @@
           "programStage": "NXsIkG9Q1BA",
           "name": "Condom Promotion and Provision",
           "id": "uciT2F6ByYO",
+          "isBoolean": true,
+          "isDate": false
+        },
+        {
+          "programStage": "bDJq2JWVTbC",
+          "name": "Condom Promotion and Provision",
+          "id": "Eug4BXDFLym",
+          "codes": ["IPC"],
           "isBoolean": true,
           "isDate": false
         },
