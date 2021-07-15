@@ -27,6 +27,7 @@ import { take } from 'rxjs/operators';
 import { ReportErrorComponent } from '../../components/report-error/report-error.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GeneratedReport } from 'src/app/shared/models/generated-report.model';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
   selector: 'app-home',
@@ -51,8 +52,10 @@ export class HomeComponent implements OnInit {
     private dialog: MatDialog,
     private store: Store<State>,
     private excelFileService: ExcelFileService,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private configService: ConfigService
   ) {}
+
 
   ngOnInit() {
     this.hasCountryLevelOrganisationUnit$ = this.store.select(
@@ -63,7 +66,7 @@ export class HomeComponent implements OnInit {
     this.analyticsError$ = this.store.select(getCurrentAnalyticsError);
     this.downloading = false;
     this.selectedPeriods = [];
-    this.reports = reportConfig.report || [];
+    this.fetchReportConfig();
     this.store
       .select(getCurrentUserOrganisationUnits)
       .subscribe((userOrganisationUnits) => {
@@ -77,6 +80,14 @@ export class HomeComponent implements OnInit {
           );
         }
       });
+  }
+
+  fetchReportConfig(): void {
+    this.configService.getReportConfigs().pipe(take(1)).subscribe((configs) => {
+      this.reports = configs.reports || reportConfig.reports || [];
+    }, (error) => {
+      this.reports = reportConfig.reports || [];
+    });
   }
 
   getSanitizedListOfReport(hasCountryLevelOrganisationUnit: boolean) {
