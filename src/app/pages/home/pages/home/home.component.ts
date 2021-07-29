@@ -86,11 +86,11 @@ export class HomeComponent implements OnInit {
       .getReportConfigs()
       .pipe(take(1))
       .subscribe(
-        (configs) => {
+        (configs: any) => {
           this.reports = configs.reports || reportConfig.reports || [];
         },
         (error) => {
-          this.reports = reportConfig.reports || [];
+          this.reports = reportConfig.reports || ([] as Array<any>);
         }
       );
   }

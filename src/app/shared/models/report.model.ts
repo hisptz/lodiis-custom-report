@@ -2,6 +2,7 @@ export interface Report {
   id: string;
   name: string;
   program: string;
+  includeEnrollmentWithoutService?: boolean;
   disablePeriodSelection?: boolean;
   disableOrgUnitSelection?: boolean;
   dxConfigs: DxConfig[];
