@@ -56,16 +56,56 @@ export class ReportDataEffects {
       let overAllProcessCount = 0;
       let bufferProcessCount = 0;
       const locations = await this.getAllLocations();
+      const eventAnalyticParamaters = _.flattenDeep(
+        _.filter(
+          analyticParameters,
+          (parameter: any) => parameter && !parameter.isEnrollmentAnalytic
+        )
+      );
+      const enrollmentAnalyticParamaters = _.flattenDeep(
+        _.filter(
+          analyticParameters,
+          (parameter: any) => parameter && parameter.isEnrollmentAnalytic
+        )
+      );
+      for (const analyticParameter of enrollmentAnalyticParamaters) {
+        const programId = analyticParameter.programId || '';
+        if (programId !== '') {
+          const programStages: any = await this.getProgramStagesByProgramId(
+            programId
+          );
+          if (programStages && programStages.length > 0) {
+            const programStageId = programStages[0];
+            const response: any =
+              await this.getAnalyticParameterWithPaginationFilter(
+                {
+                  ...analyticParameter,
+                  dx: _.flattenDeep(
+                    _.map(
+                      analyticParameter.dx || [],
+                      (dataId: string) => `${programStageId}.${dataId}`
+                    )
+                  ),
+                },
+                programId,
+                reportConfig
+              );
+            console.log({ response });
+            //totalOverAllProcess += response.paginationFilters.length;
+            //analyticParametersWithPaginationFilters.push(response);
+          }
+        }
+      }
       for (const programId of programIds) {
-        for (const analyticParameter of analyticParameters) {
+        for (const analyticParameter of eventAnalyticParamaters) {
           const response: any =
             await this.getAnalyticParameterWithPaginationFilter(
               analyticParameter,
               programId,
               reportConfig
             );
-          totalOverAllProcess += response.paginationFilters.length;
-          analyticParametersWithPaginationFilters.push(response);
+          //totalOverAllProcess += response.paginationFilters.length;
+          //analyticParametersWithPaginationFilters.push(response);
         }
       }
 
@@ -112,6 +152,27 @@ export class ReportDataEffects {
       'District of Service',
       'Last Service Community Council',
     ]);
+  }
+
+  getProgramStagesByProgramId(programId: string) {
+    const url = `programs/${programId}.json?fields=id,programStages[id]`;
+    return new Promise((resolve, reject) => {
+      this.httpClient
+        .get(url)
+        .pipe(take(1))
+        .subscribe(
+          (data) => {
+            const programStages = _.flattenDeep(
+              _.map(
+                data.programStages || [],
+                (programStage) => programStage.id || []
+              )
+            );
+            resolve(programStages);
+          },
+          (error) => reject([])
+        );
+    });
   }
 
   getAllLocations() {
@@ -174,6 +235,9 @@ export class ReportDataEffects {
     programId: string,
     reportConfig: any
   ) {
+    const isEnrollmentAnalytic =
+      analyticParameter.isEnrollmentAnalytic || false;
+    console.log({ isEnrollmentAnalytic, analyticParameter });
     const paginationFilters = [];
     const pe = _.join(analyticParameter.pe || [], ';');
     const ou = _.join(analyticParameter.ou || [], ';');

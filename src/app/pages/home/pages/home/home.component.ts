@@ -183,14 +183,12 @@ export class HomeComponent implements OnInit {
         selectedProgramIds,
         this.selectedReport.dxConfigs
       );
-      //@TODO paramter set enrollment data
-      console.log({ analyticParameters, selectedProgramIds });
-      // this.store.dispatch(
-      //   LoadReportData({
-      //     analyticParameters,
-      //     reportConfig: this.selectedReport,
-      //   })
-      // );
+      this.store.dispatch(
+        LoadReportData({
+          analyticParameters,
+          reportConfig: this.selectedReport,
+        })
+      );
     }
   }
 
