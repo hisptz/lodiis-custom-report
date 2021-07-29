@@ -172,17 +172,25 @@ export class HomeComponent implements OnInit {
 
   onGenerateReport() {
     if (this.selectedReport && !this.selectedReport.disablePeriodSelection) {
+      const includeEnrollmentWithoutService =
+        this.selectedReport.includeEnrollmentWithoutService || false;
+      const selectedProgramIds = includeEnrollmentWithoutService
+        ? _.flattenDeep([this.selectedReport.program])
+        : [];
       const analyticParameters = getAnalyticsParameters(
         this.selectedOrgUnitItems,
         this.selectedPeriods,
+        selectedProgramIds,
         this.selectedReport.dxConfigs
       );
-      this.store.dispatch(
-        LoadReportData({
-          analyticParameters,
-          reportConfig: this.selectedReport,
-        })
-      );
+      //@TODO paramter set enrollment data
+      console.log({ analyticParameters, selectedProgramIds });
+      // this.store.dispatch(
+      //   LoadReportData({
+      //     analyticParameters,
+      //     reportConfig: this.selectedReport,
+      //   })
+      // );
     }
   }
 
