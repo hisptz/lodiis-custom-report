@@ -77,7 +77,7 @@ export function getSanitizedAnalyticData(Analytics: any, programStage: string) {
       _.keys(_.omit(dimensions, _.concat(['ou', 'pe'], dimensions.ou || [])))
     )
   );
-  if(noneAgywParticipationProgramStages.includes(programStage)) {
+  if (noneAgywParticipationProgramStages.includes(programStage)) {
     defaultKeys.push('psi');
   }
   return _.map(

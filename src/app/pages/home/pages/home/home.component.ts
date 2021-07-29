@@ -56,7 +56,6 @@ export class HomeComponent implements OnInit {
     private configService: ConfigService
   ) {}
 
-
   ngOnInit() {
     this.hasCountryLevelOrganisationUnit$ = this.store.select(
       isCurrentUserHasCountryLevelOrganisationUnit
@@ -83,11 +82,17 @@ export class HomeComponent implements OnInit {
   }
 
   fetchReportConfig(): void {
-    this.configService.getReportConfigs().pipe(take(1)).subscribe((configs) => {
-      this.reports = configs.reports || reportConfig.reports || [];
-    }, (error) => {
-      this.reports = reportConfig.reports || [];
-    });
+    this.configService
+      .getReportConfigs()
+      .pipe(take(1))
+      .subscribe(
+        (configs) => {
+          this.reports = configs.reports || reportConfig.reports || [];
+        },
+        (error) => {
+          this.reports = reportConfig.reports || [];
+        }
+      );
   }
 
   getSanitizedListOfReport(hasCountryLevelOrganisationUnit: boolean) {

@@ -48,7 +48,7 @@ export class ReportDataEffects {
 
   async getEventReportAnalyticData(analyticParameters: any, reportConfig: any) {
     const eventReportAnalyticData = [];
-    const programId = reportConfig.program;
+    const programIds = _.flattenDeep([reportConfig.program]);
     const analyticData = [];
     const analyticParametersWithPaginationFilters = [];
     try {
@@ -56,16 +56,19 @@ export class ReportDataEffects {
       let overAllProcessCount = 0;
       let bufferProcessCount = 0;
       const locations = await this.getAllLocations();
-      for (const analyticParameter of analyticParameters) {
-        const response: any =
-          await this.getAnalyticParameterWithPaginationFilter(
-            analyticParameter,
-            programId,
-            reportConfig
-          );
-        totalOverAllProcess += response.paginationFilters.length;
-        analyticParametersWithPaginationFilters.push(response);
+      for (const programId of programIds) {
+        for (const analyticParameter of analyticParameters) {
+          const response: any =
+            await this.getAnalyticParameterWithPaginationFilter(
+              analyticParameter,
+              programId,
+              reportConfig
+            );
+          totalOverAllProcess += response.paginationFilters.length;
+          analyticParametersWithPaginationFilters.push(response);
+        }
       }
+
       for (const analyticParameter of _.flattenDeep(
         analyticParametersWithPaginationFilters
       )) {
