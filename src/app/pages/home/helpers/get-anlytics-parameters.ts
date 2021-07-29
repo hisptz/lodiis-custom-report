@@ -8,12 +8,10 @@ export function getAnalyticsParameters(
   const pe = _.uniq(
     _.flattenDeep(_.map(selectedPeriods, (period: any) => period.id || []))
   );
-
   const attributes = _.filter(
     dxConfigs || [],
     (dxConfig: any) => dxConfig.isAttribute
   );
-
   const dataElements = _.filter(
     dxConfigs || [],
     (dxConfig: any) => !dxConfig.isAttribute
@@ -83,7 +81,20 @@ export function getAnalyticsParameters(
               )
             );
             const programId = programIds.length > 0 ? programIds[0] : '';
-            return { ou, pe, dx, programId };
+            return {
+              ou,
+              pe,
+              dx,
+              programId,
+              attributes: _.uniq(
+                _.flattenDeep(
+                  _.map(
+                    attributes || [],
+                    (attributeObject: any) => attributeObject.id || []
+                  )
+                )
+              ),
+            };
           } else {
             return [];
           }
