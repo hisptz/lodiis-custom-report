@@ -56,7 +56,7 @@ export class ReportDataEffects {
       let overAllProcessCount = 0;
       let bufferProcessCount = 0;
       const locations = await this.getAllLocations();
-      for(const programId of programIds) {
+      for (const programId of programIds) {
         for (const analyticParameter of analyticParameters) {
           const response: any =
             await this.getAnalyticParameterWithPaginationFilter(
