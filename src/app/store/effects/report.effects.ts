@@ -56,8 +56,47 @@ export class ReportDataEffects {
       let overAllProcessCount = 0;
       let bufferProcessCount = 0;
       const locations = await this.getAllLocations();
+      const eventAnalyticParamaters = _.flattenDeep(
+        _.filter(
+          analyticParameters,
+          (parameter: any) => parameter && !parameter.isEnrollmentAnalytic
+        )
+      );
+      const enrollmentAnalyticParamaters = _.flattenDeep(
+        _.filter(
+          analyticParameters,
+          (parameter: any) => parameter && parameter.isEnrollmentAnalytic
+        )
+      );
+      for (const analyticParameter of enrollmentAnalyticParamaters) {
+        const programId = analyticParameter.programId || '';
+        if (programId !== '') {
+          const programStages: any = await this.getProgramStagesByProgramId(
+            programId
+          );
+          if (programStages && programStages.length > 0) {
+            const programStageId = programStages[0];
+            const response: any =
+              await this.getAnalyticParameterWithPaginationFilter(
+                {
+                  ...analyticParameter,
+                  dx: _.flattenDeep(
+                    _.map(
+                      analyticParameter.dx || [],
+                      (dataId: string) => `${programStageId}.${dataId}`
+                    )
+                  ),
+                },
+                programId,
+                reportConfig
+              );
+            totalOverAllProcess += response.paginationFilters.length;
+            analyticParametersWithPaginationFilters.push(response);
+          }
+        }
+      }
       for (const programId of programIds) {
-        for (const analyticParameter of analyticParameters) {
+        for (const analyticParameter of eventAnalyticParamaters) {
           const response: any =
             await this.getAnalyticParameterWithPaginationFilter(
               analyticParameter,
@@ -68,7 +107,6 @@ export class ReportDataEffects {
           analyticParametersWithPaginationFilters.push(response);
         }
       }
-
       for (const analyticParameter of _.flattenDeep(
         analyticParametersWithPaginationFilters
       )) {
@@ -114,6 +152,27 @@ export class ReportDataEffects {
     ]);
   }
 
+  getProgramStagesByProgramId(programId: string) {
+    const url = `programs/${programId}.json?fields=id,programStages[id]`;
+    return new Promise((resolve, reject) => {
+      this.httpClient
+        .get(url)
+        .pipe(take(1))
+        .subscribe(
+          (data) => {
+            const programStages = _.flattenDeep(
+              _.map(
+                data.programStages || [],
+                (programStage) => programStage.id || []
+              )
+            );
+            resolve(programStages);
+          },
+          () => reject([])
+        );
+    });
+  }
+
   getAllLocations() {
     const url =
       'organisationUnits.json?fields=id,name,level,ancestors[name,level]&paging=false';
@@ -133,7 +192,7 @@ export class ReportDataEffects {
             );
             resolve(loctions);
           },
-          (error) => reject([])
+          () => reject([])
         );
     });
   }
@@ -174,15 +233,18 @@ export class ReportDataEffects {
     programId: string,
     reportConfig: any
   ) {
+    const isEnrollmentAnalytic =
+      analyticParameter.isEnrollmentAnalytic || false;
     const paginationFilters = [];
     const pe = _.join(analyticParameter.pe || [], ';');
     const ou = _.join(analyticParameter.ou || [], ';');
     const startDate = getFormattedDate(new Date('1990-01-01'));
     const endDate = getFormattedDate(new Date());
-    const stage = _.map(
+    const stages = _.map(
       analyticParameter.dx || [],
       (dx: string) => dx.split('.')[0]
-    )[0];
+    );
+    const stage = stages.length > 0 ? stages[0] : '';
     const dataDimension = _.join(
       _.map(analyticParameter.dx || [], (dx: string) => `dimension=${dx}`),
       '&'
@@ -196,7 +258,9 @@ export class ReportDataEffects {
         ? `startDate=${startDate}&endDate=${endDate}`
         : `dimension=pe:${pe}`;
     const pageSize = 1000;
-    const url = `analytics/events/query/${programUid}.json?${periodDimension}&dimension=ou:${ou}&${dataDimension}&stage=${stage}&displayProperty=NAME&outputType=EVENT&desc=eventdate`;
+    const url = isEnrollmentAnalytic
+      ? `analytics/enrollments/query/${programUid}.json?${periodDimension}&dimension=ou:${ou}&${dataDimension}&stage=${stage}&displayProperty=NAME&outputType=ENROLLMENT&desc=enrollmentdate`
+      : `analytics/events/query/${programUid}.json?${periodDimension}&dimension=ou:${ou}&${dataDimension}&stage=${stage}&displayProperty=NAME&outputType=EVENT&desc=eventdate`;
     try {
       const response: any = await this.getPaginatinationFilters(url, pageSize);
       paginationFilters.push(response);
