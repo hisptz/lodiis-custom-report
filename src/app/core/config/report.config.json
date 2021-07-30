@@ -5,7 +5,7 @@
       "name": "OVC Layering Dataset (Services)",
       "program": ["em38qztTI8s", "BNsDaCclOiu"],
       "includeEnrollmentWithoutService": true,
-      "allowedImplementingPartner": [
+      "allowedImplementingPartners": [
         "H2CE3Iwdf7v",
         "RoLA6GyxTlS",
         "NuxoYkqopE2",
@@ -761,7 +761,7 @@
       "name": "DREAMS Layering Dataset (Services)",
       "program": "hOEIHJDrrvz",
       "includeEnrollmentWithoutService": false,
-      "allowedImplementingPartner": [
+      "allowedImplementingPartners": [
         "H2CE3Iwdf7v",
         "vVMJBQvvm5D",
         "tmuVlsiEjUi",
@@ -1288,7 +1288,7 @@
       "name": "KB DREAMS Layering Dataset (Services)",
       "program": "hOEIHJDrrvz",
       "includeEnrollmentWithoutService": true,
-      "allowedImplementingPartner": [
+      "allowedImplementingPartners": [
         "H2CE3Iwdf7v",
         "RoLA6GyxTlS",
         "NuxoYkqopE2",
@@ -1839,7 +1839,7 @@
       "name": "DREAMS Layering Dataset (Referral)",
       "program": "hOEIHJDrrvz",
       "includeEnrollmentWithoutService": false,
-      "allowedImplementingPartner": [
+      "allowedImplementingPartners": [
         "H2CE3Iwdf7v",
         "vVMJBQvvm5D",
         "tmuVlsiEjUi",
@@ -2570,7 +2570,7 @@
       "name": "DREAMS Layering Dataset (Service and Referral)",
       "program": "hOEIHJDrrvz",
       "includeEnrollmentWithoutService": false,
-      "allowedImplementingPartner": [
+      "allowedImplementingPartners": [
         "H2CE3Iwdf7v",
         "vVMJBQvvm5D",
         "tmuVlsiEjUi",
@@ -3534,7 +3534,7 @@
       "name": "Cumulative DREAMS Layering Dataset",
       "program": "hOEIHJDrrvz",
       "includeEnrollmentWithoutService": false,
-      "allowedImplementingPartner": ["H2CE3Iwdf7v"],
+      "allowedImplementingPartners": ["H2CE3Iwdf7v"],
       "disablePeriodSelection": true,
       "disableOrgUnitSelection": true,
       "dxConfigs": [
