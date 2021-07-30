@@ -81,18 +81,41 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  fetchReportConfig(): void {
+  async fetchReportConfig() {
+    const implementingPartnerId =
+      (await this.configService.getUserImpelementingPartner()) as string;
     this.configService
       .getReportConfigs()
       .pipe(take(1))
       .subscribe(
         (configs: any) => {
-          this.reports = configs.reports || reportConfig.reports || [];
+          const reports = configs.reports || reportConfig.reports || [];
+          this.reports = this.getFilteredReportByUserImplementingPartner(
+            reports,
+            implementingPartnerId
+          );
         },
-        (error) => {
-          this.reports = reportConfig.reports || ([] as Array<any>);
+        () => {
+          const reports = reportConfig.reports || ([] as Array<any>);
+          this.reports = this.getFilteredReportByUserImplementingPartner(
+            reports,
+            implementingPartnerId
+          );
         }
       );
+  }
+
+  getFilteredReportByUserImplementingPartner(
+    reports: Report[],
+    implementingPartnerId: string
+  ) {
+    return _.filter(
+      reports || [],
+      (report: Report) =>
+        report &&
+        report.allowedImplementingPartners &&
+        report.allowedImplementingPartners.includes(implementingPartnerId)
+    );
   }
 
   getSanitizedListOfReport(hasCountryLevelOrganisationUnit: boolean) {
