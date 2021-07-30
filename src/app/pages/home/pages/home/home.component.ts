@@ -86,11 +86,11 @@ export class HomeComponent implements OnInit {
       .getReportConfigs()
       .pipe(take(1))
       .subscribe(
-        (configs) => {
+        (configs: any) => {
           this.reports = configs.reports || reportConfig.reports || [];
         },
         (error) => {
-          this.reports = reportConfig.reports || [];
+          this.reports = reportConfig.reports || ([] as Array<any>);
         }
       );
   }
@@ -172,9 +172,15 @@ export class HomeComponent implements OnInit {
 
   onGenerateReport() {
     if (this.selectedReport && !this.selectedReport.disablePeriodSelection) {
+      const includeEnrollmentWithoutService =
+        this.selectedReport.includeEnrollmentWithoutService || false;
+      const selectedProgramIds = includeEnrollmentWithoutService
+        ? _.flattenDeep([this.selectedReport.program])
+        : [];
       const analyticParameters = getAnalyticsParameters(
         this.selectedOrgUnitItems,
         this.selectedPeriods,
+        selectedProgramIds,
         this.selectedReport.dxConfigs
       );
       this.store.dispatch(
