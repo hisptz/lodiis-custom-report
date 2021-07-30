@@ -117,7 +117,13 @@ export function getFormattedEventAnalyticDataForReport(
 function getLastServiceFromAnalyticData(analyticDataByBeneficiary: Array<any>) {
   let lastService = {};
   const sortedServices = _.reverse(
-    _.sortBy(analyticDataByBeneficiary, ['eventdate'])
+    _.sortBy(
+      _.filter(
+        analyticDataByBeneficiary,
+        (data: any) => data && data.hasOwnProperty('eventdate')
+      ),
+      ['eventdate']
+    )
   );
   if (sortedServices.length > 0) {
     lastService = { ...lastService, ...sortedServices[0] };
