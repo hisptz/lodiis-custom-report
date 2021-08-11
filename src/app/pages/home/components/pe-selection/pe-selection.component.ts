@@ -17,6 +17,7 @@ export class PeSelectionComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public selectionDialogData: any
   ) {}
 
+  //@TODO allowing date range
   ngOnInit(): void {
     this.periodFilterConfig = {
       singleSelection: false,

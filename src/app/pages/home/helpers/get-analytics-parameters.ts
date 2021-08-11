@@ -6,6 +6,8 @@ export function getAnalyticsParameters(
   selectedProgramIds: Array<string>,
   dxConfigs: Array<{ id: string; name: string; programStage: string }>
 ) {
+  
+  //@TODO getting attributes & stages per programs selected
   const enrollmentAnalyticParameters = [];
   const pe = _.uniq(
     _.flattenDeep(_.map(selectedPeriods, (period: any) => period.id || []))
@@ -18,6 +20,7 @@ export function getAnalyticsParameters(
       )
     )
   );
+  //@TODO Filtering dxConfig withou id
   const attributes = _.filter(
     dxConfigs || [],
     (dxConfig: any) => dxConfig.isAttribute
@@ -27,6 +30,7 @@ export function getAnalyticsParameters(
     (dxConfig: any) => !dxConfig.isAttribute
   );
 
+  //@TODO filtering attributes per program
   if (selectedProgramIds.length > 0 && attributes.length > 0) {
     enrollmentAnalyticParameters.push(
       _.map(selectedProgramIds || [], (selectedProgramId: string) => {
@@ -48,6 +52,8 @@ export function getAnalyticsParameters(
     );
   }
 
+   //@TODO filtering attributes per stages 
+   //@TODO filtering stages data
   const groupedDataElements = _.groupBy(dataElements || [], 'programStage');
   const groupedDxConfigs = _.mapValues(
     groupedDataElements,

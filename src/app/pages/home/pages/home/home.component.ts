@@ -9,7 +9,7 @@ import { OuSelectionComponent } from '../../components/ou-selection/ou-selection
 import { getDefaultOrganisationUnitSelections } from '../../helpers/get-dafault-selections';
 import { State } from 'src/app/store/reducers';
 import { ClearReportData, LoadReportData } from 'src/app/store/actions';
-import { getAnalyticsParameters } from '../../helpers/get-anlytics-parameters';
+import { getAnalyticsParameters } from '../../helpers/get-analytics-parameters';
 import {
   getCurrentAnalyticsLoadingStatus,
   getCurrentAnalytics,
@@ -158,6 +158,7 @@ export class HomeComponent implements OnInit {
     });
     selectionDialog.afterClosed().subscribe((dialogData: any) => {
       if (dialogData && dialogData.action && dialogData.action === 'UPDATE') {
+        //@TODO handling date randge issues on period selection
         this.selectedPeriods =
           dialogData.selectedPeriods.items || this.selectedPeriods;
       }
