@@ -6,11 +6,15 @@ export function getAnalyticsParameters(
   selectedProgramIds: Array<string>,
   dxConfigs: Array<{ id: string; name: string; programStage: string }>
 ) {
-  
   //@TODO getting attributes & stages per programs selected
   const enrollmentAnalyticParameters = [];
   const pe = _.uniq(
-    _.flattenDeep(_.map(selectedPeriods, (period: any) => period.id || []))
+    _.flattenDeep(
+      _.map(selectedPeriods, (period: any) => {
+        const { id, type, endDate, startDate } = period;
+        return startDate && endDate && startDate.id && endDate.id&& type && `${type}`.toLowerCase() == 'dates-range' ? `startDate=${startDate.id}&endDate=${endDate.id}` : id ||[];
+      })
+    )
   );
   const ou = _.uniq(
     _.flattenDeep(
@@ -20,10 +24,10 @@ export function getAnalyticsParameters(
       )
     )
   );
-  //@TODO Filtering dxConfig withou id
+
   const attributes = _.filter(
     dxConfigs || [],
-    (dxConfig: any) => dxConfig.isAttribute
+    (dxConfig: any) => dxConfig.isAttribute && dxConfig.id && dxConfig.id !== ""
   );
   const dataElements = _.filter(
     dxConfigs || [],
@@ -52,8 +56,8 @@ export function getAnalyticsParameters(
     );
   }
 
-   //@TODO filtering attributes per stages 
-   //@TODO filtering stages data
+  //@TODO filtering attributes per stages
+  //@TODO filtering stages data
   const groupedDataElements = _.groupBy(dataElements || [], 'programStage');
   const groupedDxConfigs = _.mapValues(
     groupedDataElements,
@@ -66,6 +70,7 @@ export function getAnalyticsParameters(
         programStageDataElements.length > 0
           ? programStageDataElements[0].program || ''
           : '';
+          // @TODO getting attributes per program
       const configs =
         programId && programId !== ''
           ? [...programStageDataElements]

@@ -233,6 +233,7 @@ export class ReportDataEffects {
     programId: string,
     reportConfig: any
   ) {
+    const pageSize = 1000;
     const isEnrollmentAnalytic =
       analyticParameter.isEnrollmentAnalytic || false;
     const paginationFilters = [];
@@ -256,8 +257,7 @@ export class ReportDataEffects {
     const periodDimension =
       reportConfig && reportConfig.disablePeriodSelection
         ? `startDate=${startDate}&endDate=${endDate}`
-        : `dimension=pe:${pe}`;
-    const pageSize = 1000;
+        : `${pe}`.includes("startDate=")? `${pe}` : `dimension=pe:${pe}`;
     const url = isEnrollmentAnalytic
       ? `analytics/enrollments/query/${programUid}.json?${periodDimension}&dimension=ou:${ou}&${dataDimension}&stage=${stage}&displayProperty=NAME&outputType=ENROLLMENT&desc=enrollmentdate`
       : `analytics/events/query/${programUid}.json?${periodDimension}&dimension=ou:${ou}&${dataDimension}&stage=${stage}&displayProperty=NAME&outputType=EVENT&desc=eventdate`;

@@ -158,7 +158,6 @@ export class HomeComponent implements OnInit {
     });
     selectionDialog.afterClosed().subscribe((dialogData: any) => {
       if (dialogData && dialogData.action && dialogData.action === 'UPDATE') {
-        //@TODO handling date randge issues on period selection
         this.selectedPeriods =
           dialogData.selectedPeriods.items || this.selectedPeriods;
       }
