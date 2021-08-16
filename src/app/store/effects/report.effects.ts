@@ -257,7 +257,9 @@ export class ReportDataEffects {
     const periodDimension =
       reportConfig && reportConfig.disablePeriodSelection
         ? `startDate=${startDate}&endDate=${endDate}`
-        : `${pe}`.includes("startDate=")? `${pe}` : `dimension=pe:${pe}`;
+        : `${pe}`.includes('startDate=')
+        ? `${pe}`
+        : `dimension=pe:${pe}`;
     const url = isEnrollmentAnalytic
       ? `analytics/enrollments/query/${programUid}.json?${periodDimension}&dimension=ou:${ou}&${dataDimension}&stage=${stage}&displayProperty=NAME&outputType=ENROLLMENT&desc=enrollmentdate`
       : `analytics/events/query/${programUid}.json?${periodDimension}&dimension=ou:${ou}&${dataDimension}&stage=${stage}&displayProperty=NAME&outputType=EVENT&desc=eventdate`;

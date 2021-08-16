@@ -233,6 +233,7 @@ export class HomeComponent implements OnInit {
         this.selectedOrgUnitItems,
         this.selectedPeriods,
         selectedProgramIds,
+        this.programMetadataObjects,
         this.selectedReport.dxConfigs
       );
       this.store.dispatch(
