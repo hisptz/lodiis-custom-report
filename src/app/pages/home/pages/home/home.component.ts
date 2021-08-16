@@ -39,6 +39,7 @@ export class HomeComponent implements OnInit {
   disablePeriodSelection: boolean;
   disableOrgUnitSelection: boolean;
   selectedOrgUnitItems: Array<any>;
+  programMetadataObjects: any;
   selectedReport: Report;
   reports: Array<Report>;
   isLoading$: Observable<boolean>;
@@ -65,6 +66,7 @@ export class HomeComponent implements OnInit {
     this.analyticsError$ = this.store.select(getCurrentAnalyticsError);
     this.downloading = false;
     this.selectedPeriods = [];
+    this.programMetadataObjects = {};
     this.fetchReportConfig();
     this.store
       .select(getCurrentUserOrganisationUnits)
@@ -90,19 +92,46 @@ export class HomeComponent implements OnInit {
       .subscribe(
         (configs: any) => {
           const reports = configs.reports || reportConfig.reports || [];
-          this.reports = this.getFilteredReportByUserImplementingPartner(
-            reports,
-            implementingPartnerId
+          const reportsByCurrentIp =
+            this.getFilteredReportByUserImplementingPartner(
+              reports,
+              implementingPartnerId
+            );
+          const selectedProgramIds = _.uniq(
+            _.flattenDeep(
+              _.map(
+                reportsByCurrentIp,
+                (report: Report) => report.program || []
+              )
+            )
           );
+          this.setProgramMetadata(selectedProgramIds);
+          this.reports = reportsByCurrentIp;
         },
         () => {
           const reports = reportConfig.reports || ([] as Array<any>);
-          this.reports = this.getFilteredReportByUserImplementingPartner(
-            reports,
-            implementingPartnerId
+          const reportsByCurrentIp =
+            this.getFilteredReportByUserImplementingPartner(
+              reports,
+              implementingPartnerId
+            );
+          const selectedProgramIds = _.uniq(
+            _.flattenDeep(
+              _.map(
+                reportsByCurrentIp,
+                (report: Report) => report.program || []
+              )
+            )
           );
+          this.setProgramMetadata(selectedProgramIds);
+          this.reports = reportsByCurrentIp;
         }
       );
+  }
+
+  async setProgramMetadata(programIds: String[] = []) {
+    this.programMetadataObjects =
+      await this.configService.getExtendeReportMetadata(programIds);
   }
 
   getFilteredReportByUserImplementingPartner(
@@ -231,14 +260,6 @@ export class HomeComponent implements OnInit {
   presentSnackBar(message: string, action = '') {
     this.snackbar.open(message, _.upperCase(action), {
       duration: 1000,
-    });
-  }
-
-  onViewErrors() {
-    const width = '800px';
-    const selectionDialog = this.dialog.open(ReportErrorComponent, {
-      width,
-      height: 'auto',
     });
   }
 }

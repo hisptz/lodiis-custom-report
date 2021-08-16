@@ -12,7 +12,14 @@ export function getAnalyticsParameters(
     _.flattenDeep(
       _.map(selectedPeriods, (period: any) => {
         const { id, type, endDate, startDate } = period;
-        return startDate && endDate && startDate.id && endDate.id&& type && `${type}`.toLowerCase() == 'dates-range' ? `startDate=${startDate.id}&endDate=${endDate.id}` : id ||[];
+        return startDate &&
+          endDate &&
+          startDate.id &&
+          endDate.id &&
+          type &&
+          `${type}`.toLowerCase() == 'dates-range'
+          ? `startDate=${startDate.id}&endDate=${endDate.id}`
+          : id || [];
       })
     )
   );
@@ -27,7 +34,7 @@ export function getAnalyticsParameters(
 
   const attributes = _.filter(
     dxConfigs || [],
-    (dxConfig: any) => dxConfig.isAttribute && dxConfig.id && dxConfig.id !== ""
+    (dxConfig: any) => dxConfig.isAttribute && dxConfig.id && dxConfig.id !== ''
   );
   const dataElements = _.filter(
     dxConfigs || [],
@@ -70,7 +77,7 @@ export function getAnalyticsParameters(
         programStageDataElements.length > 0
           ? programStageDataElements[0].program || ''
           : '';
-          // @TODO getting attributes per program
+      // @TODO getting attributes per program
       const configs =
         programId && programId !== ''
           ? [...programStageDataElements]
