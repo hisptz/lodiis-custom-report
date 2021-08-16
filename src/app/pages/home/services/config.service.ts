@@ -17,6 +17,57 @@ export class ConfigService {
     return this.httpClient.get(this.configUrl);
   }
 
+  async getExtendeReportMetadata(programIds: String[] = []) {
+    const programMetadata = {};
+    const filter = `filter=id:in:[${_.join(programIds, ',')}]`;
+    const fields =
+      'fields=id,programStages[id],programTrackedEntityAttributes[trackedEntityAttribute[id]]';
+    const url = `programs.json?&${filter}&${fields}`;
+    return new Promise((resolve, reject) => {
+      this.httpClient
+        .get(`${url}`)
+        .pipe(take(1))
+        .subscribe(
+          (data) => {
+            for (const program of data.programs || []) {
+              const { id, programStages, programTrackedEntityAttributes } =
+                program;
+              const attributes = _.uniq(
+                _.flattenDeep(
+                  _.map(
+                    programTrackedEntityAttributes,
+                    (programTrackedEntityAttribute: any) =>
+                      programTrackedEntityAttribute &&
+                      programTrackedEntityAttribute.trackedEntityAttribute &&
+                      programTrackedEntityAttribute.trackedEntityAttribute.id
+                        ? programTrackedEntityAttribute.trackedEntityAttribute
+                            .id
+                        : []
+                  )
+                )
+              );
+              programMetadata[id] = {
+                id,
+                attributes,
+                programStages: _.uniq(
+                  _.flattenDeep(
+                    _.map(
+                      programStages,
+                      (programStage) => programStage.id || []
+                    )
+                  )
+                ),
+              };
+            }
+            resolve(programMetadata);
+          },
+          () => {
+            resolve(programMetadata);
+          }
+        );
+    });
+  }
+
   async getUserImpelementingPartner() {
     const implementingPartnerAttributeId = 'wpiLo7DTwKF';
     let implementingPartnerId = '';

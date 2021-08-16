@@ -21,7 +21,7 @@ export class PeSelectionComponent implements OnInit {
     this.periodFilterConfig = {
       singleSelection: false,
       emitOnSelection: false,
-      allowDateRangeSelection: false,
+      allowDateRangeSelection: true,
       allowRelativePeriodSelection: true,
       allowFixedPeriodSelection: true,
       contentHeight: '400px',

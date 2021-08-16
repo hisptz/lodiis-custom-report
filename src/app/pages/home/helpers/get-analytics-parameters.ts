@@ -1,0 +1,240 @@
+import * as _ from 'lodash';
+
+export function getAnalyticsParameters(
+  selectedOrgUnitItems: Array<any>,
+  selectedPeriods: Array<any>,
+  selectedProgramIds: Array<string>,
+  programMetadataObjects: any,
+  dxConfigs: Array<{ id: string; name: string; programStage: string }>
+) {
+  const enrollmentAnalyticParameters = [];
+  const pe = getPeriods(selectedPeriods);
+  const ou = getOrganisations(selectedOrgUnitItems);
+  const attributes = getAttributeConfigs(dxConfigs);
+  const dataElements = getDataElementConfigs(dxConfigs);
+  if (selectedProgramIds.length > 0 && attributes.length > 0) {
+    enrollmentAnalyticParameters.push(
+      getEnrollmentAnaliticParameters(
+        selectedProgramIds,
+        programMetadataObjects,
+        attributes,
+        ou,
+        pe
+      )
+    );
+  }
+  const groupedDataElements = _.groupBy(dataElements || [], 'programStage');
+  const groupedDxConfigs = _.mapValues(
+    groupedDataElements,
+    (programStageDataElements: any[]) => {
+      const programStage =
+        programStageDataElements.length > 0
+          ? programStageDataElements[0].programStage
+          : '';
+      const programId =
+        programStageDataElements.length > 0
+          ? programStageDataElements[0].program
+          : '';
+      const programIdByStage = getProgrammIdByProgramStage(
+        programMetadataObjects,
+        programStage
+      );
+
+      const selectedAttributes = getSelectiveAttributesByProgramId(
+        programMetadataObjects,
+        programIdByStage,
+        attributes
+      );
+      const configs =
+        programId && programId !== ''
+          ? [...programStageDataElements]
+          : [
+              ...programStageDataElements,
+              ..._.map(selectedAttributes, (attribute: any) => ({
+                ...attribute,
+                programStage,
+                program: programIdByStage,
+              })),
+            ];
+      console.log({
+        programStage,
+        programIdByStage,
+        status: programMetadataObjects.hasOwnProperty(programIdByStage),
+        selectedAttributes,
+        configs,
+      });
+      return configs;
+    }
+  );
+  return _.keys(groupedDxConfigs).length > 0
+    ? _.flattenDeep(
+        _.concat(
+          enrollmentAnalyticParameters,
+          _.map(_.keys(groupedDxConfigs), (programStage: String) => {
+            const dx = _.uniq(
+              _.flattenDeep(
+                _.map(
+                  groupedDxConfigs[programStage] || [],
+                  (groupedDxConfig: any) =>
+                    groupedDxConfig.id !== '' &&
+                    groupedDxConfig.programStage !== ''
+                      ? `${groupedDxConfig.programStage}.${groupedDxConfig.id}`
+                      : []
+                )
+              )
+            );
+            if (dx.length > 0) {
+              const programIds = _.uniq(
+                _.flattenDeep(
+                  _.map(
+                    groupedDxConfigs[programStage] || [],
+                    (groupedDxConfig: any) => {
+                      return groupedDxConfig.program &&
+                        groupedDxConfig.program !== ''
+                        ? groupedDxConfig.program
+                        : [];
+                    }
+                  )
+                )
+              );
+              const programId = programIds.length > 0 ? programIds[0] : '';
+              return {
+                ou,
+                pe,
+                dx,
+                programId,
+                isEnrollmentAnalytic: false,
+              };
+            } else {
+              return [];
+            }
+          })
+        )
+      )
+    : _.flattenDeep([enrollmentAnalyticParameters]);
+}
+function getSelectiveAttributesByProgramId(
+  programMetadataObjects: any,
+  programId: any,
+  attributeConfigs: any
+) {
+  const selectedAttributes = [];
+  const hasProgramAttributes = programMetadataObjects.hasOwnProperty(programId);
+  if (hasProgramAttributes) {
+    const programMetadataObject = programMetadataObjects[programId] || {};
+    const programAttributes = programMetadataObject.attributes || [];
+    selectedAttributes.push(
+      _.filter(
+        attributeConfigs,
+        (attributeObject: any) =>
+          attributeObject &&
+          attributeObject.id &&
+          programAttributes.includes(attributeObject.id)
+      )
+    );
+  }
+  return _.flattenDeep(selectedAttributes);
+}
+
+function getProgrammIdByProgramStage(
+  programMetadataObjects: any,
+  programStage: string
+) {
+  return (
+    _.find(_.keys(programMetadataObjects), (id: string) => {
+      const programMetadataObject = programMetadataObjects[id] || {};
+      const programStages = programMetadataObject.programStages || [];
+      return programStages.includes(programStage);
+    }) || ''
+  );
+}
+
+function getEnrollmentAnaliticParameters(
+  selectedProgramIds: string[],
+  programMetadataObjects: any,
+  attributes: any,
+  ou: any,
+  pe: any
+): any {
+  return _.map(selectedProgramIds || [], (selectedProgramId: string) => {
+    const selectedAttributes = programMetadataObjects.hasOwnProperty(
+      selectedProgramId
+    )
+      ? _.filter(attributes, (attributeObject: any) => {
+          const programMetadataObject =
+            programMetadataObjects[selectedProgramId] || {};
+          const programAttributes = programMetadataObject.attributes || [];
+          return (
+            attributeObject &&
+            attributeObject.id &&
+            programAttributes.includes(attributeObject.id)
+          );
+        })
+      : attributes;
+    return {
+      ou,
+      pe,
+      programId: selectedProgramId,
+      isEnrollmentAnalytic: true,
+      dx: _.uniq(
+        _.flattenDeep(
+          _.map(
+            selectedAttributes,
+            (attributeObject: any) => attributeObject.id || []
+          )
+        )
+      ),
+    };
+  });
+}
+
+function getDataElementConfigs(
+  dxConfigs: { id: string; name: string; programStage: string }[]
+) {
+  return _.filter(
+    dxConfigs || [],
+    (dxConfig: any) => !dxConfig.isAttribute && dxConfig.id !== ''
+  );
+}
+
+function getAttributeConfigs(
+  dxConfigs: { id: string; name: string; programStage: string }[]
+) {
+  return _.uniqBy(
+    _.filter(
+      dxConfigs || [],
+      (dxConfig: any) =>
+        dxConfig.isAttribute && dxConfig.id && dxConfig.id !== ''
+    ),
+    'id'
+  );
+}
+
+function getOrganisations(selectedOrgUnitItems: any[]) {
+  return _.uniq(
+    _.flattenDeep(
+      _.map(
+        selectedOrgUnitItems,
+        (organisationUnit: any) => organisationUnit.id || []
+      )
+    )
+  );
+}
+
+function getPeriods(selectedPeriods: any[]) {
+  return _.uniq(
+    _.flattenDeep(
+      _.map(selectedPeriods, (period: any) => {
+        const { id, type, endDate, startDate } = period;
+        return startDate &&
+          endDate &&
+          startDate.id &&
+          endDate.id &&
+          type &&
+          `${type}`.toLowerCase() == 'dates-range'
+          ? `startDate=${startDate.id}&endDate=${endDate.id}`
+          : id || [];
+      })
+    )
+  );
+}
