@@ -502,7 +502,22 @@ export class PeriodFilterComponent implements OnInit, OnChanges, OnDestroy {
 
   private _getPeriodSelection() {
     return {
-      items: this.selectedPeriods,
+      items:
+        PeriodFilterTypes.DATE_RANGE == this.currentPeriodFilterType
+          ? filter(
+              this.selectedPeriods || [],
+              (period: any) =>
+                period &&
+                period.type &&
+                `${period.type}`.toLocaleLowerCase() === 'dates-range'
+            )
+          : filter(
+              this.selectedPeriods || [],
+              (period: any) =>
+                period &&
+                period.type &&
+                `${period.type}`.toLocaleLowerCase() !== 'dates-range'
+            ),
       dimension: 'pe',
       lowestPeriodType: this.periodFilterConfig.lowestPeriodType,
       changed: true,
