@@ -153,7 +153,7 @@ export class ReportDataEffects {
   }
 
   getProgramStagesByProgramId(programId: string) {
-    const url = `programs/${programId}.json?fields=id,programStages[id]`;
+    const url = `programs/${programId}.json?fields=id,programStages[id, publicAccess]`;
     return new Promise((resolve, reject) => {
       this.httpClient
         .get(url)
@@ -162,8 +162,14 @@ export class ReportDataEffects {
           (data) => {
             const programStages = _.flattenDeep(
               _.map(
-                data.programStages || [],
-                (programStage) => programStage.id || []
+                _.filter(
+                  data.programStages || [],
+                  (programStage: any) =>
+                    programStage &&
+                    programStage.publicAccess &&
+                    programStage.publicAccess !== '--------'
+                ),
+                (programStage: any) => programStage.id || []
               )
             );
             resolve(programStages);
