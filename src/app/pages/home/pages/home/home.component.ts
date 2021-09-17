@@ -91,7 +91,9 @@ export class HomeComponent implements OnInit {
       .pipe(take(1))
       .subscribe(
         (configs: any) => {
-          const reports = configs.reports || reportConfig.reports || [];
+         // @TODO remove below on deplyoment to production
+          //const reports = configs.reports || reportConfig.reports || [];
+          const reports = reportConfig.reports || ([] as Array<any>);;
           const reportsByCurrentIp =
             this.getFilteredReportByUserImplementingPartner(
               reports,
