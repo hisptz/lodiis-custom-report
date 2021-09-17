@@ -746,10 +746,10 @@
           "programStage": "gkNKXUxpyv9"
         },
         {
-          "id": "",
+          "id": "is_service_provided",
           "name": "SERVICES PROVIDED?",
           "isDate": false,
-          "isBoolean": true,
+          "isBoolean": false,
           "programStage": ""
         },
         {
@@ -760,7 +760,7 @@
           "programStage": ""
         },
         {
-          "id": "",
+          "id": "date_of_last_service_received",
           "name": "DATE OF SERVICE (YYYY/MM/DD)",
           "isDate": true,
           "isBoolean": false,
