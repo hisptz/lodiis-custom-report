@@ -43,6 +43,12 @@ export function getFormattedEventAnalyticDataForReport(
           displayValues,
         } = dxConfigs;
         let value = '';
+        if(id === 'is_service_provided'){
+          const lastService = getLastServiceFromAnalyticData(
+            analyticDataByBeneficiary
+          );
+          value = lastService? 'Yes' : 'No'
+        }
         if (id === 'last_service_community_council') {
           const lastService = getLastServiceFromAnalyticData(
             analyticDataByBeneficiary
