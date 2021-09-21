@@ -1,5 +1,14 @@
 import * as _ from 'lodash';
 
+const defaultCustomDxConfigIds = [
+  'date_of_last_service_received',
+  'is_service_provided',
+  'isAgywBeneficiary',
+  'district_of_service',
+  'facility_name',
+  'last_service_community_council',
+];
+
 export function getAnalyticsParameters(
   selectedOrgUnitItems: Array<any>,
   selectedPeriods: Array<any>,
@@ -56,13 +65,6 @@ export function getAnalyticsParameters(
                 program: programIdByStage,
               })),
             ];
-      console.log({
-        programStage,
-        programIdByStage,
-        status: programMetadataObjects.hasOwnProperty(programIdByStage),
-        selectedAttributes,
-        configs,
-      });
       return configs;
     }
   );
@@ -193,7 +195,10 @@ function getDataElementConfigs(
 ) {
   return _.filter(
     dxConfigs || [],
-    (dxConfig: any) => !dxConfig.isAttribute && dxConfig.id !== ''
+    (dxConfig: any) =>
+      !dxConfig.isAttribute &&
+      dxConfig.id !== '' &&
+      !defaultCustomDxConfigIds.includes(dxConfig.id)
   );
 }
 
@@ -204,7 +209,10 @@ function getAttributeConfigs(
     _.filter(
       dxConfigs || [],
       (dxConfig: any) =>
-        dxConfig.isAttribute && dxConfig.id && dxConfig.id !== ''
+        dxConfig.isAttribute &&
+        dxConfig.id &&
+        dxConfig.id !== '' &&
+        !defaultCustomDxConfigIds.includes(dxConfig.id)
     ),
     'id'
   );
