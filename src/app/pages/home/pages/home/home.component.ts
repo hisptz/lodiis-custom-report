@@ -28,6 +28,7 @@ import { ReportErrorComponent } from '../../components/report-error/report-error
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GeneratedReport } from 'src/app/shared/models/generated-report.model';
 import { ConfigService } from '../../services/config.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -54,8 +55,10 @@ export class HomeComponent implements OnInit {
     private store: Store<State>,
     private excelFileService: ExcelFileService,
     private snackbar: MatSnackBar,
+    private router: Router,
     private configService: ConfigService
   ) {}
+
 
   ngOnInit() {
     this.hasCountryLevelOrganisationUnit$ = this.store.select(
@@ -82,7 +85,9 @@ export class HomeComponent implements OnInit {
         }
       });
   }
-
+goReportList(){
+  this.router.navigate(['/report'])
+}
   async fetchReportConfig() {
     const implementingPartnerId =
       (await this.configService.getUserImpelementingPartner()) as string;

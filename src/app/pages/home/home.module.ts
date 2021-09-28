@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { HomeRoutingModule } from './home-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { pages } from './pages';
@@ -18,6 +17,9 @@ import { ReportErrorComponent } from './components/report-error/report-error.com
 import { ReportTableComponent } from './components/report-table/report-table.component';
 import { ReportDownloadComponent } from './components/report-download/report-download.component';
 import { ReportNamePipe } from './pipes/report-name.pipe';
+import { ReportListComponent } from './components/report-list/report-list.component';
+import { MetadataValidatorComponent } from './components/metadata-validator/metadata-validator.component';
+import { CustomReportTableComponent } from './components/custom-report-table/custom-report-table.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,9 @@ import { ReportNamePipe } from './pipes/report-name.pipe';
     ReportTableComponent,
     ReportDownloadComponent,
     ReportNamePipe,
+    ReportListComponent,
+    MetadataValidatorComponent,
+    CustomReportTableComponent,
   ],
   imports: [CommonModule, SharedModule, HomeRoutingModule],
   entryComponents: [ReportErrorComponent],
