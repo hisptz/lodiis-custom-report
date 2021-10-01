@@ -17,20 +17,28 @@
         </div>
         <div class='report-validate'>
         <mat-card>
-           <mat-card-title style="padding-left: 2%;margin-bottom: 1%; font-size: 20px;font-weight: bold;">Custom Reports Validation</mat-card-title>
+           <mat-card-title style="margin-bottom: 1%; font-size: 15px;font-weight: bold;">Custom Reports Columns</mat-card-title>
           <form class="configuration-form" validate>
             <div class="nametitile">
-            <h5>Report Title :</h5>
+            <h5>Report Title </h5>
              <mat-form-field appearance="outline">
                <mat-label>Name</mat-label>
                <input (input)="title = $event.target.value"  matInput required>
              </mat-form-field>
             </div>
            <div class="nametitile">
-             <h5>Configuration :</h5>
-             <mat-form-field class="example-full-width" appearance="outline">
-               <mat-label>Configuration Object</mat-label>
-               <textarea #searchInput (input)="message = $event.target.value"    rows="10" cols="70" matInput placeholder="Enter Metadata Object Extracted from DataStore for report generation" required></textarea>
+             <h5>Configuration </h5>
+             <mat-form-field 
+            
+
+             class="example-full-width" appearance="outline" style="border: 1px red;">
+             <mat-label  *ngIf="!showMessage; else elseTemplate">
+              Configuration Object</mat-label>
+             <ng-template #elseTemplate>
+              <mat-label style="color: red;" *ngIf="showMessage; else elseTemplate">
+               Custom Column is not Compatible </mat-label>
+             </ng-template>
+               <textarea #searchInput  (input)="message = $event.target.value"   rows="10" cols="70" matInput placeholder="Enter Metadata Object Extracted from DataStore for report generation" required></textarea>
              </mat-form-field>
            </div>
        

@@ -1,79 +1,136 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { SingleReportConfiguration } from 'src/app/shared/models/report-config-inteface';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { DxConfig } from 'src/app/shared/models/report-config-inteface';
 import { ReportModelInterface } from 'src/app/shared/models/report-model-interface';
 import { Router } from '@angular/router';
+import { ConfigService } from '../../services/config.service';
+import { uuid } from '../../helpers/dhis2-uid-generator';
+import { Report } from 'src/app/shared/models/report.model';
 
 @Component({
   selector: 'app-metadata-validator',
   templateUrl: './metadata-validator.component.html',
   styleUrls: ['./metadata-validator.component.css'],
 })
-export class MetadataValidatorComponent {
+export class MetadataValidatorComponent implements OnInit{
   @ViewChild('searchInput') searchInput: ElementRef;
-  message: any;
+  message: any= '';
   title: string;
   isValid: boolean = false;
   isError: boolean = true;
+showMessage:boolean = false;
+  editedReport :Report;
 
-  arr: (keyof SingleReportConfiguration)[];
+
+  arr: (keyof DxConfig)[];
   @Input() reportModel?: ReportModelInterface;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,private configService:ConfigService) {}
 
   clearSearch() {
     this.searchInput.nativeElement.value = '';
     this.isValid = false;
     this.isError = true;
   }
+  customReportOnSave(reportName:string,dxConfigs:any[],implementingPartner:string):Report{
+    return {
+      id:uuid(),
+      name:reportName,
+      program:[
+        "em38qztTI8s",
+        "BNsDaCclOiu"
+      ],
+      includeEnrollmentWithoutService:true,
+      allowedImplementingPartners:['H2CE3Iwdf7v',implementingPartner],
+      disableOrgUnitSelection:false,
+      disablePeriodSelection:false,
+      dxConfigs:dxConfigs
+    }
+  }
+  ngOnInit(): void {
+   
+
+    
+  }
 
   check = (
-    p: SingleReportConfiguration,
+    p: DxConfig,
     propery: any
-  ): p is SingleReportConfiguration => {
+  ): p is DxConfig => {
     if (
       [
         'id',
         'name',
-        'program',
-        'dxConfigs',
-        'disablePeriodSelection',
-        'allowedImplementingPartners',
-        'includeEnrollmentWithoutService',
-        'disableOrgUnitSelection',
-      ].includes(propery) &&
-      p.hasOwnProperty(propery)
+        'isDate',
+        'isBoolean',
+        'isAttribute',
+        'programStage',
+      ].map(key=>{
+        if(p.hasOwnProperty(key)){
+          return true;
+        }
+        else{
+          return false;
+        }
+      }) &&
+      [
+        'id',
+        'name',
+        'isDate',
+        'isBoolean',
+        'isAttribute',
+        'programStage',
+        'codes',
+        'displayValues'
+      ].includes(propery) 
     ) {
       return true;
     }
     return false;
   };
 
-  validateMetadata() {
+  validateMetadata():boolean {
     try {
+     
+     if(Object.entries(JSON.parse(this.message)).length > 0)
+     {
       for (let [key, value] of Object.entries(JSON.parse(this.message))) {
-        if (this.check(JSON.parse(this.message), key)) {        
+
+        if (this.check(JSON.parse(this.message), key)) {    
+        
         } else {
           throw new Error('Something bad happened');
         }
 
       }
-      this.isValid =!this.isValid;
+    
+     
       setTimeout(()=>{
-        this.router.navigateByUrl('/report')
-      },3000)
+        this.isValid =!this.isValid;
+      },1000)
+      this.isValid =!this.isValid;
+     }
+     
+     return true;
     } catch (error) {
+      this.showMessage = true;
       setTimeout(() => {
         this.clearSearch();
-      }, 1000);
-       this.isValid =!this.isValid;
-       this.isError = !this.isError;
+        this.showMessage = false;
+      }, 500);
+  
+     return false;
     }
   }
 goBack(){
   this.router.navigateByUrl('/report')
 }
-  saveMetadata() {
-    this.validateMetadata();
-    console.log('on save metadata');
+  saveMetadata() { 
+   if( this.validateMetadata()){
+    this.configService.onCreateReport(this.customReportOnSave(this.title,JSON.parse(this.message),'SdDDPA28oVh'));
+    setTimeout(()=>{
+      this.router.navigateByUrl('/report')
+    },3000)
+   }
+   
   }
 }

@@ -1,23 +1,77 @@
 import { Injectable } from '@angular/core';
 import { NgxDhis2HttpClientService } from '@iapps/ngx-dhis2-http-client';
-import { Observable } from 'rxjs';
+import { Observable,Subject } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { Report } from 'src/app/shared/models/report.model';
 import * as _ from 'lodash';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class ConfigService {
-  configUrl = 'dataStore/kb-custom-reports-config/reports';
+  private subject = new Subject<any>();
+  configUrl = 'dataStore/kb-custom-reports-config';
+
 
   constructor(private httpClient: NgxDhis2HttpClientService) {}
 
+  
   getReportConfigs(): Observable<{ reports: Report[] }> {
-    return this.httpClient.get(this.configUrl);
+    return this.httpClient.get(this.configUrl+'/reports');
   }
 
+  getCustomReportConfigs(): Observable<{ reports: Report[] }> {
+    return this.httpClient.get(this.configUrl+'/implementing-partners-reports');
+  }
+
+  async onCreateReport(reports:Report){
+    this.httpClient.get(this.configUrl+'/implementing-partners-reports')
+    .subscribe((data)=>{
+()=>{
+
+  if(_.find(data['reports'],{'id':reports.id})!=null || _.find(data['reports'],{'id':reports.id}) != undefined){
+    console.log("pass 3")
+    this.httpClient.put(this.configUrl+'/implementing-partners-reports',{"reports":[...(_.remove(data['reports']['dxConfigs']??[],function(report){
+      return !reports.dxConfigs.includes(report['id'])
+    })),reports]});
+
+  }else
+ {
+ 
+ console.log({"reports":[...data['reports']??[],reports]})
+this.httpClient.put(this.configUrl+'/implementing-partners-reports',{"reports":[...data['reports']??[],reports]});
+
+ }
+}
+() =>{
+console.log("in errors")
+}
+})
+  }
+
+  async onDeleteReport(report:Report)
+  {
+    // this.httpClient.delete()
+  }
+async getReportById(id:String):Promise<any>{
+return new Promise((resolve, reject) =>{
+  this.httpClient.get(this.configUrl+'/implementing-partners-reports')
+  .subscribe((data)=>{
+    (data['reports']).forEach(reportObject => {
+if(reportObject['id'] === id){
+  resolve (reportObject)
+}
+    });
+  },()=>{
+    return {"errir":"take"}
+  })
+})
+}
+
   async getExtendeReportMetadata(programIds: String[] = []) {
+
+
     const programMetadata = {};
     const filter = `filter=id:in:[${_.join(programIds, ',')}]`;
     const fields =
@@ -98,4 +152,15 @@ export class ConfigService {
         );
     });
   }
+  sendEditReport(report: Report) {
+    this.subject.next(report);
+}
+
+clearEditedReport() {
+    this.subject.next();
+}
+
+ getEditedReport(): Observable<Report> {
+    return this.subject.asObservable();
+}
 }

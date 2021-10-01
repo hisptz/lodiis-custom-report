@@ -20,6 +20,7 @@ import { ReportNamePipe } from './pipes/report-name.pipe';
 import { ReportListComponent } from './components/report-list/report-list.component';
 import { MetadataValidatorComponent } from './components/metadata-validator/metadata-validator.component';
 import { CustomReportTableComponent } from './components/custom-report-table/custom-report-table.component';
+import { EditCustomReportComponent } from './components/edit-custom-report/edit-custom-report.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { CustomReportTableComponent } from './components/custom-report-table/cus
     ReportListComponent,
     MetadataValidatorComponent,
     CustomReportTableComponent,
+    EditCustomReportComponent,
   ],
   imports: [CommonModule, SharedModule, HomeRoutingModule],
   entryComponents: [ReportErrorComponent],

@@ -1,12 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
+import { async } from '@angular/core/testing';
+import { Router } from '@angular/router';
 import { ReportModelInterface } from 'src/app/shared/models/report-model-interface';
+import { Report } from 'src/app/shared/models/report.model';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
   selector: 'app-custom-report-table',
   templateUrl: './custom-report-table.component.html',
   styleUrls: ['./custom-report-table.component.css']
 })
-export class CustomReportTableComponent implements OnInit {
+export class CustomReportTableComponent implements OnInit ,OnChanges{
+  reports:Report[];
+  isEdit:boolean = false;
+  isLoading:boolean = true;
 
   reportList: ReportModelInterface[] = [
     {
@@ -39,13 +46,37 @@ export class CustomReportTableComponent implements OnInit {
     },
 
   ];
-  constructor() { }
+  constructor( private configService: ConfigService,private router:Router
+    ) { }
 
   ngOnInit(): void {
+    this.fetchCustomReportConfig()
   }
 
-  onEdit(report:ReportModelInterface){
+  ngOnChanges(): void {
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
 
+ 
   }
+  
+ fetchCustomReportConfig(){
+  this.isLoading = true;
+setTimeout(async()=>{
+  (await this.configService.getCustomReportConfigs()).subscribe((data)=>{
+    console.log([...data['reports']])
+    this.reports = [...data['reports']] 
+   //  ? this.reportList
+  })
+  this.isLoading =false;
+},1000)
+}
+
+onEdit(report:Report){
+  this.isEdit = !this.isEdit;
+this.configService.sendEditReport(report);
+this.router.navigate(['/report', report.id]);
+}
+
 
 }

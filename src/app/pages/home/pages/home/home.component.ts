@@ -3,7 +3,6 @@ import { Store } from '@ngrx/store';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import * as _ from 'lodash';
-
 import { PeSelectionComponent } from '../../components/pe-selection/pe-selection.component';
 import { OuSelectionComponent } from '../../components/ou-selection/ou-selection.component';
 import { getDefaultOrganisationUnitSelections } from '../../helpers/get-dafault-selections';

@@ -1,7 +1,7 @@
 export interface Report {
   id: string;
   name: string;
-  program: string;
+  program: string[];
   includeEnrollmentWithoutService?: boolean;
   allowedImplementingPartners?: string[];
   disablePeriodSelection?: boolean;

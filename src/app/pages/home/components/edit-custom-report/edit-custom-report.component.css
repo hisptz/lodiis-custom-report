@@ -28,11 +28,6 @@
     margin-bottom: 3%;
 }
 
-h5{
-    font-size: 18px;
-}
-mat-form-field {
-border-color:red  }
 
 .report-validate{
     display: flex;
@@ -48,7 +43,7 @@ border-color:red  }
       
   }
   .configuration-form{
-      padding-right: 73%;
+      padding-right: 75%;
   }
   .nametitile{
     display: flex;
@@ -85,6 +80,6 @@ border-color:red  }
       color: #555555;
   }
 
-h5{
+  h5{
     font-size: 15px;
 }
