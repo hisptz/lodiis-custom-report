@@ -26,9 +26,13 @@ export class ConfigService {
   }
 
   async onCreateReport(reports:Report){
+
+    this.httpClient.post(this.configUrl+'/implementing-partners-reports',{"reports":reports});
+
     this.httpClient.get(this.configUrl+'/implementing-partners-reports')
     .subscribe((data)=>{
-()=>{
+
+  // this.httpClient.put(this.configUrl+'/implementing-partners-reports',{"reports":[...data['reports']??[],reports]});
 
   if(_.find(data['reports'],{'id':reports.id})!=null || _.find(data['reports'],{'id':reports.id}) != undefined){
     console.log("pass 3")
@@ -36,17 +40,12 @@ export class ConfigService {
       return !reports.dxConfigs.includes(report['id'])
     })),reports]});
 
-  }else
- {
- 
- console.log({"reports":[...data['reports']??[],reports]})
-this.httpClient.put(this.configUrl+'/implementing-partners-reports',{"reports":[...data['reports']??[],reports]});
+  }else{
+
+console.log(reports);
+this.httpClient.put(this.configUrl+'/implementing-partners-reports',{"reports":reports});
 
  }
-}
-() =>{
-console.log("in errors")
-}
 })
   }
 
