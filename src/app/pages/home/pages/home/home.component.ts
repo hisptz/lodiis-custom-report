@@ -46,6 +46,7 @@ export class HomeComponent implements OnInit {
   customReports:Array<Report>;
   isLoading$: Observable<boolean>;
   downloading: boolean;
+  isConfigAccessAllow$:Observable<boolean>;
   analytics$: Observable<any>;
   analyticsError$: Observable<any>;
   generatedReport$: Observable<GeneratedReport>;
@@ -65,10 +66,13 @@ export class HomeComponent implements OnInit {
     this.hasCountryLevelOrganisationUnit$ = this.store.select(
       isCurrentUserHasCountryLevelOrganisationUnit
     );
+    console.log(this.configService.userAccess())  
+    console.log("data")
     this.isLoading$ = this.store.select(getCurrentAnalyticsLoadingStatus);
     this.analytics$ = this.store.select(getCurrentAnalytics);
     this.analyticsError$ = this.store.select(getCurrentAnalyticsError);
     this.downloading = false;
+    this.isConfigAccessAllow$  = this.configService.userAccess();
     this.selectedPeriods = [];
     this.programMetadataObjects = {};
     this.fetchReportConfig();

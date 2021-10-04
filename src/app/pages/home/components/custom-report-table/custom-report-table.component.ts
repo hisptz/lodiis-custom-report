@@ -17,7 +17,10 @@ export class CustomReportTableComponent implements OnInit ,OnChanges{
   isLoading:boolean = true;
 
   constructor( private configService: ConfigService,private router:Router
-    ) { }
+    ) { 
+ this.configService.userAccess()
+
+    }
 
   ngOnInit(): void {
     this.fetchCustomReportConfig()
