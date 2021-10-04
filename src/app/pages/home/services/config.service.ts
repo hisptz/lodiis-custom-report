@@ -26,32 +26,23 @@ export class ConfigService {
   }
 
   async onCreateReport(reports:Report){
-
-
-    // console.log("reports sare");
-    // console.log(reports);
-//     this.httpClient.post(this.configUrl+'/implementing-partners-reports',{"reports":reports});
-
-//  this.httpClient.put(this.configUrl+'/implementing-partners-reports',{"reports":  reports});
-
-
-    this.httpClient.get(this.configUrl+'/implementing-partners-reports')
-    .subscribe((data)=>{
+        this.httpClient.get(this.configUrl+'/implementing-partners-reports')
+    .subscribe((data)=>{ 
+  if(_.find(data['reports'],{'id':reports.id})!=null || _.find(data['reports'],{'id':reports.id}) != undefined){
+    console.log("pass 3")
+    this.httpClient.put(this.configUrl+'/implementing-partners-reports',{"reports":[...(_.remove(data['reports']['dxConfigs']??[],function(report){
+      return !reports.dxConfigs.includes(report['id'])
+    })),reports]}).subscribe((configs)=>{
  
- this.httpClient.post(this.configUrl+'/implementing-partners-reports',{"reports":[...data['reports']??[],reports]});
+    });
 
-//   if(_.find(data['reports'],{'id':reports.id})!=null || _.find(data['reports'],{'id':reports.id}) != undefined){
-//     console.log("pass 3")
-//     this.httpClient.put(this.configUrl+'/implementing-partners-reports',{"reports":[...(_.remove(data['reports']['dxConfigs']??[],function(report){
-//       return !reports.dxConfigs.includes(report['id'])
-//     })),reports]});
-
-//   }else{
+  }else{
+this.httpClient.put(this.configUrl+'/implementing-partners-reports',{"reports":[...data['reports'],reports]}).subscribe((configs)=>{
+  
+});
 
 
-// this.httpClient.put(this.configUrl+'/implementing-partners-reports',{"reports":reports});
-
-//  }
+ }
 })
   }
 

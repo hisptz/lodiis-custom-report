@@ -6,6 +6,7 @@ import { ConfigService } from '../../services/config.service';
 import { uuid } from '../../helpers/dhis2-uid-generator';
 import { Report } from 'src/app/shared/models/report.model';
 import { isArray } from 'highcharts';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-metadata-validator',
@@ -41,7 +42,7 @@ showMessage:boolean = false;
         "BNsDaCclOiu"
       ],
       includeEnrollmentWithoutService:true,
-      allowedImplementingPartners:['H2CE3Iwdf7v',implementingPartner],
+      allowedImplementingPartners:_.uniq(['H2CE3Iwdf7v',implementingPartner]),
       disableOrgUnitSelection:false,
       disablePeriodSelection:false,
       dxConfigs:dxConfigs
@@ -129,12 +130,14 @@ showMessage:boolean = false;
 goBack(){
   this.router.navigateByUrl('/report')
 }
-  saveMetadata() { 
+ async saveMetadata() { 
    if( this.validateMetadata()){
-    this.configService.onCreateReport(this.customReportOnSave(this.title,JSON.parse(this.message),'SdDDPA28oVh'));
-    // setTimeout(()=>{
-    //   this.router.navigateByUrl('/report')
-    // },3000)
+    const implementingPartnerId =
+    (await this.configService.getUserImpelementingPartner()) as string;
+    this.configService.onCreateReport(this.customReportOnSave(this.title,JSON.parse(this.message),implementingPartnerId));
+    setTimeout(()=>{
+      this.router.navigateByUrl('/report')
+    },3000)
    }
    
   }

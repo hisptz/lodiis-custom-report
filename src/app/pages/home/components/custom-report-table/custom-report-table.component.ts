@@ -3,6 +3,7 @@ import { async } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { ReportModelInterface } from 'src/app/shared/models/report-model-interface';
 import { Report } from 'src/app/shared/models/report.model';
+import { getFilteredReportByUserImplementingPartner } from '../../helpers/report-by-implementing-partner';
 import { ConfigService } from '../../services/config.service';
 
 @Component({
@@ -15,37 +16,6 @@ export class CustomReportTableComponent implements OnInit ,OnChanges{
   isEdit:boolean = false;
   isLoading:boolean = true;
 
-  reportList: ReportModelInterface[] = [
-    {
-      id: 1,
-      name: 'OVC Layering Dataset (Services)',
-    },
-    {
-      id: 2,
-      name: 'DREAMS Layering Dataset (Services)',
-    },
-    {
-      id: 3,
-      name: 'PSI DREAMS Layering Dataset (Enrollment & Services)',
-    },
-    {
-      id: 4,
-      name: 'KB DREAMS Layering Dataset (Services)',
-    },
-    {
-      id: 5,
-      name: 'DREAMS Layering Dataset (Referral)',
-    },
-    {
-      id: 6,
-      name: 'DREAMS Layering Dataset (Service and Referral)',
-    },
-    {
-      id: 7,
-      name: 'Cumulative DREAMS Layering Dataset',
-    },
-
-  ];
   constructor( private configService: ConfigService,private router:Router
     ) { }
 
@@ -60,12 +30,13 @@ export class CustomReportTableComponent implements OnInit ,OnChanges{
  
   }
   
- fetchCustomReportConfig(){
+async fetchCustomReportConfig(){
   this.isLoading = true;
+  const implementingPartnerId =
+  (await this.configService.getUserImpelementingPartner()) as string
 setTimeout(async()=>{
   (await this.configService.getCustomReportConfigs()).subscribe((data)=>{
-    this.reports = [...data['reports']] 
-   //  ? this.reportList
+    this.reports = getFilteredReportByUserImplementingPartner( [...data['reports']] ,implementingPartnerId)
   })
   this.isLoading =false;
 },1000)

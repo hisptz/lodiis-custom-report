@@ -28,6 +28,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { GeneratedReport } from 'src/app/shared/models/generated-report.model';
 import { ConfigService } from '../../services/config.service';
 import { Router } from '@angular/router';
+import { getFilteredReportByUserImplementingPartner } from '../../helpers/report-by-implementing-partner';
 
 @Component({
   selector: 'app-home',
@@ -113,7 +114,7 @@ goReportList(){
             const reports = [...configs.reports,...customConfig.reports ]|| reportConfig.reports || [];
 
             const reportsByCurrentIp =
-              this.getFilteredReportByUserImplementingPartner(
+             getFilteredReportByUserImplementingPartner(
                 reports,
                 implementingPartnerId
               );
@@ -143,7 +144,7 @@ goReportList(){
           // this.configService.get
           const reports = reportConfig.reports || ([] as Array<any>) ;
           const reportsByCurrentIp =
-            this.getFilteredReportByUserImplementingPartner(
+           getFilteredReportByUserImplementingPartner(
               reports,
               implementingPartnerId
             );
@@ -166,18 +167,7 @@ goReportList(){
       await this.configService.getExtendeReportMetadata(programIds);
   }
 
-  getFilteredReportByUserImplementingPartner(
-    reports: Report[],
-    implementingPartnerId: string
-  ) {
-    return _.filter(
-      reports || [],
-      (report: Report) =>
-        report &&
-        report.allowedImplementingPartners &&
-        report.allowedImplementingPartners.includes(implementingPartnerId)
-    );
-  }
+
 
   getSanitizedListOfReport(hasCountryLevelOrganisationUnit: boolean) {
     return hasCountryLevelOrganisationUnit
