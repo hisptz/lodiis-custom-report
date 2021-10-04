@@ -6,6 +6,7 @@ import { ConfigService } from '../../services/config.service';
 import { uuid } from '../../helpers/dhis2-uid-generator';
 import { Report } from 'src/app/shared/models/report.model';
 import { isArray } from 'highcharts';
+import { check } from '../../helpers/object-checker-funtion';
 
 @Component({
   selector: 'app-edit-custom-report',
@@ -51,8 +52,7 @@ export class EditCustomReportComponent implements OnInit {
       dxConfigs: dxConfigs,
     };
   }
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   async getEditedReport(id: String) {
     this.isLoading = true;
@@ -71,32 +71,6 @@ export class EditCustomReportComponent implements OnInit {
     console.log('am in demo');
     console.log(report);
   }
-  check = (p: DxConfig, propery: any): p is DxConfig => {
-    if (
-      ['id', 'name', 'isDate', 'isBoolean', 'isAttribute', 'programStage'].map(
-        (key) => {
-          if (p.hasOwnProperty(key)) {
-            return true;
-          } else {
-            return false;
-          }
-        }
-      ) &&
-      [
-        'id',
-        'name',
-        'isDate',
-        'isBoolean',
-        'isAttribute',
-        'programStage',
-        'codes',
-        'displayValues',
-      ].includes(propery)
-    ) {
-      return true;
-    }
-    return false;
-  };
 
   validateMetadata(): boolean {
     try {
@@ -106,7 +80,7 @@ export class EditCustomReportComponent implements OnInit {
       ) {
         JSON.parse(this.message).forEach((ObjectData) => {
           for (let [key, value] of Object.entries(ObjectData)) {
-            if (this.check(JSON.parse(this.message), key)) {
+            if (check(JSON.parse(this.message), key)) {
             } else {
               throw new Error('Something bad happened');
             }
@@ -137,8 +111,7 @@ export class EditCustomReportComponent implements OnInit {
 
   async saveMetadata() {
     if (this.validateMetadata()) {
-      const implementingPartnerId =
-        (await this.configService.getUserImpelementingPartner()) as string;
+      const implementingPartnerId = (await this.configService.getUserImpelementingPartner()) as string;
       this.configService.onEditCustomReport(
         this.customReportOnSave(JSON.parse(this.message), this.editedReport)
       );

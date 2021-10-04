@@ -1,36 +1,30 @@
+<div class="table-responsive">
+  <table class="report-table table-bordered">
+    <thead>
+      <tr>
+        <td class="p-1">s/n</td>
+        <td class="p-1" colspan="2">custom reports</td>
+        <td class="p-1">action</td>
+      </tr>
+    </thead>
 
-  <div class="table-responsive">
-    <table class="report-table table-bordered">
-      <thead>
-        <tr>
-          <td class="p-1" >s/n</td>
-          <td class="p-1" colspan="2">custom reports</td>
-          <td class="p-1" >action</td>
-        </tr>
-      </thead>
-  
-      <tbody>
-        <ng-container *ngIf="isLoading; else elseTemplate">
-          <app-loader></app-loader>
-        </ng-container>
-        <ng-template #elseTemplate>
+    <tbody>
+      <ng-container *ngIf="isLoading; else elseTemplate">
+        <app-loader></app-loader>
+      </ng-container>
+      <ng-template #elseTemplate>
         <tr *ngFor="let report of reports;let reportCount = index">
-            <td class="p-1" >
-              {{ reportCount+1 }}
-            </td>
-            <td class="p-1" colspan="2"><span  style="padding-left: 0px">{{ report.name }}</span></td>
-            <td class="p-1" >
-              <a routerLink="/validator-report" style="margin-right: 20px;" (click)='onEdit(report)'>Edit</a>
-              <a href (click)='onDelete(report)'>Delete</a>
-            </td>
-         
+          <td class="p-1">
+            {{ reportCount+1 }}
+          </td>
+          <td class="p-1" colspan="2"><span style="padding-left: 0px">{{ report.name }}</span></td>
+          <td class="p-1">
+            <a routerLink="/validator-report" style="margin-right: 20px;" (click)='onEdit(report)'>Edit</a>
+            <a href (click)='onDelete(report)'>Delete</a>
+          </td>
+
         </tr>
       </ng-template>
-      </tbody>
-    </table>
-  </div>
-
-
-
-
-
+    </tbody>
+  </table>
+</div>

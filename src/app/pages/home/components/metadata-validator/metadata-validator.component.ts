@@ -7,6 +7,7 @@ import { uuid } from '../../helpers/dhis2-uid-generator';
 import { Report } from 'src/app/shared/models/report.model';
 import { isArray } from 'highcharts';
 import * as _ from 'lodash';
+import { check } from '../../helpers/object-checker-funtion';
 
 @Component({
   selector: 'app-metadata-validator',
@@ -55,41 +56,7 @@ showMessage:boolean = false;
     
   }
 
-  check = (
-    p: DxConfig,
-    propery: any
-  ): p is DxConfig => {
-    if (
-      [
-        'id',
-        'name',
-        'isDate',
-        'isBoolean',
-        'isAttribute',
-        'programStage',
-      ].map(key=>{
-        if(p.hasOwnProperty(key)){
-          return true;
-        }
-        else{
-          return false;
-        }
-      }) &&
-      [
-        'id',
-        'name',
-        'isDate',
-        'isBoolean',
-        'isAttribute',
-        'programStage',
-        'codes',
-        'displayValues'
-      ].includes(propery) 
-    ) {
-      return true;
-    }
-    return false;
-  };
+  
 
   validateMetadata():boolean {
     try {
@@ -99,7 +66,7 @@ showMessage:boolean = false;
       JSON.parse(this.message).forEach(ObjectData => {
         for (let [key, value] of Object.entries(ObjectData)) {
 
-          if (this.check(JSON.parse(this.message), key)) {    
+          if (check(JSON.parse(this.message), key)) {    
           
           } else {
             throw new Error('Something bad happened');
