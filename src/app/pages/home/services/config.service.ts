@@ -171,39 +171,41 @@ export class ConfigService {
     return this.subject.asObservable();
   }
 
-  userAccess():Observable<boolean> {
+  userAccess(): Observable<boolean> {
     const rolesAlowed: string[] = [
       'Superuser',
       'System administrator',
       'Data Clerk',
     ];
-  
-     return new Observable((observer)=>{
-      observer.next(false)
+
+    return new Observable((observer) => {
+      observer.next(false);
       this.httpClient
-      .get('me.json?fields=authorities,userCredentials[userRoles[id]]')
-      .subscribe((data) => {
-        if (data['authorities'].includes('ALL')) {
-          
-          observer.next(true)
-          
-        } else {
-          data['userCredentials']['userRoles']?.forEach((userObjectRoleId) => {
-            this.httpClient.get('userRoles.json').subscribe((userRolesData) => {
-              userRolesData['userRoles'].map((userRoleOject) => {
-                if (
-                  userRoleOject['id'] === userObjectRoleId &&
-                  rolesAlowed.includes(userRoleOject['displayName'])
-                ) {
-                  observer.next(true)
-                }else{
-                  observer.next(false)
-                }
-              });
-            });
-          });
-        }
-      });
-     });
+        .get('me.json?fields=authorities,userCredentials[userRoles[id]]')
+        .subscribe((data) => {
+          if (data['authorities'].includes('ALL')) {
+            observer.next(true);
+          } else {
+            data['userCredentials']['userRoles']?.forEach(
+              (userObjectRoleId) => {
+                this.httpClient
+                  .get('userRoles.json')
+                  .subscribe((userRolesData) => {
+                    userRolesData['userRoles'].map((userRoleOject) => {
+                      if (
+                        userRoleOject['id'] === userObjectRoleId &&
+                        rolesAlowed.includes(userRoleOject['displayName'])
+                      ) {
+                        observer.next(true);
+                      } else {
+                        observer.next(false);
+                      }
+                    });
+                  });
+              }
+            );
+          }
+        });
+    });
   }
 }
