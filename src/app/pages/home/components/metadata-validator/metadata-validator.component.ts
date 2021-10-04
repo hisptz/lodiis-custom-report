@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ConfigService } from '../../services/config.service';
 import { uuid } from '../../helpers/dhis2-uid-generator';
 import { Report } from 'src/app/shared/models/report.model';
+import { isArray } from 'highcharts';
 
 @Component({
   selector: 'app-metadata-validator',
@@ -31,7 +32,7 @@ showMessage:boolean = false;
     this.isValid = false;
     this.isError = true;
   }
-  customReportOnSave(reportName:string,dxConfigs:any[],implementingPartner:string):Report{
+  customReportOnSave(reportName:string,dxConfigs:DxConfig[],implementingPartner:string):Report{
     return {
       id:uuid(),
       name:reportName,
@@ -91,27 +92,31 @@ showMessage:boolean = false;
   validateMetadata():boolean {
     try {
      
-     if(Object.entries(JSON.parse(this.message)).length > 0)
+     if(isArray(JSON.parse(this.message)) && (JSON.parse(this.message)).length > 0)
      {
-      for (let [key, value] of Object.entries(JSON.parse(this.message))) {
+      JSON.parse(this.message).forEach(ObjectData => {
+        for (let [key, value] of Object.entries(ObjectData)) {
 
-        if (this.check(JSON.parse(this.message), key)) {    
-        
-        } else {
-          throw new Error('Something bad happened');
+          if (this.check(JSON.parse(this.message), key)) {    
+          
+          } else {
+            throw new Error('Something bad happened');
+          }
+  
         }
-
-      }
+      });
+       
+   
     
      
       setTimeout(()=>{
         this.isValid =!this.isValid;
       },1000)
       this.isValid =!this.isValid;
+      return true;
      }
      
-     return true;
-    } catch (error) {
+     throw new Error('Something bad happened');    } catch (error) {
       this.showMessage = true;
       setTimeout(() => {
         this.clearSearch();
@@ -127,9 +132,9 @@ goBack(){
   saveMetadata() { 
    if( this.validateMetadata()){
     this.configService.onCreateReport(this.customReportOnSave(this.title,JSON.parse(this.message),'SdDDPA28oVh'));
-    setTimeout(()=>{
-      this.router.navigateByUrl('/report')
-    },3000)
+    // setTimeout(()=>{
+    //   this.router.navigateByUrl('/report')
+    // },3000)
    }
    
   }

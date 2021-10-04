@@ -42,6 +42,7 @@ export class HomeComponent implements OnInit {
   programMetadataObjects: any;
   selectedReport: Report;
   reports: Array<Report>;
+  customReports:Array<Report>;
   isLoading$: Observable<boolean>;
   downloading: boolean;
   analytics$: Observable<any>;
@@ -83,6 +84,16 @@ export class HomeComponent implements OnInit {
           );
         }
       });
+    /**
+     *  {
+          "id": "WTZ7GLTrE8Q",
+          "name": "Header One",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": true,
+          "programStage": ""
+        }
+     */
   }
 goReportList(){
   this.router.navigate(['/report'])
@@ -96,26 +107,41 @@ goReportList(){
       .subscribe(
         (configs: any) => {
          // @TODO remove below on deplyoment to production
-          //const reports = configs.reports || reportConfig.reports || [];
-          const reports = reportConfig.reports || ([] as Array<any>);;
-          const reportsByCurrentIp =
-            this.getFilteredReportByUserImplementingPartner(
-              reports,
-              implementingPartnerId
-            );
-          const selectedProgramIds = _.uniq(
-            _.flattenDeep(
-              _.map(
-                reportsByCurrentIp,
-                (report: Report) => report.program || []
+   
+
+          this.configService.getCustomReportConfigs().subscribe((customConfig:any)=>{
+            const reports = [...configs.reports,...customConfig.reports ]|| reportConfig.reports || [];
+
+            const reportsByCurrentIp =
+              this.getFilteredReportByUserImplementingPartner(
+                reports,
+                implementingPartnerId
+              );
+            const selectedProgramIds = _.uniq(
+              _.flattenDeep(
+                _.map(
+                  reportsByCurrentIp,
+                  (report: Report) => report.program || []
+                )
               )
-            )
-          );
-          this.setProgramMetadata(selectedProgramIds);
-          this.reports = reportsByCurrentIp;
+            );
+            this.setProgramMetadata(selectedProgramIds);
+            this.reports = reportsByCurrentIp;
+          } )
+         
+      
+      
+      
+      
+      
+      
+      
+      
+      
         },
         () => {
-          const reports = reportConfig.reports || ([] as Array<any>);
+          // this.configService.get
+          const reports = reportConfig.reports || ([] as Array<any>) ;
           const reportsByCurrentIp =
             this.getFilteredReportByUserImplementingPartner(
               reports,

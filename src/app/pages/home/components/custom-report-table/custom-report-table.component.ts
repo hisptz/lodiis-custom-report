@@ -64,8 +64,6 @@ export class CustomReportTableComponent implements OnInit ,OnChanges{
   this.isLoading = true;
 setTimeout(async()=>{
   (await this.configService.getCustomReportConfigs()).subscribe((data)=>{
-    console.log(data)
-    console.log([...data['reports']])
     this.reports = [...data['reports']] 
    //  ? this.reportList
   })

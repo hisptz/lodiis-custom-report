@@ -41,7 +41,7 @@ export class EditCustomReportComponent implements OnInit {
   }
   customReportOnSave(
     reportName: string,
-    dxConfigs: any[],
+    dxConfigs: DxConfig[],
     implementingPartner: string
   ): Report {
     return {
@@ -99,6 +99,8 @@ export class EditCustomReportComponent implements OnInit {
   };
 
   validateMetadata() {
+    console.log("this is object")
+    console.log(this.message)
     try {
       for (let [key, value] of Object.entries(JSON.parse(this.message)[0])) {
         if (this.check(JSON.parse(this.message)[0], key)) {
