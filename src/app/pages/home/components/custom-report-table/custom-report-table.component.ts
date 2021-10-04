@@ -47,5 +47,10 @@ this.configService.sendEditReport(report);
 this.router.navigate(['/report', report.id]);
 }
 
+async onDelete(report:Report){
+await this.configService.onDeleteReport(report);
+window.location.reload();
+// this.router.navigateByUrl('/')
+}
 
 }
