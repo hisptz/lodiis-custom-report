@@ -1,7 +1,4 @@
-<ng-container *ngIf="isLoading; else elseTemplate">
-  <app-loader></app-loader>
-</ng-container>
-<ng-template #elseTemplate>
+
   <div class="table-responsive">
     <table class="report-table table-bordered">
       <thead>
@@ -13,20 +10,31 @@
       </thead>
   
       <tbody>
+        <ng-container *ngIf="isLoading; else elseTemplate">
+          <app-loader></app-loader>
+        </ng-container>
+        <ng-template #elseTemplate>
         <tr *ngFor="let report of reports;let reportCount = index">
-          <td class="p-1" >
-            {{ reportCount+1 }}
-          </td>
-          <td class="p-1" colspan="2"><span  style="padding-left: 0px">{{ report.name }}</span></td>
-          <td class="p-1" >
-            <a routerLink="/validator-report" (click)='onEdit(report)'>Edit</a>
-          </td>
+         
+
+        
+
+            <td class="p-1" >
+              {{ reportCount+1 }}
+            </td>
+            <td class="p-1" colspan="2"><span  style="padding-left: 0px">{{ report.name }}</span></td>
+            <td class="p-1" >
+              <a routerLink="/validator-report" (click)='onEdit(report)'>Edit</a>
+            </td>
+         
+       
         </tr>
+      </ng-template>
       </tbody>
     </table>
   </div>
-  
-</ng-template>
+
+
 
 
 

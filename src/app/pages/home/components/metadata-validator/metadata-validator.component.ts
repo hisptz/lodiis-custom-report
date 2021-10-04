@@ -14,6 +14,7 @@ import * as _ from 'lodash';
   styleUrls: ['./metadata-validator.component.css'],
 })
 export class MetadataValidatorComponent implements OnInit{
+  
   @ViewChild('searchInput') searchInput: ElementRef;
   message: any= '';
   title: string;

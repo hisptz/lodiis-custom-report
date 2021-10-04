@@ -32,19 +32,20 @@
                 </div>
                <div class="nametitile">
                  <h5>Configuration </h5>
-                 <mat-form-field class="example-full-width" appearance="outline">
-                   <mat-label>Configuration Object</mat-label>
-                   <textarea #searchInput (input)="message = $event.target.value"  [value]="toString(editedReport.dxConfigs)"  rows="10" cols="70" matInput placeholder="Enter Metadata Object Extracted from DataStore for report generation" required></textarea>
-                 </mat-form-field>
+                 <mat-form-field 
+            
+
+             class="example-full-width" appearance="outline" style="border: 1px red;">
+             <mat-label  *ngIf="!showMessage; else elseTemplate">
+              Configuration Object</mat-label>
+             <ng-template #elseTemplate>
+              <mat-label style="color: red;" *ngIf="showMessage; else elseTemplate">
+               Custom Column is not Compatible </mat-label>
+             </ng-template>
+               <textarea #searchInput  (input)="message = $event.target.value" [value]= 'toString(editedReport.dxConfigs)'  rows="10" cols="70" matInput placeholder="Enter Metadata Object Extracted from DataStore for report generation" required></textarea>
+             </mat-form-field>
                </div>
-           
-                   <!-- <div class="input-space">
-                     <textarea id="textAreaObject" #nameInput rows="10" cols="70" *ngIf="!showError" ng-required
-                       placeholder="Enter Metadata Object Extracted from DataStore for report generation"
-                       (input)="message = $event.target.value" required></textarea>
-                   
-             
-                   </div> -->
+
                    <div  class="button-validator">
                     <div *ngIf="!isValid;else other_content">
                       <button class="no-outline" mat-stroked-button (click)='validateMetadata()'>Validate</button>&nbsp;&nbsp;

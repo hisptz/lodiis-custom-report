@@ -66,8 +66,6 @@ export class HomeComponent implements OnInit {
     this.hasCountryLevelOrganisationUnit$ = this.store.select(
       isCurrentUserHasCountryLevelOrganisationUnit
     );
-    console.log(this.configService.userAccess())  
-    console.log("data")
     this.isLoading$ = this.store.select(getCurrentAnalyticsLoadingStatus);
     this.analytics$ = this.store.select(getCurrentAnalytics);
     this.analyticsError$ = this.store.select(getCurrentAnalyticsError);

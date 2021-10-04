@@ -32,7 +32,6 @@ export class ConfigService {
           _.find(data['reports'], { id: reports.id }) != null ||
           _.find(data['reports'], { id: reports.id }) != undefined
         ) {
-          console.log('pass 3');
           this.httpClient
             .put(this.configUrl + '/implementing-partners-reports', {
               reports: [
@@ -58,6 +57,20 @@ export class ConfigService {
 
   async onDeleteReport(report: Report) {
     // this.httpClient.delete()
+  }
+
+  async onEditCustomReport(report:Report){
+    this.httpClient.get(this.configUrl + '/implementing-partners-reports').subscribe(data =>{
+
+      this.httpClient
+      .put(this.configUrl + '/implementing-partners-reports', {
+        reports: [...(_.filter([...data['reports']],function (individialReport:Report){
+                   return individialReport.id != report.id
+        })), report],
+      })
+      .subscribe((configs) => {});
+
+    })
   }
   async getReportById(id: String): Promise<any> {
     return new Promise((resolve, reject) => {
