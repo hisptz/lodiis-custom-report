@@ -5,7 +5,6 @@ const defaultCustomDxConfigIds = [
   'beneficiary_age',
   'beneficiary_age_range',
   'beneficiary_age_ranges',
-  'beneficiary_type',
   'is_service_provided',
   'isAgywBeneficiary',
   'district_of_service',
@@ -157,7 +156,17 @@ function getSelectiveAttributesByProgramId(
     const programAttributes = programMetadataObject.attributes || [];
     selectedAttributes.push(
       _.filter(
-        attributeConfigs,
+        _.flattenDeep(
+          _.map(attributeConfigs, (attributeObject: any) => {
+            console.log(attributeObject);
+            return _.concat(
+              attributeObject,
+              _.map(attributeObject.ids || [], (id: string) => {
+                return { ...attributeObject, id };
+              })
+            );
+          })
+        ),
         (attributeObject: any) =>
           attributeObject &&
           attributeObject.id &&
