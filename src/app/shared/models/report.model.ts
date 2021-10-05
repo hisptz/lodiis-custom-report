@@ -13,7 +13,8 @@ interface DxConfig {
   programStage: string;
   name: string;
   id: string;
-  isOrganisationUnit: boolean;
+  ids?: string[];
+  isOrganisationUnit?: boolean;
   isBoolean: boolean;
   isDate: boolean;
   codes?: string[];
