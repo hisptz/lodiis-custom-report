@@ -742,7 +742,6 @@
           "isBoolean": false,
           "programStage": ""
         },
-
         {
           "id": "BYu8pI5kGXF",
           "name": "HIVSCREEN Service",
@@ -1194,10 +1193,24 @@
           "programStage": "RJTRRO0wg8H"
         },
         {
-          "id": "hivriskres",
+          "id": "hiv_risk_assessment_result",
+          "ids": [
+            "Fz89mIraWIl",
+            "mIcseDgrIlJ",
+            "Hi9fp222l2D",
+            "YAugNMbMe2c",
+            "niqNMJrfFDs",
+            "NhjnHO0IyqY",
+            "LA4G0A6fkNF",
+            "dL8ts5GQcMI",
+            "W64q5maeL6o",
+            "VJh6KDlBkfb",
+            "SDPCwdDB9yX",
+            "v0ArPi4Rk4o"
+          ],
           "name": "HIV RISK ASSESSMENT RESULT",
           "isDate": false,
-          "isBoolean": true,
+          "isBoolean": false,
           "programStage": "Pb1Gb4Aky92"
         },
         {
