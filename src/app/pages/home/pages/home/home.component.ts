@@ -131,15 +131,6 @@ goReportList(){
             this.reports = reportsByCurrentIp;
           } )
          
-      
-      
-      
-      
-      
-      
-      
-      
-      
         },
         () => {
           // this.configService.get

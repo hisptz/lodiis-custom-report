@@ -41,7 +41,7 @@ export class MetadataValidatorComponent implements OnInit {
     return {
       id: uuid(),
       name: reportName,
-      program: ['em38qztTI8s', 'BNsDaCclOiu'],
+      program: ['hOEIHJDrrvz'],
       includeEnrollmentWithoutService: true,
       allowedImplementingPartners: _.uniq(['H2CE3Iwdf7v', implementingPartner]),
       disableOrgUnitSelection: false,
