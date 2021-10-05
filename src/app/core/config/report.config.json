@@ -48,7 +48,7 @@
           "isAttribute": true
         },
         {
-          "id": "beneficiary_age_range",
+          "id": "beneficiary_age_ranges",
           "name": "AGE RANGES",
           "isDate": false,
           "program": "",
