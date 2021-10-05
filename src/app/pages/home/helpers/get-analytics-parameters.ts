@@ -56,8 +56,6 @@ export function getAnalyticsParameters(
         programMetadataObjects,
         programStage
       );
-
-      //@TODO handling attributes with ids mapping
       const selectedAttributes = getSelectiveAttributesByProgramId(
         programMetadataObjects,
         programIdByStage,
@@ -158,7 +156,6 @@ function getSelectiveAttributesByProgramId(
       _.filter(
         _.flattenDeep(
           _.map(attributeConfigs, (attributeObject: any) => {
-            console.log(attributeObject);
             return _.concat(
               attributeObject,
               _.map(attributeObject.ids || [], (id: string) => {
