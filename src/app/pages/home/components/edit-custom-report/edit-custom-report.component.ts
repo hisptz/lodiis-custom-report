@@ -40,10 +40,10 @@ export class EditCustomReportComponent implements OnInit {
     this.isValid = false;
     this.isError = true;
   }
-  customReportOnSave(dxConfigs: DxConfig[], report: Report): Report {
+  customReportOnSave(dxConfigs: DxConfig[], report: Report,editedTitle:string): Report {
     return {
       id: report.id,
-      name: report.name,
+      name: editedTitle,
       program: report.program,
       includeEnrollmentWithoutService: report.includeEnrollmentWithoutService,
       allowedImplementingPartners: report.allowedImplementingPartners,
@@ -65,13 +65,6 @@ export class EditCustomReportComponent implements OnInit {
     return JSON.stringify(reportConfigDx);
   }
 
-  getdemo(report: Report) {
-    // this.homeComponent.getFilteredReportByUserImplementingPartner()
-    this.message = report.name;
-    console.log('am in demo');
-    console.log(report);
-  }
-
   validateMetadata(): boolean {
     try {
       if (
@@ -80,6 +73,7 @@ export class EditCustomReportComponent implements OnInit {
       ) {
         JSON.parse(this.message).forEach((ObjectData) => {
           for (let [key, value] of Object.entries(ObjectData)) {
+            console.log(check(JSON.parse(this.message), key)) 
             if (check(JSON.parse(this.message), key)) {
             } else {
               throw new Error('Something bad happened');
@@ -113,7 +107,7 @@ export class EditCustomReportComponent implements OnInit {
     if (this.validateMetadata()) {
       const implementingPartnerId = (await this.configService.getUserImpelementingPartner()) as string;
       this.configService.onEditCustomReport(
-        this.customReportOnSave(JSON.parse(this.message), this.editedReport)
+        this.customReportOnSave(JSON.parse(this.message), this.editedReport,this.title)
       );
       setTimeout(() => {
         this.router.navigateByUrl('/report');

@@ -14,99 +14,92 @@ import { check } from '../../helpers/object-checker-funtion';
   templateUrl: './metadata-validator.component.html',
   styleUrls: ['./metadata-validator.component.css'],
 })
-export class MetadataValidatorComponent implements OnInit{
-  
+export class MetadataValidatorComponent implements OnInit {
   @ViewChild('searchInput') searchInput: ElementRef;
-  message: any= '';
+  message: any = '';
   title: string;
   isValid: boolean = false;
   isError: boolean = true;
-showMessage:boolean = false;
-  editedReport :Report;
-
+  showMessage: boolean = false;
+  editedReport: Report;
 
   arr: (keyof DxConfig)[];
   @Input() reportModel?: ReportModelInterface;
 
-  constructor(private router: Router,private configService:ConfigService) {}
+  constructor(private router: Router, private configService: ConfigService) {}
 
   clearSearch() {
     this.searchInput.nativeElement.value = '';
     this.isValid = false;
     this.isError = true;
   }
-  customReportOnSave(reportName:string,dxConfigs:DxConfig[],implementingPartner:string):Report{
+  customReportOnSave(
+    reportName: string,
+    dxConfigs: DxConfig[],
+    implementingPartner: string
+  ): Report {
     return {
-      id:uuid(),
-      name:reportName,
-      program:[
-        "em38qztTI8s",
-        "BNsDaCclOiu"
-      ],
-      includeEnrollmentWithoutService:true,
-      allowedImplementingPartners:_.uniq(['H2CE3Iwdf7v',implementingPartner]),
-      disableOrgUnitSelection:false,
-      disablePeriodSelection:false,
-      dxConfigs:dxConfigs
-    }
+      id: uuid(),
+      name: reportName,
+      program: ['em38qztTI8s', 'BNsDaCclOiu'],
+      includeEnrollmentWithoutService: true,
+      allowedImplementingPartners: _.uniq(['H2CE3Iwdf7v', implementingPartner]),
+      disableOrgUnitSelection: false,
+      disablePeriodSelection: false,
+      dxConfigs: dxConfigs,
+    };
   }
-  ngOnInit(): void {
-   
+  ngOnInit(): void {}
 
-    
-  }
-
-  
-
-  validateMetadata():boolean {
+  validateMetadata(): boolean {
     try {
-     
-     if(isArray(JSON.parse(this.message)) && (JSON.parse(this.message)).length > 0)
-     {
-      JSON.parse(this.message).forEach(ObjectData => {
-        for (let [key, value] of Object.entries(ObjectData)) {
-
-          if (check(JSON.parse(this.message), key)) {    
-          
-          } else {
-            throw new Error('Something bad happened');
+      if (
+        isArray(JSON.parse(this.message)) &&
+        JSON.parse(this.message).length > 0
+      ) {
+        JSON.parse(this.message).forEach((ObjectData) => {
+          for (let [key, value] of Object.entries(ObjectData)) {
+            if (check(JSON.parse(this.message), key)) {
+            } else {
+              throw new Error('Something bad happened');
+            }
           }
-  
-        }
-      });
-       
-   
-    
-     
-      setTimeout(()=>{
-        this.isValid =!this.isValid;
-      },1000)
-      this.isValid =!this.isValid;
-      return true;
-     }
-     
-     throw new Error('Something bad happened');    } catch (error) {
+        });
+
+        setTimeout(() => {
+          this.isValid = !this.isValid;
+        }, 1000);
+        this.isValid = !this.isValid;
+        return true;
+      }
+
+      throw new Error('Something bad happened');
+    } catch (error) {
       this.showMessage = true;
       setTimeout(() => {
         this.clearSearch();
         this.showMessage = false;
       }, 500);
-  
-     return false;
+
+      return false;
     }
   }
-goBack(){
-  this.router.navigateByUrl('/report')
-}
- async saveMetadata() { 
-   if( this.validateMetadata()){
-    const implementingPartnerId =
-    (await this.configService.getUserImpelementingPartner()) as string;
-    this.configService.onCreateReport(this.customReportOnSave(this.title,JSON.parse(this.message),implementingPartnerId));
-    setTimeout(()=>{
-      this.router.navigateByUrl('/report')
-    },3000)
-   }
-   
+  goBack() {
+    this.router.navigateByUrl('/report');
+  }
+  async saveMetadata() {
+    if (this.validateMetadata()) {
+      const implementingPartnerId = (await this.configService.getUserImpelementingPartner()) as string;
+      this.configService.onCreateReport(
+        this.customReportOnSave(
+          this.title,
+          JSON.parse(this.message),
+          implementingPartnerId
+        )
+      );
+      setTimeout(() => {
+        this.router.navigateByUrl('/report');
+      }, 3000);
+    }
   }
 }
