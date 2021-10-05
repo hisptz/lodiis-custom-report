@@ -7,7 +7,7 @@ import { uuid } from '../../helpers/dhis2-uid-generator';
 import { Report } from 'src/app/shared/models/report.model';
 import { isArray } from 'highcharts';
 import * as _ from 'lodash';
-import { check } from '../../helpers/object-checker-funtion';
+import { checkUserObjectDxConfigCompatibility } from '../../helpers/object-checker-funtion';
 
 @Component({
   selector: 'app-metadata-validator',
@@ -29,7 +29,6 @@ export class MetadataValidatorComponent implements OnInit {
   constructor(private router: Router, private configService: ConfigService) {}
 
   clearSearch() {
-    this.searchInput.nativeElement.value = '';
     this.isValid = false;
     this.isError = true;
   }
@@ -59,8 +58,7 @@ export class MetadataValidatorComponent implements OnInit {
       ) {
         JSON.parse(this.message).forEach((ObjectData) => {
           for (let [key, value] of Object.entries(ObjectData)) {
-            if (check(JSON.parse(this.message), key)) {
-            } else {
+            if (checkUserObjectDxConfigCompatibility(JSON.parse(this.message), key)) {} else {
               throw new Error('Something bad happened');
             }
           }

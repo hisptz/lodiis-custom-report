@@ -1,9 +1,9 @@
 import { DxConfig } from "src/app/shared/models/report-config-inteface";
 
-export function check  (
-    p: DxConfig,
-    propery: any
-  ): p is DxConfig {
+export function checkUserObjectDxConfigCompatibility  (
+    configColumnsObject: DxConfig,
+    userIndividualConfigColumnsObjectKey: any
+  ): configColumnsObject is DxConfig {
     if (
       [
         'id',
@@ -12,8 +12,8 @@ export function check  (
         'isBoolean',
         'isAttribute',
         'programStage',
-      ].map(key=>{
-        if(p.hasOwnProperty(key)){
+      ].map(standardObjectKey=>{
+        if(configColumnsObject.hasOwnProperty(standardObjectKey)){
           return true;
         }
         else{
@@ -29,7 +29,7 @@ export function check  (
         'programStage',
         'codes',
         'displayValues'
-      ].includes(propery) 
+      ].includes(userIndividualConfigColumnsObjectKey) 
     ) {
       return true;
     }

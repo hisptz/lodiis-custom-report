@@ -3,10 +3,9 @@ import { DxConfig } from 'src/app/shared/models/report-config-inteface';
 import { ReportModelInterface } from 'src/app/shared/models/report-model-interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfigService } from '../../services/config.service';
-import { uuid } from '../../helpers/dhis2-uid-generator';
 import { Report } from 'src/app/shared/models/report.model';
 import { isArray } from 'highcharts';
-import { check } from '../../helpers/object-checker-funtion';
+import { checkUserObjectDxConfigCompatibility } from '../../helpers/object-checker-funtion';
 
 @Component({
   selector: 'app-edit-custom-report',
@@ -16,14 +15,12 @@ import { check } from '../../helpers/object-checker-funtion';
 export class EditCustomReportComponent implements OnInit {
   @ViewChild('searchInput') searchInput: ElementRef;
   message: any = '';
-  title: string;
+  title: string = '';
   isValid: boolean = false;
   isError: boolean = true;
   editedReport: Report;
   isLoading: boolean = false;
   showMessage: boolean = false;
-
-  arr: (keyof DxConfig)[];
   @Input() reportModel?: ReportModelInterface;
 
   constructor(
@@ -40,10 +37,11 @@ export class EditCustomReportComponent implements OnInit {
     this.isValid = false;
     this.isError = true;
   }
-  customReportOnSave(dxConfigs: DxConfig[], report: Report,editedTitle:string): Report {
+  customReportOnSave(dxConfigs: DxConfig[], report: Report): Report {
+  
     return {
       id: report.id,
-      name: editedTitle,
+      name: this.title,
       program: report.program,
       includeEnrollmentWithoutService: report.includeEnrollmentWithoutService,
       allowedImplementingPartners: report.allowedImplementingPartners,
@@ -59,6 +57,7 @@ export class EditCustomReportComponent implements OnInit {
     this.editedReport = await this.configService.getReportById(id);
     if (this.editedReport.name != null) {
       this.isLoading = false;
+      this.title = this.editedReport.name;
     }
   }
   toString(reportConfigDx: any) {
@@ -72,11 +71,9 @@ export class EditCustomReportComponent implements OnInit {
         JSON.parse(this.message).length > 0
       ) {
         JSON.parse(this.message).forEach((ObjectData) => {
-          for (let [key, value] of Object.entries(ObjectData)) {
-            console.log(check(JSON.parse(this.message), key)) 
-            if (check(JSON.parse(this.message), key)) {
-            } else {
-              throw new Error('Something bad happened');
+          for (let [key, value] of Object.entries(ObjectData)) { 
+            if (checkUserObjectDxConfigCompatibility(JSON.parse(this.message), key)) {} else {
+              throw new Error('Object keys are not compatible');
             }
           }
         });
@@ -107,7 +104,7 @@ export class EditCustomReportComponent implements OnInit {
     if (this.validateMetadata()) {
       const implementingPartnerId = (await this.configService.getUserImpelementingPartner()) as string;
       this.configService.onEditCustomReport(
-        this.customReportOnSave(JSON.parse(this.message), this.editedReport,this.title)
+        this.customReportOnSave(JSON.parse(this.message), this.editedReport)
       );
       setTimeout(() => {
         this.router.navigateByUrl('/report');

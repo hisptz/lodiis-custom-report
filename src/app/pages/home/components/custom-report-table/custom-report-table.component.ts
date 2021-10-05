@@ -43,13 +43,15 @@ export class CustomReportTableComponent implements OnInit, OnChanges {
 
   onEdit(report: Report) {
     this.isEdit = !this.isEdit;
-    this.configService.sendEditReport(report);
     this.router.navigate(['/report', report.id]);
   }
 
   async onDelete(report: Report) {
     await this.configService.onDeleteReport(report);
-    window.location.reload();
+    setTimeout(()=>{
+
+    },5000)
+    // window.location.reload();
     // this.router.navigateByUrl('/')
   }
 }

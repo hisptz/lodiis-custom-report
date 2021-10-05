@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NgxDhis2HttpClientService } from '@iapps/ngx-dhis2-http-client';
-import { Observable, Subject } from 'rxjs';
+import { Observable} from 'rxjs';
 import { take } from 'rxjs/operators';
 import { Report } from 'src/app/shared/models/report.model';
 import * as _ from 'lodash';
@@ -9,7 +9,6 @@ import * as _ from 'lodash';
   providedIn: 'root',
 })
 export class ConfigService {
-  private subject = new Subject<any>();
   configUrl = 'dataStore/kb-custom-reports-config';
 
   constructor(private httpClient: NgxDhis2HttpClientService) {}
@@ -56,21 +55,22 @@ export class ConfigService {
   }
 
   async onDeleteReport(report: Report) {
-    this.httpClient
+   return this.httpClient
       .get(this.configUrl + '/implementing-partners-reports')
       .subscribe((data) => {
         this.httpClient
           .put(this.configUrl + '/implementing-partners-reports', {
             reports: [
               ..._.filter(
-                [...data['reports']],
+                [...data['reports']??[]],
                 function (individialReport: Report) {
                   return individialReport.id != report.id;
                 }
               ),
             ],
           })
-          .subscribe((configs) => {});
+          .subscribe((configs) => {
+          });
       });
   }
 
@@ -99,14 +99,14 @@ export class ConfigService {
         .get(this.configUrl + '/implementing-partners-reports')
         .subscribe(
           (data) => {
-            data['reports'].forEach((reportObject) => {
+            data['reports']??[].forEach((reportObject) => {
               if (reportObject['id'] === id) {
                 resolve(reportObject);
               }
             });
           },
           () => {
-            return { errir: 'take' };
+            reject ({ error: 'Report get failed' });
           }
         );
     });
@@ -193,23 +193,12 @@ export class ConfigService {
         );
     });
   }
-  sendEditReport(report: Report) {
-    this.subject.next(report);
-  }
 
-  clearEditedReport() {
-    this.subject.next();
-  }
-
-  getEditedReport(): Observable<Report> {
-    return this.subject.asObservable();
-  }
 
   userAccess(): Observable<boolean> {
-    const rolesAlowed: string[] = [
-      'Superuser',
-      'System administrator',
-      'Data Clerk',
+    const rolesIdAlowed: string[] = [
+      'yrB6vc5Ip3r',
+      'jv5X0x0A0xy',
     ];
 
     return new Observable((observer) => {
@@ -217,25 +206,16 @@ export class ConfigService {
       this.httpClient
         .get('me.json?fields=authorities,userCredentials[userRoles[id]]')
         .subscribe((data) => {
-          if (data['authorities'].includes('ALL')) {
+          if (data['authorities']??[].includes('ALL')) {
             observer.next(true);
           } else {
-            data['userCredentials']['userRoles']?.forEach(
+            data['userCredentials']['userRoles']??[].forEach(
               (userObjectRoleId) => {
-                this.httpClient
-                  .get('userRoles.json')
-                  .subscribe((userRolesData) => {
-                    userRolesData['userRoles'].map((userRoleOject) => {
-                      if (
-                        userRoleOject['id'] === userObjectRoleId &&
-                        rolesAlowed.includes(userRoleOject['displayName'])
-                      ) {
-                        observer.next(true);
-                      } else {
-                        observer.next(false);
-                      }
-                    });
-                  });
+                if (rolesIdAlowed.includes(userObjectRoleId)) {
+                  observer.next(true);
+                } else {
+                  observer.next(false);
+                }
               }
             );
           }

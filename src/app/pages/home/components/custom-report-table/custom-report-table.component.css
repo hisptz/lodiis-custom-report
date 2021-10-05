@@ -19,10 +19,7 @@ table th, table td{
     border: 1px solid #dee2e6;
     width:20px;    
     }
-    
-    table td.wideRow, table th.wideRow{
-   
-    }
+
     
 
 th,td{
@@ -36,7 +33,7 @@ th{
     text-align: left;
 }
 table{
-    width: 70%;
+    width: 90%;
 }
 .table-responsive{
     align-self: center;
