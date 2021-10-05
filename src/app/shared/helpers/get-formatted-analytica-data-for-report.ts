@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import { types } from 'util';
 import {
   getSanitizesReportValue,
   getSanitizedDisplayValue,
@@ -38,11 +39,21 @@ export function getFormattedEventAnalyticDataForReport(
           name,
           programStage,
           isBoolean,
+          isOrganisationUnit,
           codes,
           isDate,
           displayValues,
         } = dxConfigs;
         let value = '';
+        //@TODO manipulate dob attributes to qZP982qpSPS
+        // beneficiary_age
+        //beneficiary_age_range
+        //beneficiary_age_ranges
+        //@TODO using programs to deduce types => ["em38qztTI8s", "BNsDaCclOiu"]
+        //beneficiary_type
+
+        //checking for organisation units fielfs
+        //wv3YAGLZlev
         if (id === 'is_service_provided') {
           const lastService = getLastServiceFromAnalyticData(
             analyticDataByBeneficiary,
