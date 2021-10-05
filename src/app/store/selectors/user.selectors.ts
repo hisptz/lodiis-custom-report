@@ -32,7 +32,6 @@ export const getCurrentUserLoadingError = createSelector(
 export const isCurrentUserHasCountryLevelOrganisationUnit = createSelector(
   getCurrentUser,
   (currentUser: User) => {
-    console.log();
     const organisationUnits = currentUser
       ? _.flattenDeep(
           _.concat(

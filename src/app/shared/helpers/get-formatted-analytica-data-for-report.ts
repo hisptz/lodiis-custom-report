@@ -43,17 +43,27 @@ export function getFormattedEventAnalyticDataForReport(
           displayValues,
         } = dxConfigs;
         let value = '';
-        if(id === 'is_service_provided'){
+        if (id === 'is_service_provided') {
           const lastService = getLastServiceFromAnalyticData(
-            analyticDataByBeneficiary
+            analyticDataByBeneficiary,
+            programStage
           );
-          value = lastService? 'Yes' : 'No'
+          value =
+            lastService && _.keys(lastService).length > 0
+              ? 'Yes'
+              : value === ''
+              ? ''
+              : 'No';
         }
         if (id === 'last_service_community_council') {
           const lastService = getLastServiceFromAnalyticData(
-            analyticDataByBeneficiary
+            analyticDataByBeneficiary,
+            programStage
           );
-          const locationId = lastService ? lastService['ou'] || '' : '';
+          const locationId =
+            lastService && _.keys(lastService).length > 0
+              ? lastService['ou'] || ''
+              : '';
           value = getLocationNameById(
             locations,
             commmunityCouncilLevel,
@@ -73,9 +83,13 @@ export function getFormattedEventAnalyticDataForReport(
           );
         } else if (id === 'date_of_last_service_received') {
           const lastService = getLastServiceFromAnalyticData(
-            analyticDataByBeneficiary
+            analyticDataByBeneficiary,
+            programStage
           );
-          value = lastService ? lastService['eventdate'] || value : value;
+          value =
+            lastService && _.keys(lastService).length > 0
+              ? lastService['eventdate'] || value
+              : value;
         } else if (id === 'isAgywBeneficiary') {
           value = !isNotAgywBeneficiary ? 'Yes' : 'No';
         } else {
@@ -120,12 +134,21 @@ export function getFormattedEventAnalyticDataForReport(
   );
 }
 
-function getLastServiceFromAnalyticData(analyticDataByBeneficiary: Array<any>) {
+function getLastServiceFromAnalyticData(
+  analyticDataByBeneficiary: Array<any>,
+  programStage: string
+) {
   let lastService = {};
   const sortedServices = _.reverse(
     _.sortBy(
       _.filter(
-        analyticDataByBeneficiary,
+        programStage && programStage !== ''
+          ? _.filter(
+              analyticDataByBeneficiary,
+              (data: any) =>
+                data.programStage && data.programStage === programStage
+            )
+          : analyticDataByBeneficiary,
         (data: any) => data && data.hasOwnProperty('eventdate')
       ),
       ['eventdate']

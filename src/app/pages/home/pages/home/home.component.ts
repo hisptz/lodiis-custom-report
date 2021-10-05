@@ -23,7 +23,6 @@ import * as reportConfig from '../../../../core/config/report.config.json';
 import { Report } from 'src/app/shared/models/report.model';
 import { ExcelFileService } from 'src/app/core/services/excel-file.service';
 import { take } from 'rxjs/operators';
-import { ReportErrorComponent } from '../../components/report-error/report-error.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GeneratedReport } from 'src/app/shared/models/generated-report.model';
 import { ConfigService } from '../../services/config.service';
