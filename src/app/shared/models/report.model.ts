@@ -14,7 +14,6 @@ interface DxConfig {
   name: string;
   id: string;
   ids?: string[];
-  isOrganisationUnit?: boolean;
   isBoolean: boolean;
   isDate: boolean;
   codes?: string[];
