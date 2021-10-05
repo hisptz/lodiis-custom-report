@@ -30,25 +30,16 @@
           "programStage": ""
         },
         {
-          "id": "qZP982qpSPS",
-          "name": "DATE OF BIRTH",
-          "isDate": true,
-          "program": "BNsDaCclOiu",
-          "isBoolean": false,
-          "programStage": "",
-          "isAttribute": true
-        },
-        {
-          "id": "ls9hlz2tyol",
+          "id": "beneficiary_age",
           "name": "BENEFICIARY AGE",
           "isDate": false,
           "isBoolean": false,
-          "isAttribute": true,
+          "isAttribute": false,
           "programStage": "",
-          "program": "BNsDaCclOiu"
+          "program": ""
         },
         {
-          "id": "",
+          "id": "beneficiary_age_range",
           "name": "AGE RANGE",
           "isDate": false,
           "program": "",
@@ -57,22 +48,31 @@
           "isAttribute": true
         },
         {
-          "id": "",
+          "id": "beneficiary_age_ranges",
+          "name": "AGE RANGES",
+          "isDate": false,
+          "program": "",
+          "isBoolean": false,
+          "programStage": "",
+          "isAttribute": true
+        },
+        {
+          "id": "Uw2Z1XNFgXI",
           "name": "18-20 IN SCHOOL",
           "isDate": false,
-          "isBoolean": false,
-          "isAttribute": true,
-          "programStage": "",
-          "program": ""
+          "isBoolean": true,
+          "isAttribute": false,
+          "programStage": "dVdlJNtNLIQ",
+          "program": "em38qztTI8s"
         },
         {
           "id": "",
           "name": "18-20 IN ECONOMIC STRENGTHNING",
           "isDate": false,
           "program": "",
-          "isBoolean": false,
+          "isBoolean": true,
           "programStage": "",
-          "isAttribute": true
+          "isAttribute": false
         },
         {
           "id": "fQInK8s2RNR",
@@ -111,17 +111,9 @@
           "program": ""
         },
         {
-          "id": "",
+          "id": "beneficiary_type",
           "name": "BENEFICIARY TYPE",
-          "isDate": false,
-          "isBoolean": false,
-          "isAttribute": true,
-          "programStage": "",
-          "program": ""
-        },
-        {
-          "id": "",
-          "name": "HH ID #",
+          "ids": ["KO5NC4pfBmv"],
           "isDate": false,
           "isBoolean": false,
           "isAttribute": true,
@@ -140,15 +132,6 @@
         {
           "id": "tNdoR0jYr7R",
           "name": "PHONE NUMBERS",
-          "isDate": false,
-          "isBoolean": false,
-          "isAttribute": true,
-          "programStage": "",
-          "program": ""
-        },
-        {
-          "id": "",
-          "name": "CHILD HEADED HOUSEHOLD",
           "isDate": false,
           "isBoolean": false,
           "isAttribute": true,
@@ -760,7 +743,6 @@
           "isBoolean": false,
           "programStage": ""
         },
-
         {
           "id": "BYu8pI5kGXF",
           "name": "HIVSCREEN Service",
@@ -1189,39 +1171,54 @@
           "programStage": "CHFwighOquA"
         },
         {
-          "id": "",
+          "id": "Uw2Z1XNFgXI",
           "name": "SCHOOLING (02-20 years)",
           "isDate": false,
           "isBoolean": true,
-          "programStage": ""
+          "program": "em38qztTI8s",
+          "programStage": "dVdlJNtNLIQ"
         },
         {
-          "id": "wmKqYZML8GA",
+          "id": "c5TMWtM4VVJ",
           "name": "INITIAL HIV STATUS",
           "isDate": false,
           "isBoolean": false,
-          "programStage": ""
+          "programStage": "RJTRRO0wg8H"
         },
         {
-          "id": "",
+          "id": "wv3YAGLZlev",
           "name": "HEALTH FACILITY",
           "isDate": false,
           "isBoolean": false,
-          "programStage": ""
+          "programStage": "RJTRRO0wg8H"
         },
         {
-          "id": "",
+          "id": "hiv_risk_assessment_result",
+          "ids": [
+            "Fz89mIraWIl",
+            "mIcseDgrIlJ",
+            "Hi9fp222l2D",
+            "YAugNMbMe2c",
+            "niqNMJrfFDs",
+            "NhjnHO0IyqY",
+            "LA4G0A6fkNF",
+            "dL8ts5GQcMI",
+            "W64q5maeL6o",
+            "VJh6KDlBkfb",
+            "SDPCwdDB9yX",
+            "v0ArPi4Rk4o"
+          ],
           "name": "HIV RISK ASSESSMENT RESULT",
           "isDate": false,
-          "isBoolean": true,
-          "programStage": ""
+          "isBoolean": false,
+          "programStage": "Pb1Gb4Aky92"
         },
         {
-          "id": "",
+          "id": "aRNGDZcwWmS",
           "name": "VIRAL LOAD",
           "isDate": false,
           "isBoolean": true,
-          "programStage": ""
+          "programStage": "uEwup8PaVBd"
         },
         {
           "id": "",
@@ -1231,17 +1228,18 @@
           "programStage": ""
         },
         {
-          "id": "",
+          "id": "Icb6vUJXVDX",
           "name": "ADHERENCE & APPOINTMENTS",
           "isDate": false,
           "isBoolean": true,
-          "programStage": ""
+          "programStage": "uEwup8PaVBd"
         },
         {
           "id": "PN92g65TkVI",
           "name": "BENEFICIARY STATUS",
           "isDate": false,
           "isBoolean": false,
+          "isAttribute": true,
           "programStage": ""
         },
         {
@@ -1260,13 +1258,6 @@
         },
         {
           "id": "",
-          "name": "ANY ADDITIONAL INFORMATION OR COMMENTS",
-          "isDate": false,
-          "isBoolean": false,
-          "programStage": ""
-        },
-        {
-          "id": "",
           "name": "HOUSEHOLD CATEGORIZATION",
           "isDate": false,
           "isBoolean": false,
@@ -1277,6 +1268,7 @@
           "name": "When did the violence/abuse happen",
           "isDate": false,
           "isBoolean": false,
+          "isAttribute": true,
           "programStage": ""
         },
         {
@@ -1284,6 +1276,7 @@
           "name": "What Type of violence/Abuse did you experience?",
           "isDate": false,
           "isBoolean": false,
+          "isAttribute": true,
           "programStage": ""
         },
         {
@@ -1291,6 +1284,7 @@
           "name": "Action taken?",
           "isDate": false,
           "isBoolean": true,
+          "isAttribute": true,
           "programStage": ""
         },
         {
@@ -1305,13 +1299,6 @@
           "name": "Case completed?",
           "isDate": false,
           "isBoolean": true,
-          "programStage": ""
-        },
-        {
-          "id": "",
-          "name": "Comments/ More information",
-          "isDate": false,
-          "isBoolean": false,
           "programStage": ""
         },
         {
