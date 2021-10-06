@@ -21,7 +21,6 @@ export class EditCustomReportComponent implements OnInit {
   editedReport: Report;
   isLoading: boolean = false;
   showMessage: boolean = false;
-  @Input() reportModel?: ReportModelInterface;
 
   constructor(
     private router: Router,
@@ -50,7 +49,9 @@ export class EditCustomReportComponent implements OnInit {
       dxConfigs: dxConfigs,
     };
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    
+  }
 
   async getEditedReport(id: String) {
     this.isLoading = true;

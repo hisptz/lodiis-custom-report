@@ -22,19 +22,17 @@
           <div class='report-validate'>
             <mat-card>
                <mat-card-title style="margin-bottom: 1%; font-size: 15px;font-weight: bold;">Custom Reports Columns</mat-card-title>
-              <form class="configuration-form" validate>
+              <div class="configuration-form" validate>
                 <div class="nametitile">
                 <h5>Report Title </h5>
                  <mat-form-field appearance="outline">
                    <mat-label>Name</mat-label>
-                   <input (input)="title = $event.target.value" [value]='editedReport.name' matInput required>
+                   <input (input)="title = $event.target.value" [(ngModel)]='editedReport.name' matInput required>
                  </mat-form-field>
                 </div>
                <div class="nametitile">
                  <h5>Configuration </h5>
-                 <mat-form-field 
-            
-
+                 <mat-form-field            
              class="example-full-width" appearance="outline" style="border: 1px red;">
              <mat-label  *ngIf="!showMessage; else elseTemplate">
               Configuration Object</mat-label>
@@ -42,10 +40,9 @@
               <mat-label style="color: red;" *ngIf="showMessage; else elseTemplate">
                Custom Column is not Compatible </mat-label>
              </ng-template>
-               <textarea #searchInput  (input)="message = $event.target.value" [value]= 'toString(editedReport.dxConfigs)'  rows="10" cols="70" matInput placeholder="Enter Metadata Object Extracted from DataStore for report generation" required></textarea>
+               <textarea #searchInput  (input)="message = $event.target.value" [value]= 'toString(editedReport.dxConfigs)' [(ngModel)] ='message'  rows="10" cols="70" matInput placeholder="Enter Metadata Object Extracted from DataStore for report generation" required></textarea>
              </mat-form-field>
                </div>
-
                    <div  class="button-validator">
                     <div *ngIf="!isValid;else other_content">
                       <button class="no-outline" mat-stroked-button (click)='validateMetadata()'>Validate</button>&nbsp;&nbsp;
@@ -60,7 +57,7 @@
                       </div>
                     </ng-template>
                    </div>
-                 </form>
+                  </div>
             </mat-card>
           </div>
         </ng-template>

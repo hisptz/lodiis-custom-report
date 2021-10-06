@@ -15,7 +15,7 @@ export class ReportListComponent {
     this.router.navigateByUrl('')  }
 
   onAddReport() {
-    this.router.navigate(['/validator-report']);
+    this.router.navigate(['/validator-report','true']);
   }
 
 

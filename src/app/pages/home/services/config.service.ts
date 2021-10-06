@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NgxDhis2HttpClientService } from '@iapps/ngx-dhis2-http-client';
-import { Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { Report } from 'src/app/shared/models/report.model';
 import * as _ from 'lodash';
@@ -55,22 +55,22 @@ export class ConfigService {
   }
 
   async onDeleteReport(report: Report) {
-   return this.httpClient
+    this.httpClient
       .get(this.configUrl + '/implementing-partners-reports')
+      .pipe()
       .subscribe((data) => {
         this.httpClient
           .put(this.configUrl + '/implementing-partners-reports', {
             reports: [
               ..._.filter(
-                [...data['reports']??[]],
+                [...data['reports']],
                 function (individialReport: Report) {
                   return individialReport.id != report.id;
                 }
               ),
             ],
           })
-          .subscribe((configs) => {
-          });
+          .subscribe((configs) => {});
       });
   }
 
@@ -99,14 +99,14 @@ export class ConfigService {
         .get(this.configUrl + '/implementing-partners-reports')
         .subscribe(
           (data) => {
-            data['reports']??[].forEach((reportObject) => {
+            data['reports'].forEach((reportObject) => {
               if (reportObject['id'] === id) {
                 resolve(reportObject);
               }
             });
           },
           () => {
-            reject ({ error: 'Report get failed' });
+            return { error: 'Report get failed' };
           }
         );
     });
@@ -194,30 +194,24 @@ export class ConfigService {
     });
   }
 
-
   userAccess(): Observable<boolean> {
-    const rolesIdAlowed: string[] = [
-      'yrB6vc5Ip3r',
-      'jv5X0x0A0xy',
-    ];
-
+    const rolesIdAlowed: string[] = ['yrB6vc5Ip3r', 'jv5X0x0A0xy'];
     return new Observable((observer) => {
       observer.next(false);
       this.httpClient
         .get('me.json?fields=authorities,userCredentials[userRoles[id]]')
         .subscribe((data) => {
-          if (data['authorities']??[].includes('ALL')) {
+          if (data['authorities'] ?? [].includes('ALL')) {
             observer.next(true);
           } else {
-            data['userCredentials']['userRoles']??[].forEach(
-              (userObjectRoleId) => {
+            data['userCredentials']['userRoles'] ??
+              [].forEach((userObjectRoleId) => {
                 if (rolesIdAlowed.includes(userObjectRoleId)) {
                   observer.next(true);
                 } else {
                   observer.next(false);
                 }
-              }
-            );
+              });
           }
         });
     });
