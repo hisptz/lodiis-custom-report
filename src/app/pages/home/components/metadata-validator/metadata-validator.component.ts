@@ -68,6 +68,7 @@ export class MetadataValidatorComponent implements OnInit {
     this.isEdited = false;
     let isNewReport: string = this.activeRoute.snapshot.params['onAddReport'];
     if (isNewReport === 'true') {
+      this.isEdited = true;
     } else {
       this.getEditedReport(isNewReport);
     }
