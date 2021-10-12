@@ -21,7 +21,6 @@ export class CustomReportTableComponent implements OnInit{
   isLoading$: Observable<boolean>;
 
   constructor(private configService: ConfigService, private router: Router,private store:Store<State>) {
-    this.configService.userAccess();
   }
 
   ngOnInit(): void {
