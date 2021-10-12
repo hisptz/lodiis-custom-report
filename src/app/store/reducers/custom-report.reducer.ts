@@ -12,7 +12,7 @@ export const reducer = createReducer(
  })),
  on(AddCustomReport,(state,{report}) =>({
      ...state,
-     customReport:[...state.customReport,report]
+     isEdited:false
  })),
  on(DeleteCustomReport,(state,{report}) =>({
 ...state

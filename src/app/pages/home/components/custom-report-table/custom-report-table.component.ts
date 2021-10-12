@@ -26,7 +26,6 @@ export class CustomReportTableComponent implements OnInit{
 
   ngOnInit(): void {
     this.isLoading$ = this.store.select(getCustomReportLoadingStatus);
-  this.store.dispatch(LoadCustomReport())
     this.reports$ = this.store.select(getCustomReports);
   }
 

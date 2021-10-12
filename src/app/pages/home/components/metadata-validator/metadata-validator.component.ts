@@ -10,9 +10,16 @@ import * as _ from 'lodash';
 import { checkUserObjectDxConfigCompatibility } from '../../helpers/object-checker-funtion';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/store/reducers';
-import { EditCustomReport } from 'src/app/store/actions/custom-report.actions';
+import {
+  AddCustomReport,
+  EditCustomReport,
+} from 'src/app/store/actions/custom-report.actions';
 import { Observable } from 'rxjs';
-import { getIsEditedStatus } from 'src/app/store/selectors/custom-report.selector';
+import {
+  getCustomReportById,
+  getIsEditedStatus,
+} from 'src/app/store/selectors/custom-report.selector';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-metadata-validator',
@@ -27,18 +34,24 @@ export class MetadataValidatorComponent implements OnInit {
   showMessage: boolean = false;
   editedReport: Report;
   isLoading: boolean = false;
- isEdited$: Observable<boolean>;
+  isEdited$: Observable<boolean>;
+  isNewReport: string ;
 
   constructor(
     private router: Router,
     private activeRoute: ActivatedRoute,
     private configService: ConfigService,
-    private store:Store<State>
+    private store: Store<State>
   ) {}
 
   async getEditedReport(id: String) {
     this.isLoading = true;
-    this.editedReport = await this.configService.getReportById(id);
+    this.store
+      .select(getCustomReportById(id))
+      .pipe(take(1))
+      .subscribe((report: Report) => {
+        this.editedReport = report;
+      });
     if (this.editedReport.name != null) {
       this.title = this.editedReport.name;
       this.message = this.toString(this.editedReport.dxConfigs);
@@ -70,13 +83,11 @@ export class MetadataValidatorComponent implements OnInit {
     };
   }
   ngOnInit(): void {
-this.isEdited$ = this.store.select(getIsEditedStatus)
-    // this.isEdited = false;
-    let isNewReport: string = this.activeRoute.snapshot.params['onAddReport'];
-    if (isNewReport === 'true') {
-      // this.isEdited = true;
+    this.isEdited$ = this.store.select(getIsEditedStatus);
+    this.isNewReport = this.activeRoute.snapshot.params['onAddReport'];
+    if (this.isNewReport === 'true') {
     } else {
-      this.getEditedReport(isNewReport);
+      this.getEditedReport(this.isNewReport);
     }
   }
 
@@ -138,26 +149,25 @@ this.isEdited$ = this.store.select(getIsEditedStatus)
     if (this.validateMetadata()) {
       const implementingPartnerId =
         (await this.configService.getUserImpelementingPartner()) as string;
-if(       this.isEdited$
+      if (this.isNewReport != 'true') {
+        let report = this.customReportOnEditSave(
+          JSON.parse(this.message),
+          this.editedReport
+        );
 
-)     
-   {
-     let report =  this.customReportOnEditSave(
-      JSON.parse(this.message),
-      this.editedReport
-    );
-
-        this.store.dispatch(EditCustomReport({report}))
-    }else { this.configService.onCreateReport(
-            this.customReportOnSave(
-              this.title,
-              JSON.parse(this.message),
-              implementingPartnerId
-            )
-          );}
-      if(this.isEdited$){
+        this.store.dispatch(EditCustomReport({ report }));
+      } else {
+        console.log("in data");
+        let report = this.customReportOnSave(
+          this.title,
+          JSON.parse(this.message),
+          implementingPartnerId
+        );
+        this.store.dispatch(AddCustomReport({ report }));
+      }
+      if (this.isEdited$) {
         this.router.navigateByUrl('/report');
-      };
+      }
     }
   }
 }
