@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { Report } from 'src/app/shared/models/report.model';
 import * as _ from 'lodash';
+import { config } from 'process';
 
 @Injectable({
   providedIn: 'root',
@@ -54,45 +55,45 @@ export class ConfigService {
       });
   }
 
-  async onDeleteReport(report: Report) {
-    this.httpClient
-      .get(this.configUrl + '/implementing-partners-reports')
-      .pipe()
-      .subscribe((data) => {
-        this.httpClient
-          .put(this.configUrl + '/implementing-partners-reports', {
-            reports: [
-              ..._.filter(
-                [...data['reports']],
-                function (individialReport: Report) {
-                  return individialReport.id != report.id;
-                }
-              ),
-            ],
-          })
-          .subscribe((configs) => {});
-      });
-  }
+  // async onDeleteReport(report: Report) {
+  //   this.httpClient
+  //     .get(this.configUrl + '/implementing-partners-reports')
+  //     .subscribe((data) => {
+  //       this.httpClient
+  //         .put(this.configUrl + '/implementing-partners-reports', {
+  //           reports: [
+  //             ..._.filter(
+  //               [...data['reports']],
+  //               function (individialReport: Report) {
+  //                 return individialReport.id != report.id;
+  //               }
+  //             ),
+  //           ],
+  //         })
+  //         .subscribe((configs) => {});
+  //     });
+  // }
 
-  async onEditCustomReport(report: Report) {
-    this.httpClient
-      .get(this.configUrl + '/implementing-partners-reports')
-      .subscribe((data) => {
-        this.httpClient
-          .put(this.configUrl + '/implementing-partners-reports', {
-            reports: [
-              ..._.filter(
-                [...data['reports']],
-                function (individialReport: Report) {
-                  return individialReport.id != report.id;
-                }
-              ),
-              report,
-            ],
-          })
-          .subscribe((configs) => {});
-      });
-  }
+  // async onEditCustomReport(report: Report) {
+  //   this.httpClient
+  //     .get(this.configUrl + '/implementing-partners-reports')
+  //     .subscribe((data) => {
+  //       this.httpClient
+  //         .put(this.configUrl + '/implementing-partners-reports', {
+  //           reports: [
+  //             ..._.filter(
+  //               [...data['reports']],
+  //               function (individialReport: Report) {
+  //                 return individialReport.id != report.id;
+  //               }
+  //             ),
+  //             report,
+  //           ],
+  //         })
+  //         .subscribe((configs) => {
+  //         });
+  //     });
+  // }
   async getReportById(id: String): Promise<any> {
     return new Promise((resolve, reject) => {
       this.httpClient

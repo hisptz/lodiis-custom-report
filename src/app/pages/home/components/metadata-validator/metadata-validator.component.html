@@ -9,7 +9,7 @@
         </div>
         <div></div>
       </div>
-      <ng-container *ngIf="!isEdited; else elseTemplate">
+      <ng-container *ngIf="!isEdited$ |async; else elseTemplate">
         <app-loader></app-loader>
       </ng-container>
       <ng-template #elseTemplate>

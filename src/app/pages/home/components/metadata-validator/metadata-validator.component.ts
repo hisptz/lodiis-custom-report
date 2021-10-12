@@ -8,6 +8,11 @@ import { Report } from 'src/app/shared/models/report.model';
 import { isArray } from 'highcharts';
 import * as _ from 'lodash';
 import { checkUserObjectDxConfigCompatibility } from '../../helpers/object-checker-funtion';
+import { Store } from '@ngrx/store';
+import { State } from 'src/app/store/reducers';
+import { EditCustomReport } from 'src/app/store/actions/custom-report.actions';
+import { Observable } from 'rxjs';
+import { getIsEditedStatus } from 'src/app/store/selectors/custom-report.selector';
 
 @Component({
   selector: 'app-metadata-validator',
@@ -22,19 +27,19 @@ export class MetadataValidatorComponent implements OnInit {
   showMessage: boolean = false;
   editedReport: Report;
   isLoading: boolean = false;
-  @Input() isEdited: boolean;
+ isEdited$: Observable<boolean>;
 
   constructor(
     private router: Router,
     private activeRoute: ActivatedRoute,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private store:Store<State>
   ) {}
 
   async getEditedReport(id: String) {
     this.isLoading = true;
     this.editedReport = await this.configService.getReportById(id);
     if (this.editedReport.name != null) {
-      this.isEdited = true;
       this.title = this.editedReport.name;
       this.message = this.toString(this.editedReport.dxConfigs);
       this.isLoading = false;
@@ -65,10 +70,11 @@ export class MetadataValidatorComponent implements OnInit {
     };
   }
   ngOnInit(): void {
-    this.isEdited = false;
+this.isEdited$ = this.store.select(getIsEditedStatus)
+    // this.isEdited = false;
     let isNewReport: string = this.activeRoute.snapshot.params['onAddReport'];
     if (isNewReport === 'true') {
-      this.isEdited = true;
+      // this.isEdited = true;
     } else {
       this.getEditedReport(isNewReport);
     }
@@ -132,23 +138,26 @@ export class MetadataValidatorComponent implements OnInit {
     if (this.validateMetadata()) {
       const implementingPartnerId =
         (await this.configService.getUserImpelementingPartner()) as string;
-      this.isEdited
-        ? this.configService.onEditCustomReport(
-            this.customReportOnEditSave(
-              JSON.parse(this.message),
-              this.editedReport
-            )
-          )
-        : this.configService.onCreateReport(
+if(       this.isEdited$
+
+)     
+   {
+     let report =  this.customReportOnEditSave(
+      JSON.parse(this.message),
+      this.editedReport
+    );
+
+        this.store.dispatch(EditCustomReport({report}))
+    }else { this.configService.onCreateReport(
             this.customReportOnSave(
               this.title,
               JSON.parse(this.message),
               implementingPartnerId
             )
-          );
-      setTimeout(() => {
+          );}
+      if(this.isEdited$){
         this.router.navigateByUrl('/report');
-      }, 3000);
+      };
     }
   }
 }
