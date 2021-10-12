@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import { User, ErrorMessage } from '@iapps/ngx-dhis2-http-client';
+import {  ErrorMessage } from '@iapps/ngx-dhis2-http-client';
+import { CurrentUser } from 'src/app/shared/models/current-user.model';
 
 export enum UserActionTypes {
   LoadCurrentUser = '[User] Load current User',
@@ -11,7 +12,7 @@ export const loadCurrentUser = createAction('[User] Load current User');
 
 export const addCurrentUser = createAction(
   '[User] Add Current User',
-  props<{ currentUser: User }>()
+  props<{ currentUser: CurrentUser }>()
 );
 
 export const loadCurrentUserFail = createAction(

@@ -48,6 +48,7 @@ export class ReportDataEffects {
 
   async getEventReportAnalyticData(analyticParameters: any, reportConfig: any) {
     const eventReportAnalyticData = [];
+    const programToProgramStageObject = {};
     const programIds = _.flattenDeep([reportConfig.program]);
     const analyticData = [];
     const analyticParametersWithPaginationFilters = [];
@@ -97,6 +98,10 @@ export class ReportDataEffects {
       }
       for (const programId of programIds) {
         for (const analyticParameter of eventAnalyticParamaters) {
+          const programStages: any = await this.getProgramStagesByProgramId(
+            programId
+          );
+          programToProgramStageObject[programId] = programStages;
           const response: any =
             await this.getAnalyticParameterWithPaginationFilter(
               analyticParameter,
@@ -140,7 +145,8 @@ export class ReportDataEffects {
       const formattedEventReportData = getFormattedEventAnalyticDataForReport(
         _.flattenDeep(analyticData),
         reportConfig,
-        locations
+        locations,
+        programToProgramStageObject
       );
       eventReportAnalyticData.push(formattedEventReportData);
     } catch (error) {

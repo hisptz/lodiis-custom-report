@@ -15,6 +15,7 @@ import {
   getCurrentAnalyticsError,
 } from 'src/app/store/selectors/report-data.selectors';
 import {
+  getCurrentUserAccessToReportConfiguration,
   getCurrentUserOrganisationUnits,
   getSelectedGeneratedReport,
   isCurrentUserHasCountryLevelOrganisationUnit,
@@ -69,7 +70,7 @@ export class HomeComponent implements OnInit {
     this.analytics$ = this.store.select(getCurrentAnalytics);
     this.analyticsError$ = this.store.select(getCurrentAnalyticsError);
     this.downloading = false;
-    this.isConfigAccessAllow$  = this.configService.userAccess();
+    this.isConfigAccessAllow$  = this.store.select(getCurrentUserAccessToReportConfiguration);
     this.selectedPeriods = [];
     this.programMetadataObjects = {};
     this.fetchReportConfig();

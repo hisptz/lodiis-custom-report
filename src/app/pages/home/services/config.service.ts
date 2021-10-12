@@ -125,26 +125,5 @@ export class ConfigService {
     });
   }
 
-  userAccess(): Observable<boolean> {
-    const rolesIdAlowed: string[] = ['yrB6vc5Ip3r', 'jv5X0x0A0xy'];
-    return new Observable((observer) => {
-      observer.next(false);
-      this.httpClient
-        .get('me.json?fields=authorities,userCredentials[userRoles[id]]')
-        .subscribe((data) => {
-          if (data['authorities'] ?? [].includes('ALL')) {
-            observer.next(true);
-          } else {
-            data['userCredentials']['userRoles'] ??
-              [].forEach((userObjectRoleId) => {
-                if (rolesIdAlowed.includes(userObjectRoleId)) {
-                  observer.next(true);
-                } else {
-                  observer.next(false);
-                }
-              });
-          }
-        });
-    });
-  }
+
 }

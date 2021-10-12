@@ -2,6 +2,9 @@ import * as _ from 'lodash';
 
 const defaultCustomDxConfigIds = [
   'date_of_last_service_received',
+  'beneficiary_age',
+  'beneficiary_age_range',
+  'beneficiary_age_ranges',
   'is_service_provided',
   'isAgywBeneficiary',
   'district_of_service',
@@ -14,7 +17,12 @@ export function getAnalyticsParameters(
   selectedPeriods: Array<any>,
   selectedProgramIds: Array<string>,
   programMetadataObjects: any,
-  dxConfigs: Array<{ id: string; name: string; programStage: string }>
+  dxConfigs: Array<{
+    id: string;
+    ids?: string[];
+    name: string;
+    programStage: string;
+  }>
 ) {
   const enrollmentAnalyticParameters = [];
   const pe = getPeriods(selectedPeriods);
@@ -48,7 +56,6 @@ export function getAnalyticsParameters(
         programMetadataObjects,
         programStage
       );
-
       const selectedAttributes = getSelectiveAttributesByProgramId(
         programMetadataObjects,
         programIdByStage,
@@ -77,11 +84,31 @@ export function getAnalyticsParameters(
               _.flattenDeep(
                 _.map(
                   groupedDxConfigs[programStage] || [],
-                  (groupedDxConfig: any) =>
-                    groupedDxConfig.id !== '' &&
-                    groupedDxConfig.programStage !== ''
-                      ? `${groupedDxConfig.programStage}.${groupedDxConfig.id}`
-                      : []
+                  (groupedDxConfig: any) => {
+                    const dxList = [];
+                    if (
+                      groupedDxConfig.id !== '' &&
+                      groupedDxConfig.programStage !== '' &&
+                      groupedDxConfig.ids &&
+                      groupedDxConfig.ids.length > 0
+                    ) {
+                      dxList.push(
+                        _.map(
+                          groupedDxConfig.ids || [],
+                          (dxId: string) =>
+                            `${groupedDxConfig.programStage}.${dxId}`
+                        )
+                      );
+                    } else if (
+                      groupedDxConfig.id !== '' &&
+                      groupedDxConfig.programStage !== ''
+                    ) {
+                      dxList.push(
+                        `${groupedDxConfig.programStage}.${groupedDxConfig.id}`
+                      );
+                    }
+                    return dxList;
+                  }
                 )
               )
             );
@@ -127,7 +154,16 @@ function getSelectiveAttributesByProgramId(
     const programAttributes = programMetadataObject.attributes || [];
     selectedAttributes.push(
       _.filter(
-        attributeConfigs,
+        _.flattenDeep(
+          _.map(attributeConfigs, (attributeObject: any) => {
+            return _.concat(
+              attributeObject,
+              _.map(attributeObject.ids || [], (id: string) => {
+                return { ...attributeObject, id };
+              })
+            );
+          })
+        ),
         (attributeObject: any) =>
           attributeObject &&
           attributeObject.id &&
@@ -191,7 +227,12 @@ function getEnrollmentAnaliticParameters(
 }
 
 function getDataElementConfigs(
-  dxConfigs: { id: string; name: string; programStage: string }[]
+  dxConfigs: {
+    id: string;
+    ids?: string[];
+    name: string;
+    programStage: string;
+  }[]
 ) {
   return _.filter(
     dxConfigs || [],
@@ -203,7 +244,12 @@ function getDataElementConfigs(
 }
 
 function getAttributeConfigs(
-  dxConfigs: { id: string; name: string; programStage: string }[]
+  dxConfigs: {
+    id: string;
+    ids?: string[];
+    name: string;
+    programStage: string;
+  }[]
 ) {
   return _.uniqBy(
     _.filter(
