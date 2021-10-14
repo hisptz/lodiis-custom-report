@@ -10,6 +10,9 @@ import { State } from 'src/app/store/reducers';
 import { getCustomReportLoadingStatus, getCustomReports } from 'src/app/store/selectors/custom-report.selector';
 import { getFilteredReportByUserImplementingPartner } from '../../helpers/report-by-implementing-partner';
 import { ConfigService } from '../../services/config.service';
+import { MetadataValidatorComponent } from '../metadata-validator/metadata-validator.component';
+import { MatDialog } from  '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-custom-report-table',
@@ -20,7 +23,7 @@ export class CustomReportTableComponent implements OnInit{
   reports$:Observable< Report[]>;
   isLoading$: Observable<boolean>;
 
-  constructor(private configService: ConfigService, private router: Router,private store:Store<State>) {
+  constructor(private  dialogRef : MatDialog,private configService: ConfigService, private router: Router,private store:Store<State>) {
   }
 
   ngOnInit(): void {
@@ -30,7 +33,13 @@ export class CustomReportTableComponent implements OnInit{
 
 
   onEdit(report: Report) {
-    this.router.navigate(['/validator-report', report.id]);
+    this.dialogRef.open(MetadataValidatorComponent,{
+      height:'90%',
+      width:'100%',
+      data:{
+        params:report.id
+      }
+    });
   }
 
   async onDelete(report: Report){

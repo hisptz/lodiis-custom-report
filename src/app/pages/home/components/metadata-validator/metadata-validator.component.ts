@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, Input, OnInit, ViewChild } from '@angular/core';
 import { DxConfig } from 'src/app/shared/models/report-config-inteface';
 import { ReportModelInterface } from 'src/app/shared/models/report-model-interface';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,6 +10,8 @@ import * as _ from 'lodash';
 import { checkUserObjectDxConfigCompatibility } from '../../helpers/object-checker-funtion';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/store/reducers';
+import { MatDialog } from  '@angular/material/dialog';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {
   AddCustomReport,
   EditCustomReport,
@@ -38,10 +40,11 @@ export class MetadataValidatorComponent implements OnInit {
   isNewReport: string ;
 
   constructor(
+    private  dialogRef : MatDialog,
     private router: Router,
-    private activeRoute: ActivatedRoute,
     private configService: ConfigService,
-    private store: Store<State>
+    private store: Store<State>,
+    @Inject(MAT_DIALOG_DATA) public data: {params: string}
   ) {}
 
   async getEditedReport(id: String) {
@@ -84,10 +87,10 @@ export class MetadataValidatorComponent implements OnInit {
   }
   ngOnInit(): void {
     this.isEdited$ = this.store.select(getIsEditedStatus);
-    this.isNewReport = this.activeRoute.snapshot.params['onAddReport'];
-    if (this.isNewReport === 'true') {
+    if (this.data.params === 'true') {
+
     } else {
-      this.getEditedReport(this.isNewReport);
+      this.getEditedReport(this.data.params);
     }
   }
 
@@ -129,8 +132,7 @@ export class MetadataValidatorComponent implements OnInit {
     }
   }
   goBack() {
-    this.router.navigateByUrl('/report');
-  }
+   this.dialogRef.closeAll();  }
 
   customReportOnEditSave(dxConfigs: DxConfig[], report: Report): Report {
     return {
@@ -149,7 +151,7 @@ export class MetadataValidatorComponent implements OnInit {
     if (this.validateMetadata()) {
       const implementingPartnerId =
         (await this.configService.getUserImpelementingPartner()) as string;
-      if (this.isNewReport != 'true') {
+      if (this.data.params != 'true') {
         let report = this.customReportOnEditSave(
           JSON.parse(this.message),
           this.editedReport
@@ -157,7 +159,6 @@ export class MetadataValidatorComponent implements OnInit {
 
         this.store.dispatch(EditCustomReport({ report }));
       } else {
-        console.log("in data");
         let report = this.customReportOnSave(
           this.title,
           JSON.parse(this.message),

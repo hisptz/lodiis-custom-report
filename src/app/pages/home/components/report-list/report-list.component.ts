@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
+import { MatDialog } from  '@angular/material/dialog';
+import { MetadataValidatorComponent } from '../metadata-validator/metadata-validator.component';
 
 @Component({
   selector: 'app-report-list',
@@ -9,13 +11,20 @@ import { Router } from '@angular/router';
 })
 export class ReportListComponent {
 
-  constructor( private router: Router) {}
+  constructor( private router: Router ,private  dialogRef : MatDialog) {}
 
   goBack() {
     this.router.navigateByUrl('')  }
 
   onAddReport() {
-    this.router.navigate(['/validator-report','true']);
+    this.dialogRef.open(MetadataValidatorComponent,{
+      height:'90%',
+      width:'100%',
+      data:{
+        params:'true'
+      }
+    },
+    );
   }
 
 
