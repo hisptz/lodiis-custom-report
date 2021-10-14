@@ -24,24 +24,7 @@ export class ConfigService {
     );
   }
 
-  async getReportById(id: String): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this.httpClient
-        .get(this.configUrl + '/implementing-partners-reports')
-        .subscribe(
-          (data) => {
-            data['reports'].forEach((reportObject) => {
-              if (reportObject['id'] === id) {
-                resolve(reportObject);
-              }
-            });
-          },
-          () => {
-            return { error: 'Report get failed' };
-          }
-        );
-    });
-  }
+
 
   async getExtendeReportMetadata(programIds: String[] = []) {
     const programMetadata = {};

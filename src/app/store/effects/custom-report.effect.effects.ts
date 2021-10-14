@@ -37,7 +37,7 @@ export class CustomReportEffect {
     private store: Store<State>
   ) {}
 
-  configUrl: string = 'dataStore/kb-custom-reports-config';
+  configUrl: string = 'dataStore/kb-custom-reports-config/implementing-partners-reports';
   loadCustomReports$ = createEffect(() =>
     this.actions$.pipe(
       ofType(LoadCustomReport),
@@ -79,7 +79,7 @@ export class CustomReportEffect {
                 action.report,
               ];
               this.httpClient
-                .put(this.configUrl + '/implementing-partners-reports', {
+                .put(this.configUrl, {
                   reports: reports,
                 })
                 .subscribe();
@@ -107,7 +107,7 @@ export class CustomReportEffect {
                 }),
               ];
               this.httpClient
-                .put(this.configUrl + '/implementing-partners-reports', {
+                .put(this.configUrl, {
                   reports: reports,
                 })
                 .subscribe();
@@ -140,7 +140,7 @@ export class CustomReportEffect {
                   action.report,
                 ];
                 this.httpClient
-                  .put(this.configUrl + '/implementing-partners-reports', {
+                  .put(this.configUrl, {
                     reports: reports,
                   })
                   .subscribe((configs) => {});
@@ -149,7 +149,7 @@ export class CustomReportEffect {
               } else {
                 const reports = [...report['reports'], action.report];
                 this.httpClient
-                  .put(this.configUrl + '/implementing-partners-reports', {
+                  .put(this.configUrl, {
                     reports: reports,
                   })
                   .subscribe((configs) => {});
