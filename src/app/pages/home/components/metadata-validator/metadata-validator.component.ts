@@ -35,9 +35,7 @@ export class MetadataValidatorComponent implements OnInit {
   isError: boolean = true;
   showMessage: boolean = false;
   editedReport: Report;
-  isLoading: boolean = false;
   isEdited$: Observable<boolean>;
-  isNewReport: string ;
 
   constructor(
     private  dialogRef : MatDialog,
@@ -48,7 +46,6 @@ export class MetadataValidatorComponent implements OnInit {
   ) {}
 
   async getEditedReport(id: String) {
-    this.isLoading = true;
     this.store
       .select(getCustomReportById(id))
       .pipe(take(1))
@@ -58,7 +55,6 @@ export class MetadataValidatorComponent implements OnInit {
     if (this.editedReport.name != null) {
       this.title = this.editedReport.name;
       this.message = this.toString(this.editedReport.dxConfigs);
-      this.isLoading = false;
     }
   }
   toString(reportConfigDx: any) {
