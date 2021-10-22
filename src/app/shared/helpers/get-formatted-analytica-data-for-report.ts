@@ -38,6 +38,30 @@ function getLastServiceFromAnalyticData(
   return lastService;
 }
 
+function getLongFormPrEPValue(
+  analyticsDataByBeneficiary: Array<any>,
+  prepFields: Array<string>,
+  programStage: string): string {
+  const programStageData = _.find(
+    analyticsDataByBeneficiary || [],
+    (data: any) => {
+      return data.programStage && data.programStage === programStage;
+  });
+
+  if(programStageData) {
+    for (const field of prepFields) {
+      if (
+        !programStageData.hasOwnProperty(field)
+        || programStageData[field] !== '1') {
+          return '0';
+        }
+      }
+    } else {
+      return '0';
+    }
+    return '1';
+  }
+
 function getLocationNameByLevel(
   analyticDataByBeneficiary: Array<any>,
   locations: Array<any>,
@@ -255,6 +279,9 @@ export function getFormattedEventAnalyticDataForReport(
             analyticDataByBeneficiary,
             programToProgramStageObject
           );
+
+        } else if (id === 'prep_from_long_form') {
+          value = getLongFormPrEPValue(analyticDataByBeneficiary, ids, programStage);
         } else if (id === 'is_service_provided') {
           const lastService = getLastServiceFromAnalyticData(
             analyticDataByBeneficiary,
