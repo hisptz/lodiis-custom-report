@@ -25,8 +25,7 @@ export class CustomReportTableComponent implements OnInit{
   reports$:Observable< Report[]>;
   isLoading$: Observable<boolean>;
 
-  constructor(private  dialogRef : MatDialog,private configService: ConfigService, private router: Router,private store:Store<State>) {
-  }
+  constructor(private  dialogRef : MatDialog,private configService: ConfigService, private router: Router,private store:Store<State>){}
 
   ngOnInit(): void {
     this.isLoading$ = this.store.select(getCustomReportLoadingStatus);
@@ -44,10 +43,18 @@ export class CustomReportTableComponent implements OnInit{
     });
   }
 
-  async onDelete(report: Report){
- this.store.dispatch(DeleteCustomReport({report}))
 
+  onConfirmDeleteAction(report: Report) {
+    this.dialogRef.open(ReportactionComponent,{
+      height:'20%',
+      width:'50%',
+      data:{
+        reports:report
+      }
+    });
   }
+
+
   }
 
 

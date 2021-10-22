@@ -1,12 +1,24 @@
-<div>
-     <div>
-        <span> 
-            <button
-            class="ml-1"
-            mat-icon-button
-          ><h6>Edit
-            <mat-icon class="">edit</mat-icon>
-          </h6>
-          </button></span>
-     </div>
+
+<div mat-dialog-content>
+  <p>Are you sure, you want to delete <b>{{reportTitle}}</b></p>
 </div>
+<div style="padding-left: 13%;display: flex;" mat-dialog-actions>
+  <button
+  class="no-outline"
+  mat-button
+  cdkFocusInitial
+  mat-stroked-button
+  (click)='onComfirmAction(false)' 
+>
+  Cancel</button
+>&nbsp;&nbsp;
+<button
+class="no-outline"
+mat-button 
+mat-stroked-button
+(click)='onComfirmAction(true)' 
+>
+Delete</button
+>&nbsp;&nbsp;
+</div>
+
