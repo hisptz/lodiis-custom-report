@@ -22,6 +22,9 @@ import { MetadataValidatorComponent } from './components/metadata-validator/meta
 import { CustomReportTableComponent } from './components/custom-report-table/custom-report-table.component';
 import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ReportactionComponent } from './components/reportaction/reportaction.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -43,8 +46,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     ReportListComponent,
     MetadataValidatorComponent,
     CustomReportTableComponent,
+    ReportactionComponent,
   ],
-  imports: [CommonModule, SharedModule,MatDialogModule, HomeRoutingModule,FormsModule],
+  imports: [CommonModule,MatButtonModule ,MatMenuModule,SharedModule,MatDialogModule, HomeRoutingModule,FormsModule],
   entryComponents: [ReportErrorComponent],
 })
 export class HomeModule {}

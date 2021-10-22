@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { async } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -12,6 +12,8 @@ import { getFilteredReportByUserImplementingPartner } from '../../helpers/report
 import { ConfigService } from '../../services/config.service';
 import { MetadataValidatorComponent } from '../metadata-validator/metadata-validator.component';
 import { MatDialog } from  '@angular/material/dialog';
+import { ReportactionComponent } from '../reportaction/reportaction.component';
+import {MatMenuModule} from '@angular/material/menu';
 
 
 @Component({
@@ -29,8 +31,8 @@ export class CustomReportTableComponent implements OnInit{
   ngOnInit(): void {
     this.isLoading$ = this.store.select(getCustomReportLoadingStatus);
     this.reports$ = this.store.select(getCustomReports);
+    const matMenu = MatMenuModule;
   }
-
 
   onEdit(report: Report) {
     this.dialogRef.open(MetadataValidatorComponent,{
@@ -46,4 +48,10 @@ export class CustomReportTableComponent implements OnInit{
  this.store.dispatch(DeleteCustomReport({report}))
 
   }
-}
+  }
+
+
+
+
+
+

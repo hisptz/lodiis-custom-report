@@ -11,7 +11,7 @@ import { checkUserObjectDxConfigCompatibility } from '../../helpers/object-check
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/store/reducers';
 import { MatDialog } from  '@angular/material/dialog';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {
   AddCustomReport,
   EditCustomReport,
