@@ -5,7 +5,7 @@ import {
 } from './report-data.helper';
 
 const districtLevel = 2;
-const commmunityCouncilLevel = 3;
+const communityCouncilLevel = 3;
 const facilityLevel = 4;
 
 const noneAgywParticipationProgramStages = ['uctHRP6BBXP'];
@@ -177,19 +177,19 @@ function getBeneficiaryTypeValue(
     )
   );
 
-  let beneficiaryProgrmId = '';
+  let beneficiaryProgramId = '';
   if (eventProgramStages.length > 0) {
     const stageId = eventProgramStages[0];
     for (const programId of _.keys(programToProgramStageObject)) {
       if (programToProgramStageObject[programId].includes(stageId)) {
-        beneficiaryProgrmId = programId;
+        beneficiaryProgramId = programId;
       }
     }
   }
 
-  if (beneficiaryProgrmId === 'BNsDaCclOiu') {
+  if (beneficiaryProgramId === 'BNsDaCclOiu') {
     beneficiaryType = 'Caregiver';
-  } else if (beneficiaryProgrmId === 'em38qztTI8s') {
+  } else if (beneficiaryProgramId === 'em38qztTI8s') {
     const isPrimaryChild = getValueFromAnalyticalData(
       analyticDataByBeneficiary,
       primaryChildCheckReference,
@@ -305,7 +305,7 @@ export function getFormattedEventAnalyticDataForReport(
               : '';
           value = getLocationNameByIdAndLevel(
             locations,
-            commmunityCouncilLevel,
+            communityCouncilLevel,
             locationId
           );
         } else if (id === 'facility_name') {
