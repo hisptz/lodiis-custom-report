@@ -27,7 +27,8 @@ export class CustomReporActionComponent implements OnInit {
   onComfirmAction(actionComfirm: boolean) {
     if (actionComfirm) {
       let report = this.data.reports;
-      return this.store.dispatch(DeleteCustomReport({ report }));
+      this.store.dispatch(DeleteCustomReport({ report }));
+      this.dialog.closeAll();
     } else {
       this.dialog.closeAll();
     }

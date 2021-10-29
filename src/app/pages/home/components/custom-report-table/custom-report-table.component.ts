@@ -5,6 +5,7 @@ import { Report } from 'src/app/shared/models/report.model';
 import { State } from 'src/app/store/reducers';
 import {
   getCustomReportLoadingStatus,
+  getIsRefreshingStatus,
   getCustomReports,
 } from 'src/app/store/selectors/custom-report.selector';
 import { CustomReporFormComponent } from '../custom-report-form/custom-report-form.component';
@@ -19,12 +20,14 @@ import { CustomReporActionComponent } from '../custom-report-action/custom-repor
 export class CustomReportTableComponent implements OnInit {
   reports$: Observable<Report[]>;
   isLoading$: Observable<boolean>;
+  isRefreshing$: Observable<boolean>;
 
   constructor(private dialogRef: MatDialog, private store: Store<State>) {}
 
   ngOnInit(): void {
     this.isLoading$ = this.store.select(getCustomReportLoadingStatus);
     this.reports$ = this.store.select(getCustomReports);
+    this.isRefreshing$ = this.store.select(getIsRefreshingStatus);
   }
 
   onEdit(report: Report) {
@@ -50,5 +53,4 @@ export class CustomReportTableComponent implements OnInit {
       },
     });
   }
-  
 }
