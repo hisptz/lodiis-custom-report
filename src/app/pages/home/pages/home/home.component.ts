@@ -77,6 +77,7 @@ export class HomeComponent implements OnInit {
     this.fetchReportConfig();
     this.store
       .select(getCurrentUserOrganisationUnits)
+      .pipe(take(1))
       .subscribe((userOrganisationUnits) => {
         if (
           !this.selectedOrgUnitItems &&
@@ -88,16 +89,6 @@ export class HomeComponent implements OnInit {
           );
         }
       });
-    /**
-     *  {
-          "id": "WTZ7GLTrE8Q",
-          "name": "Header One",
-          "isDate": false,
-          "isBoolean": false,
-          "isAttribute": true,
-          "programStage": ""
-        }
-     */
   }
   goReportList() {
     this.router.navigate(['/report']);
@@ -114,6 +105,7 @@ export class HomeComponent implements OnInit {
 
           this.configService
             .getCustomReportConfigs()
+            .pipe(take(1))
             .subscribe((customConfig: any) => {
               const reports =
                 [...configs.reports, ...customConfig.reports] ||

@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { MetadataValidatorComponent } from '../metadata-validator/metadata-validator.component';
+import { MetadataValidatorComponent } from '../../components/metadata-validator/metadata-validator.component';
 
 @Component({
-  selector: 'app-report-list',
-  templateUrl: './report-list.component.html',
-  styleUrls: ['./report-list.component.css'],
+  selector: 'app-custom-report-list',
+  templateUrl: './custom-report-list.component.html',
+  styleUrls: ['./custom-report-list.component.css'],
 })
-export class ReportListComponent {
+export class CustomReportListComponent {
   constructor(private router: Router, private dialogRef: MatDialog) {}
 
   goBack() {

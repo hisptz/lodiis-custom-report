@@ -17,7 +17,6 @@ import { ReportErrorComponent } from './components/report-error/report-error.com
 import { ReportTableComponent } from './components/report-table/report-table.component';
 import { ReportDownloadComponent } from './components/report-download/report-download.component';
 import { ReportNamePipe } from './pipes/report-name.pipe';
-import { ReportListComponent } from './components/report-list/report-list.component';
 import { MetadataValidatorComponent } from './components/metadata-validator/metadata-validator.component';
 import { CustomReportTableComponent } from './components/custom-report-table/custom-report-table.component';
 import { FormsModule } from '@angular/forms';
@@ -43,7 +42,6 @@ import { MatButtonModule } from '@angular/material/button';
     ReportTableComponent,
     ReportDownloadComponent,
     ReportNamePipe,
-    ReportListComponent,
     MetadataValidatorComponent,
     CustomReportTableComponent,
     ReportactionComponent,
