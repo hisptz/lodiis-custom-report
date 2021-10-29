@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MetadataValidatorComponent } from './metadata-validator.component';
+import { CustomReporFormComponent } from './custom-report-form.component';
 
-describe('MetadataValidatorComponent', () => {
-  let component: MetadataValidatorComponent;
-  let fixture: ComponentFixture<MetadataValidatorComponent>;
+describe('CustomReporFormComponent', () => {
+  let component: CustomReporFormComponent;
+  let fixture: ComponentFixture<CustomReporFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MetadataValidatorComponent],
+      declarations: [CustomReporFormComponent],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MetadataValidatorComponent);
+    fixture = TestBed.createComponent(CustomReporFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

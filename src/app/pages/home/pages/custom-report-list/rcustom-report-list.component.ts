@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { MetadataValidatorComponent } from '../../components/metadata-validator/metadata-validator.component';
+import { CustomReporFormComponent } from '../../components/custom-report-form/custom-report-form.component';
 
 @Component({
   selector: 'app-custom-report-list',
@@ -16,7 +16,7 @@ export class CustomReportListComponent {
   }
 
   onAddReport() {
-    this.dialogRef.open(MetadataValidatorComponent, {
+    this.dialogRef.open(CustomReporFormComponent, {
       height: '90%',
       width: '100%',
       data: {

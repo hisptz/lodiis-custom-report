@@ -23,11 +23,11 @@ import {
 import { take } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-metadata-validator',
-  templateUrl: './metadata-validator.component.html',
-  styleUrls: ['./metadata-validator.component.css'],
+  selector: 'app-custom-report-form',
+  templateUrl: './custom-report-form.component.html',
+  styleUrls: ['./custom-report-form.component.css'],
 })
-export class MetadataValidatorComponent implements OnInit {
+export class CustomReporFormComponent implements OnInit {
   message: any = '';
   title: string;
   isValid: boolean = false;
