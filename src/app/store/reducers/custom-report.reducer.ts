@@ -11,7 +11,6 @@ import {
   initialCustomReportState,
 } from '../states/custom-report.state';
 import * as _ from 'lodash';
-import { state } from '@angular/animations';
 
 export const reducer = createReducer(
   initialCustomReportState,
@@ -22,7 +21,6 @@ export const reducer = createReducer(
   })),
   on(AddCustomReport, (state, { report }) => ({
     ...state,
-    isEdited: false,
     isRefreshing: true,
   })),
   on(DeleteCustomReport, (state, { report }) => ({
@@ -34,12 +32,10 @@ export const reducer = createReducer(
     ...state,
     customReport: [...reports],
     loading: false,
-    isEdited: false,
     isRefreshing: false,
   })),
   on(EditCustomReport, (state, { report }) => ({
     ...state,
-    isEdited: true,
     isRefreshing: true,
   }))
 );

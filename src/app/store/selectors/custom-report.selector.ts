@@ -24,11 +24,6 @@ export const getIsRefreshingStatus = createSelector(
   (state: CustomReportState) => state.isRefreshing
 );
 
-export const getIsEditedStatus = createSelector(
-  getCustomReportState,
-  (state: CustomReportState) => state.isEdited
-);
-
 export const getCustomReportById = (id) =>
   createSelector(getCustomReports, (reports: Report[]) => {
     let selectedCustomReport: Report;
