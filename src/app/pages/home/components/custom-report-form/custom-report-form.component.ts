@@ -14,7 +14,6 @@ import {
   AddCustomReport,
   EditCustomReport,
 } from 'src/app/store/actions/custom-report.actions';
-import { Observable } from 'rxjs';
 import { getCustomReportById } from 'src/app/store/selectors/custom-report.selector';
 import { take } from 'rxjs/operators';
 
@@ -24,12 +23,11 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./custom-report-form.component.css'],
 })
 export class CustomReporFormComponent implements OnInit {
-  message: any = '';
+  dxConfigs: any = '';
   title: string;
-  isValid: boolean = false;
-  isError: boolean = true;
-  showMessage: boolean = false;
-  editedReport: Report;
+  isDxConfigValid: boolean;
+  hasDxConfigValidated: boolean;
+  currentReport: Report;
 
   constructor(
     private dialogRef: MatDialog,
@@ -38,16 +36,26 @@ export class CustomReporFormComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: { params: string }
   ) {}
 
+  ngOnInit(): void {
+    this.title = '';
+    this.dxConfigs = '';
+    this.isDxConfigValid = true;
+    this.hasDxConfigValidated = false;
+    if (this.data.params !== 'true') {
+      this.getEditedReport(this.data.params);
+    }
+  }
+
   async getEditedReport(id: String) {
     this.store
       .select(getCustomReportById(id))
       .pipe(take(1))
       .subscribe((report: Report) => {
-        this.editedReport = report;
+        this.currentReport = report;
       });
-    if (this.editedReport.name != null) {
-      this.title = this.editedReport.name;
-      this.message = this.toString(this.editedReport.dxConfigs);
+    if (this.currentReport.name != null) {
+      this.title = this.currentReport.name;
+      this.dxConfigs = this.toString(this.currentReport.dxConfigs);
     }
   }
 
@@ -71,25 +79,21 @@ export class CustomReporFormComponent implements OnInit {
       dxConfigs: dxConfigs,
     };
   }
-  ngOnInit(): void {
-    if (this.data.params === 'true') {
-    } else {
-      this.getEditedReport(this.data.params);
-    }
-  }
 
-  validateMetadata(): boolean {
-    this.showMessage = false;
+  validateMetadata() {
+    this.isDxConfigValid = true;
+    this.hasDxConfigValidated = false;
     try {
       if (
-        isArray(JSON.parse(this.message)) &&
-        JSON.parse(this.message).length > 0
+        this.title.trim() !== '' &&
+        isArray(JSON.parse(this.dxConfigs)) &&
+        JSON.parse(this.dxConfigs).length > 0
       ) {
-        JSON.parse(this.message).forEach((ObjectData) => {
+        JSON.parse(this.dxConfigs).forEach((ObjectData) => {
           for (let [key, value] of Object.entries(ObjectData)) {
             if (
               checkUserObjectDxConfigCompatibility(
-                JSON.parse(this.message),
+                JSON.parse(this.dxConfigs),
                 key
               )
             ) {
@@ -98,14 +102,14 @@ export class CustomReporFormComponent implements OnInit {
             }
           }
         });
-        this.isValid = true;
-        return true;
+        this.isDxConfigValid = true;
+      } else {
+        this.isDxConfigValid = false;
       }
     } catch (error) {
-      this.showMessage = true;
-      this.isValid = false;
-      return false;
+      this.isDxConfigValid = false;
     }
+    this.hasDxConfigValidated = true;
   }
   goBack() {
     this.dialogRef.closeAll();
@@ -125,19 +129,20 @@ export class CustomReporFormComponent implements OnInit {
   }
 
   async saveMetadata() {
-    if (this.validateMetadata()) {
+    this.validateMetadata();
+    if (this.isDxConfigValid) {
       const implementingPartnerId =
         (await this.configService.getUserImpelementingPartner()) as string;
       if (this.data.params != 'true') {
         let report = this.customReportOnEditSave(
-          JSON.parse(this.message),
-          this.editedReport
+          JSON.parse(this.dxConfigs),
+          this.currentReport
         );
         this.store.dispatch(EditCustomReport({ report }));
       } else {
         let report = this.customReportOnSave(
           this.title,
-          JSON.parse(this.message),
+          JSON.parse(this.dxConfigs),
           implementingPartnerId
         );
         this.store.dispatch(AddCustomReport({ report }));
