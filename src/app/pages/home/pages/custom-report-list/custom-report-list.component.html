@@ -1,45 +1,21 @@
-   <div class="app-container">
-    <div class="row">
-      <div class="col">
-        <div class="d-flex justify-content">
-          <div style="margin-left: 2%;">
-            <button
-              class="no-outline"
-              mat-stroked-button
-              (click)='goBack()'
-            >
-              Back</button
-            >&nbsp;&nbsp;
-          </div>
-          <div>
-            <button
-            class="no-outline"
-            mat-stroked-button
-            (click)='onAddReport()' 
-          >
+<div class="app-container">
+  <div class="row">
+    <div class="col">
+      <div class="d-flex justify-content">
+        <div>
+          <button class="no-outline" mat-stroked-button (click)="goBack()">
+            Back</button
+          >&nbsp;&nbsp;
+        </div>
+        <div>
+          <button class="no-outline" mat-stroked-button (click)="onAddReport()">
             Add Report</button
           >&nbsp;&nbsp;
-          </div>
         </div>
-        <div class="report-container">
-     
-          <div>
-           
-            <div
-            >
-           <!-- <mat-card> -->
-            <app-custom-report-table>
-
-            </app-custom-report-table>
-           <!-- </mat-card> -->
-              <!-- <mat-card>
-                <mat-card-content>
-                </mat-card-content>
-              </mat-card> -->
-            </div>
-         
-        </div>
+      </div>
+      <div class="report-container">
+        <app-custom-report-table> </app-custom-report-table>
       </div>
     </div>
   </div>
-  
+</div>

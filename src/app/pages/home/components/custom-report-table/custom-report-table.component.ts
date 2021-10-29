@@ -28,9 +28,11 @@ export class CustomReportTableComponent implements OnInit {
   }
 
   onEdit(report: Report) {
+    const width = '800px';
+    const height = '600px';
     this.dialogRef.open(CustomReporFormComponent, {
-      height: '90%',
-      width: '100%',
+      height,
+      width,
       data: {
         params: report.id,
       },
@@ -38,12 +40,15 @@ export class CustomReportTableComponent implements OnInit {
   }
 
   onConfirmDeleteAction(report: Report) {
+    const width = '800px';
+    const height = '300px';
     this.dialogRef.open(CustomReporActionComponent, {
-      height: '20%',
-      width: '50%',
+      height,
+      width,
       data: {
         reports: report,
       },
     });
   }
+  
 }
