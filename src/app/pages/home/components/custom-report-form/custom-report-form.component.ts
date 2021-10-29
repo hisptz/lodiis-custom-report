@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { DxConfig } from 'src/app/shared/models/report-config-inteface';
-import { Router } from '@angular/router';
 import { ConfigService } from '../../services/config.service';
 import { uuid } from '../../helpers/dhis2-uid-generator';
 import { Report } from 'src/app/shared/models/report.model';
@@ -15,45 +14,48 @@ import {
   AddCustomReport,
   EditCustomReport,
 } from 'src/app/store/actions/custom-report.actions';
-import { Observable } from 'rxjs';
-import {
-  getCustomReportById,
-  getIsEditedStatus,
-} from 'src/app/store/selectors/custom-report.selector';
+import { getCustomReportById } from 'src/app/store/selectors/custom-report.selector';
 import { take } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-metadata-validator',
-  templateUrl: './metadata-validator.component.html',
-  styleUrls: ['./metadata-validator.component.css'],
+  selector: 'app-custom-report-form',
+  templateUrl: './custom-report-form.component.html',
+  styleUrls: ['./custom-report-form.component.css'],
 })
-export class MetadataValidatorComponent implements OnInit {
-  message: any = '';
+export class CustomReporFormComponent implements OnInit {
+  dxConfigs: any = '';
   title: string;
-  isValid: boolean = false;
-  isError: boolean = true;
-  showMessage: boolean = false;
-  editedReport: Report;
-  isEdited$: Observable<boolean>;
+  isDxConfigValid: boolean;
+  hasDxConfigValidated: boolean;
+  currentReport: Report;
 
   constructor(
     private dialogRef: MatDialog,
-    private router: Router,
     private configService: ConfigService,
     private store: Store<State>,
     @Inject(MAT_DIALOG_DATA) public data: { params: string }
   ) {}
+
+  ngOnInit(): void {
+    this.title = '';
+    this.dxConfigs = '';
+    this.isDxConfigValid = true;
+    this.hasDxConfigValidated = false;
+    if (this.data.params !== 'true') {
+      this.getEditedReport(this.data.params);
+    }
+  }
 
   async getEditedReport(id: String) {
     this.store
       .select(getCustomReportById(id))
       .pipe(take(1))
       .subscribe((report: Report) => {
-        this.editedReport = report;
+        this.currentReport = report;
       });
-    if (this.editedReport.name != null) {
-      this.title = this.editedReport.name;
-      this.message = this.toString(this.editedReport.dxConfigs);
+    if (this.currentReport.name != null) {
+      this.title = this.currentReport.name;
+      this.dxConfigs = this.toString(this.currentReport.dxConfigs);
     }
   }
 
@@ -77,26 +79,21 @@ export class MetadataValidatorComponent implements OnInit {
       dxConfigs: dxConfigs,
     };
   }
-  ngOnInit(): void {
-    this.isEdited$ = this.store.select(getIsEditedStatus);
-    if (this.data.params === 'true') {
-    } else {
-      this.getEditedReport(this.data.params);
-    }
-  }
 
-  validateMetadata(): boolean {
-    this.showMessage = false;
+  validateMetadata() {
+    this.isDxConfigValid = true;
+    this.hasDxConfigValidated = false;
     try {
       if (
-        isArray(JSON.parse(this.message)) &&
-        JSON.parse(this.message).length > 0
+        this.title.trim() !== '' &&
+        isArray(JSON.parse(this.dxConfigs)) &&
+        JSON.parse(this.dxConfigs).length > 0
       ) {
-        JSON.parse(this.message).forEach((ObjectData) => {
+        JSON.parse(this.dxConfigs).forEach((ObjectData) => {
           for (let [key, value] of Object.entries(ObjectData)) {
             if (
               checkUserObjectDxConfigCompatibility(
-                JSON.parse(this.message),
+                JSON.parse(this.dxConfigs),
                 key
               )
             ) {
@@ -105,14 +102,14 @@ export class MetadataValidatorComponent implements OnInit {
             }
           }
         });
-        this.isValid = true;
-        return true;
+        this.isDxConfigValid = true;
+      } else {
+        this.isDxConfigValid = false;
       }
     } catch (error) {
-      this.showMessage = true;
-      this.isValid = false;
-      return false;
+      this.isDxConfigValid = false;
     }
+    this.hasDxConfigValidated = true;
   }
   goBack() {
     this.dialogRef.closeAll();
@@ -132,26 +129,25 @@ export class MetadataValidatorComponent implements OnInit {
   }
 
   async saveMetadata() {
-    if (this.validateMetadata()) {
+    this.validateMetadata();
+    if (this.isDxConfigValid) {
       const implementingPartnerId =
         (await this.configService.getUserImpelementingPartner()) as string;
       if (this.data.params != 'true') {
         let report = this.customReportOnEditSave(
-          JSON.parse(this.message),
-          this.editedReport
+          JSON.parse(this.dxConfigs),
+          this.currentReport
         );
         this.store.dispatch(EditCustomReport({ report }));
       } else {
         let report = this.customReportOnSave(
           this.title,
-          JSON.parse(this.message),
+          JSON.parse(this.dxConfigs),
           implementingPartnerId
         );
         this.store.dispatch(AddCustomReport({ report }));
       }
-      if (this.isEdited$) {
-        this.router.navigateByUrl('/report');
-      }
+      this.dialogRef.closeAll();
     }
   }
 }

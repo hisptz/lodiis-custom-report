@@ -145,7 +145,6 @@ export class CustomReportEffect {
                     reports: reports,
                   })
                   .subscribe((configs) => {});
-
                 return LoadSuccessCustomReport({ reports });
               } else {
                 const reports = [...report['reports'], action.report];
