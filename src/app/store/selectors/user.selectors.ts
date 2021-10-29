@@ -32,7 +32,6 @@ export const getCurrentUserLoadingError = createSelector(
 export const isCurrentUserHasCountryLevelOrganisationUnit = createSelector(
   getCurrentUser,
   (currentUser: CurrentUser) => {
-
     const organisationUnits = currentUser
       ? _.flattenDeep(
           _.concat(
@@ -84,14 +83,15 @@ export const getCurrentUserAccessToReportConfiguration = createSelector(
     if (currentUser && (currentUser.authorities ?? [].includes('ALL'))) {
       hasAccess = true;
     } else if (currentUser && currentUser.userCredentials) {
-
-      (currentUser.userCredentials['userRoles'] ?? []).forEach(userObjectRoleId => {
-        if (rolesIdAllowed.includes(userObjectRoleId)) {
-          hasAccess = true;
-        } else {
-          hasAccess = false;
+      (currentUser.userCredentials['userRoles'] ?? []).forEach(
+        (userObjectRoleId) => {
+          if (rolesIdAllowed.includes(userObjectRoleId)) {
+            hasAccess = true;
+          } else {
+            hasAccess = false;
+          }
         }
-      });
+      );
     }
 
     return hasAccess;

@@ -70,6 +70,15 @@
           >
             Download</button
           >&nbsp;&nbsp;
+        
+          <button
+          *ngIf="isConfigAccessAllow$  | async"
+          class="no-outline"
+          mat-stroked-button
+          (click)="goReportList()"
+        >
+          Configuration</button
+        >&nbsp;&nbsp;
         </div>
       </div>
       <div class="report-container">

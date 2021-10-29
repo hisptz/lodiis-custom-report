@@ -3,6 +3,7 @@ import { SystemInfoEffects } from './system-info.effects';
 import { RouterEffects } from './router.effects';
 import { ReportDataEffects } from './report.effects';
 import { GeneratedReportEffects } from './generated-report.effects';
+import { CustomReportEffect } from './custom-report.effect.effects';
 
 export const effects: any[] = [
   UserEffects,
@@ -10,4 +11,5 @@ export const effects: any[] = [
   RouterEffects,
   ReportDataEffects,
   GeneratedReportEffects,
+  CustomReportEffect,
 ];

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { HomeRoutingModule } from './home-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { pages } from './pages';
@@ -18,6 +17,14 @@ import { ReportErrorComponent } from './components/report-error/report-error.com
 import { ReportTableComponent } from './components/report-table/report-table.component';
 import { ReportDownloadComponent } from './components/report-download/report-download.component';
 import { ReportNamePipe } from './pipes/report-name.pipe';
+import { ReportListComponent } from './components/report-list/report-list.component';
+import { MetadataValidatorComponent } from './components/metadata-validator/metadata-validator.component';
+import { CustomReportTableComponent } from './components/custom-report-table/custom-report-table.component';
+import { FormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ReportactionComponent } from './components/reportaction/reportaction.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -36,8 +43,20 @@ import { ReportNamePipe } from './pipes/report-name.pipe';
     ReportTableComponent,
     ReportDownloadComponent,
     ReportNamePipe,
+    ReportListComponent,
+    MetadataValidatorComponent,
+    CustomReportTableComponent,
+    ReportactionComponent,
   ],
-  imports: [CommonModule, SharedModule, HomeRoutingModule],
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatMenuModule,
+    SharedModule,
+    MatDialogModule,
+    HomeRoutingModule,
+    FormsModule,
+  ],
   entryComponents: [ReportErrorComponent],
 })
 export class HomeModule {}

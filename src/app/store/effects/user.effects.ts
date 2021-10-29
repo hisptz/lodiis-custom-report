@@ -13,7 +13,6 @@ import {
 
 @Injectable()
 export class UserEffects implements OnInitEffects {
-
   loadCurrentUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadCurrentUser),
@@ -26,10 +25,11 @@ export class UserEffects implements OnInitEffects {
     )
   );
 
- getCurrentUser(): Observable<User> {
-   const url = 'me.json?fields=id,name,displayName,email,created,lastUpdated,dataViewOrganisationUnits,organisationUnits,authorities,userGroups,userCredentials,attributeValues[value,attribute[id]]';
-   return this.httpClient.get(url);
- }
+  getCurrentUser(): Observable<User> {
+    const url =
+      'me.json?fields=id,name,displayName,email,created,lastUpdated,dataViewOrganisationUnits,organisationUnits,authorities,userGroups,userCredentials,attributeValues[value,attribute[id]]';
+    return this.httpClient.get(url);
+  }
 
   ngrxOnInitEffects() {
     return loadCurrentUser();

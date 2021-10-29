@@ -3,7 +3,6 @@ import { Store } from '@ngrx/store';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import * as _ from 'lodash';
-
 import { PeSelectionComponent } from '../../components/pe-selection/pe-selection.component';
 import { OuSelectionComponent } from '../../components/ou-selection/ou-selection.component';
 import { getDefaultOrganisationUnitSelections } from '../../helpers/get-dafault-selections';
@@ -16,6 +15,7 @@ import {
   getCurrentAnalyticsError,
 } from 'src/app/store/selectors/report-data.selectors';
 import {
+  getCurrentUserAccessToReportConfiguration,
   getCurrentUserOrganisationUnits,
   getSelectedGeneratedReport,
   isCurrentUserHasCountryLevelOrganisationUnit,
@@ -27,6 +27,8 @@ import { take } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GeneratedReport } from 'src/app/shared/models/generated-report.model';
 import { ConfigService } from '../../services/config.service';
+import { Router } from '@angular/router';
+import { getFilteredReportByUserImplementingPartner } from '../../helpers/report-by-implementing-partner';
 
 @Component({
   selector: 'app-home',
@@ -41,8 +43,10 @@ export class HomeComponent implements OnInit {
   programMetadataObjects: any;
   selectedReport: Report;
   reports: Array<Report>;
+  customReports: Array<Report>;
   isLoading$: Observable<boolean>;
   downloading: boolean;
+  isConfigAccessAllow$: Observable<boolean>;
   analytics$: Observable<any>;
   analyticsError$: Observable<any>;
   generatedReport$: Observable<GeneratedReport>;
@@ -53,6 +57,7 @@ export class HomeComponent implements OnInit {
     private store: Store<State>,
     private excelFileService: ExcelFileService,
     private snackbar: MatSnackBar,
+    private router: Router,
     private configService: ConfigService
   ) {}
 
@@ -64,6 +69,9 @@ export class HomeComponent implements OnInit {
     this.analytics$ = this.store.select(getCurrentAnalytics);
     this.analyticsError$ = this.store.select(getCurrentAnalyticsError);
     this.downloading = false;
+    this.isConfigAccessAllow$ = this.store.select(
+      getCurrentUserAccessToReportConfiguration
+    );
     this.selectedPeriods = [];
     this.programMetadataObjects = {};
     this.fetchReportConfig();
@@ -80,8 +88,20 @@ export class HomeComponent implements OnInit {
           );
         }
       });
+    /**
+     *  {
+          "id": "WTZ7GLTrE8Q",
+          "name": "Header One",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": true,
+          "programStage": ""
+        }
+     */
   }
-
+  goReportList() {
+    this.router.navigate(['/report']);
+  }
   async fetchReportConfig() {
     const implementingPartnerId =
       (await this.configService.getUserImpelementingPartner()) as string;
@@ -90,30 +110,40 @@ export class HomeComponent implements OnInit {
       .pipe(take(1))
       .subscribe(
         (configs: any) => {
-          const reports = configs.reports || reportConfig.reports || [];
-          const reportsByCurrentIp =
-            this.getFilteredReportByUserImplementingPartner(
-              reports,
-              implementingPartnerId
-            );
-          const selectedProgramIds = _.uniq(
-            _.flattenDeep(
-              _.map(
-                reportsByCurrentIp,
-                (report: Report) => report.program || []
-              )
-            )
-          );
-          this.setProgramMetadata(selectedProgramIds);
-          this.reports = reportsByCurrentIp;
+          // @TODO remove below on deplyoment to production
+
+          this.configService
+            .getCustomReportConfigs()
+            .subscribe((customConfig: any) => {
+              const reports =
+                [...configs.reports, ...customConfig.reports] ||
+                reportConfig.reports ||
+                [];
+
+              const reportsByCurrentIp =
+                getFilteredReportByUserImplementingPartner(
+                  reports,
+                  implementingPartnerId
+                );
+              const selectedProgramIds = _.uniq(
+                _.flattenDeep(
+                  _.map(
+                    reportsByCurrentIp,
+                    (report: Report) => report.program || []
+                  )
+                )
+              );
+              this.setProgramMetadata(selectedProgramIds);
+              this.reports = reportsByCurrentIp;
+            });
         },
         () => {
+          // this.configService.get
           const reports = reportConfig.reports || ([] as Array<any>);
-          const reportsByCurrentIp =
-            this.getFilteredReportByUserImplementingPartner(
-              reports,
-              implementingPartnerId
-            );
+          const reportsByCurrentIp = getFilteredReportByUserImplementingPartner(
+            reports,
+            implementingPartnerId
+          );
           const selectedProgramIds = _.uniq(
             _.flattenDeep(
               _.map(
@@ -131,19 +161,6 @@ export class HomeComponent implements OnInit {
   async setProgramMetadata(programIds: String[] = []) {
     this.programMetadataObjects =
       await this.configService.getExtendeReportMetadata(programIds);
-  }
-
-  getFilteredReportByUserImplementingPartner(
-    reports: Report[],
-    implementingPartnerId: string
-  ) {
-    return _.filter(
-      reports || [],
-      (report: Report) =>
-        report &&
-        report.allowedImplementingPartners &&
-        report.allowedImplementingPartners.includes(implementingPartnerId)
-    );
   }
 
   getSanitizedListOfReport(hasCountryLevelOrganisationUnit: boolean) {

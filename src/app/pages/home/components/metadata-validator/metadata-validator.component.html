@@ -1,0 +1,101 @@
+<div class="app-container">
+  <div class="row">
+    <div class="col">
+      <div class="d-flex justify-content-between">
+        <div style="margin-left: 2%">
+          <button class="no-outline" mat-stroked-button (click)="goBack()">
+            Back</button
+          >&nbsp;&nbsp;
+        </div>
+      </div>
+      <ng-container *ngIf="!isEdited$ | async; else elseTemplate">
+        <app-loader></app-loader>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <div class="report-validate">
+          <mat-card-title
+            style="margin-bottom: 1%; font-size: 15px; font-weight: bold"
+            >Custom Reports Columns</mat-card-title
+          >
+          <div class="configuration-form" validate>
+            <div class="nametitile">
+              <h5>Report Title</h5>
+              <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input
+                  [(ngModel)]="title"
+                  (input)="title = $event.target.value"
+                  type="text"
+                  matInput
+                  required
+                />
+              </mat-form-field>
+            </div>
+            <div class="nametitile">
+              <h5>Configuration</h5>
+              <mat-form-field
+                class="example-full-width"
+                appearance="outline"
+                style="border: 1px red"
+              >
+                <mat-label *ngIf="!showMessage; else elseTemplate">
+                  Configuration Object</mat-label
+                >
+                <ng-template #elseTemplate>
+                  <mat-label
+                    style="color: red"
+                    *ngIf="showMessage; else elseTemplate"
+                  >
+                    Custom Column is not Compatible
+                  </mat-label>
+                </ng-template>
+                <textarea
+                  [(ngModel)]="message"
+                  (input)="message = $event.target.value"
+                  rows="10"
+                  cols="70"
+                  matInput
+                  placeholder="Enter Metadata Object Extracted from DataStore for report generation"
+                  required
+                ></textarea>
+              </mat-form-field>
+            </div>
+
+            <div class="button-validator">
+              <div *ngIf="!isValid; else other_content">
+                <button
+                  class="no-outline"
+                  mat-stroked-button
+                  (click)="validateMetadata()"
+                >
+                  Validate</button
+                >&nbsp;&nbsp;
+                <button
+                  class="no-outline"
+                  mat-stroked-button
+                  (click)="saveMetadata()"
+                >
+                  Save</button
+                >&nbsp;&nbsp;
+              </div>
+              <ng-template #other_content>
+                <div>
+                  <mat-icon
+                    *ngIf="isError; else valid_content"
+                    style="color: green; size: 50px"
+                    >check_circle_outline</mat-icon
+                  >
+                  <ng-template #valid_content>
+                    <mat-icon style="color: red; size: 50px"
+                      >highlight_off</mat-icon
+                    >
+                  </ng-template>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

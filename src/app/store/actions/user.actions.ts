@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import {  ErrorMessage } from '@iapps/ngx-dhis2-http-client';
+import { ErrorMessage } from '@iapps/ngx-dhis2-http-client';
 import { CurrentUser } from 'src/app/shared/models/current-user.model';
 
 export enum UserActionTypes {

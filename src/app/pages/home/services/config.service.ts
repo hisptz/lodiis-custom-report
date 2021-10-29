@@ -4,17 +4,24 @@ import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { Report } from 'src/app/shared/models/report.model';
 import * as _ from 'lodash';
+import { config } from 'process';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ConfigService {
-  configUrl = 'dataStore/kb-custom-reports-config/reports';
+  configUrl = 'dataStore/kb-custom-reports-config';
 
   constructor(private httpClient: NgxDhis2HttpClientService) {}
 
   getReportConfigs(): Observable<{ reports: Report[] }> {
-    return this.httpClient.get(this.configUrl);
+    return this.httpClient.get(this.configUrl + '/reports');
+  }
+
+  getCustomReportConfigs(): Observable<{ reports: Report[] }> {
+    return this.httpClient.get(
+      this.configUrl + '/implementing-partners-reports'
+    );
   }
 
   async getExtendeReportMetadata(programIds: String[] = []) {
