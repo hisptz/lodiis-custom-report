@@ -9,7 +9,7 @@ import {
 } from 'src/app/store/selectors/custom-report.selector';
 import { CustomReporFormComponent } from '../custom-report-form/custom-report-form.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ReportactionComponent } from '../reportaction/reportaction.component';
+import { CustomReporActionComponent } from '../custom-report-action/custom-report-action.component';
 
 @Component({
   selector: 'app-custom-report-table',
@@ -38,7 +38,7 @@ export class CustomReportTableComponent implements OnInit {
   }
 
   onConfirmDeleteAction(report: Report) {
-    this.dialogRef.open(ReportactionComponent, {
+    this.dialogRef.open(CustomReporActionComponent, {
       height: '20%',
       width: '50%',
       data: {

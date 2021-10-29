@@ -21,7 +21,7 @@ import { CustomReporFormComponent } from './components/custom-report-form/custom
 import { CustomReportTableComponent } from './components/custom-report-table/custom-report-table.component';
 import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
-import { ReportactionComponent } from './components/reportaction/reportaction.component';
+import { CustomReporActionComponent } from './components/custom-report-action/custom-report-action.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 
@@ -44,7 +44,7 @@ import { MatButtonModule } from '@angular/material/button';
     ReportNamePipe,
     CustomReporFormComponent,
     CustomReportTableComponent,
-    ReportactionComponent,
+    CustomReporActionComponent,
   ],
   imports: [
     CommonModule,
