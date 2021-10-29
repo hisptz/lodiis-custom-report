@@ -11,5 +11,5 @@ export const effects: any[] = [
   RouterEffects,
   ReportDataEffects,
   GeneratedReportEffects,
-  CustomReportEffect
+  CustomReportEffect,
 ];

@@ -1,5 +1,4 @@
 export interface CustomReportInterface {
-    reportTitle: any;
-    configuration: any;
-  }
-  
+  reportTitle: any;
+  configuration: any;
+}

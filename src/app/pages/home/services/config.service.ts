@@ -24,8 +24,6 @@ export class ConfigService {
     );
   }
 
-
-
   async getExtendeReportMetadata(programIds: String[] = []) {
     const programMetadata = {};
     const filter = `filter=id:in:[${_.join(programIds, ',')}]`;
@@ -107,6 +105,4 @@ export class ConfigService {
         );
     });
   }
-
-
 }

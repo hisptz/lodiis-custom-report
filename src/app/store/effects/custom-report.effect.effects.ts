@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
-import { async } from '@angular/core/testing';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { EMPTY, Observable, of } from 'rxjs';
+import { EMPTY } from 'rxjs';
 import {
   map,
   mergeMap,
   catchError,
   withLatestFrom,
-  take,
   mapTo,
 } from 'rxjs/operators';
 import { getFilteredReportByUserImplementingPartner } from 'src/app/pages/home/helpers/report-by-implementing-partner';
@@ -22,7 +20,6 @@ import {
 } from '../actions/custom-report.actions';
 import * as _ from 'lodash';
 import { NgxDhis2HttpClientService } from '@iapps/ngx-dhis2-http-client';
-import { AddReportData, LoadReportData } from '../actions/report.actions';
 import { addCurrentUser } from '../actions/user.actions';
 import { Store } from '@ngrx/store';
 import { State } from '../reducers';
@@ -37,7 +34,8 @@ export class CustomReportEffect {
     private store: Store<State>
   ) {}
 
-  configUrl: string = 'dataStore/kb-custom-reports-config/implementing-partners-reports';
+  configUrl: string =
+    'dataStore/kb-custom-reports-config/implementing-partners-reports';
   loadCustomReports$ = createEffect(() =>
     this.actions$.pipe(
       ofType(LoadCustomReport),
@@ -71,11 +69,12 @@ export class CustomReportEffect {
           map(
             (report) => {
               const reports = [
-                ..._.filter([...report['reports']], function (
-                  individialReport: Report
-                ) {
-                  return individialReport.id != action.report.id;
-                }),
+                ..._.filter(
+                  [...report['reports']],
+                  function (individialReport: Report) {
+                    return individialReport.id != action.report.id;
+                  }
+                ),
                 action.report,
               ];
               this.httpClient
@@ -100,11 +99,12 @@ export class CustomReportEffect {
           map(
             (report) => {
               const reports = [
-                ..._.filter([...report['reports']], function (
-                  individialReport: Report
-                ) {
-                  return individialReport.id != action.report.id;
-                }),
+                ..._.filter(
+                  [...report['reports']],
+                  function (individialReport: Report) {
+                    return individialReport.id != action.report.id;
+                  }
+                ),
               ];
               this.httpClient
                 .put(this.configUrl, {
@@ -132,11 +132,12 @@ export class CustomReportEffect {
                 _.find(report['reports'], { id: action.report.id }) != undefined
               ) {
                 const reports = [
-                  ..._.remove(report['reports']['dxConfigs'] ?? [], function (
-                    report
-                  ) {
-                    return !action.report.dxConfigs.includes(report['id']);
-                  }),
+                  ..._.remove(
+                    report['reports']['dxConfigs'] ?? [],
+                    function (report) {
+                      return !action.report.dxConfigs.includes(report['id']);
+                    }
+                  ),
                   action.report,
                 ];
                 this.httpClient

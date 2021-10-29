@@ -43,10 +43,10 @@ export class HomeComponent implements OnInit {
   programMetadataObjects: any;
   selectedReport: Report;
   reports: Array<Report>;
-  customReports:Array<Report>;
+  customReports: Array<Report>;
   isLoading$: Observable<boolean>;
   downloading: boolean;
-  isConfigAccessAllow$:Observable<boolean>;
+  isConfigAccessAllow$: Observable<boolean>;
   analytics$: Observable<any>;
   analyticsError$: Observable<any>;
   generatedReport$: Observable<GeneratedReport>;
@@ -61,7 +61,6 @@ export class HomeComponent implements OnInit {
     private configService: ConfigService
   ) {}
 
-
   ngOnInit() {
     this.hasCountryLevelOrganisationUnit$ = this.store.select(
       isCurrentUserHasCountryLevelOrganisationUnit
@@ -70,7 +69,9 @@ export class HomeComponent implements OnInit {
     this.analytics$ = this.store.select(getCurrentAnalytics);
     this.analyticsError$ = this.store.select(getCurrentAnalyticsError);
     this.downloading = false;
-    this.isConfigAccessAllow$  = this.store.select(getCurrentUserAccessToReportConfiguration);
+    this.isConfigAccessAllow$ = this.store.select(
+      getCurrentUserAccessToReportConfiguration
+    );
     this.selectedPeriods = [];
     this.programMetadataObjects = {};
     this.fetchReportConfig();
@@ -98,9 +99,9 @@ export class HomeComponent implements OnInit {
         }
      */
   }
-goReportList(){
-  this.router.navigate(['/report'])
-}
+  goReportList() {
+    this.router.navigate(['/report']);
+  }
   async fetchReportConfig() {
     const implementingPartnerId =
       (await this.configService.getUserImpelementingPartner()) as string;
@@ -109,38 +110,40 @@ goReportList(){
       .pipe(take(1))
       .subscribe(
         (configs: any) => {
-         // @TODO remove below on deplyoment to production
-   
+          // @TODO remove below on deplyoment to production
 
-          this.configService.getCustomReportConfigs().subscribe((customConfig:any)=>{
-            const reports = [...configs.reports,...customConfig.reports ]|| reportConfig.reports || [];
+          this.configService
+            .getCustomReportConfigs()
+            .subscribe((customConfig: any) => {
+              const reports =
+                [...configs.reports, ...customConfig.reports] ||
+                reportConfig.reports ||
+                [];
 
-            const reportsByCurrentIp =
-             getFilteredReportByUserImplementingPartner(
-                reports,
-                implementingPartnerId
-              );
-            const selectedProgramIds = _.uniq(
-              _.flattenDeep(
-                _.map(
-                  reportsByCurrentIp,
-                  (report: Report) => report.program || []
+              const reportsByCurrentIp =
+                getFilteredReportByUserImplementingPartner(
+                  reports,
+                  implementingPartnerId
+                );
+              const selectedProgramIds = _.uniq(
+                _.flattenDeep(
+                  _.map(
+                    reportsByCurrentIp,
+                    (report: Report) => report.program || []
+                  )
                 )
-              )
-            );
-            this.setProgramMetadata(selectedProgramIds);
-            this.reports = reportsByCurrentIp;
-          } )
-         
+              );
+              this.setProgramMetadata(selectedProgramIds);
+              this.reports = reportsByCurrentIp;
+            });
         },
         () => {
           // this.configService.get
-          const reports = reportConfig.reports || ([] as Array<any>) ;
-          const reportsByCurrentIp =
-           getFilteredReportByUserImplementingPartner(
-              reports,
-              implementingPartnerId
-            );
+          const reports = reportConfig.reports || ([] as Array<any>);
+          const reportsByCurrentIp = getFilteredReportByUserImplementingPartner(
+            reports,
+            implementingPartnerId
+          );
           const selectedProgramIds = _.uniq(
             _.flattenDeep(
               _.map(
@@ -159,8 +162,6 @@ goReportList(){
     this.programMetadataObjects =
       await this.configService.getExtendeReportMetadata(programIds);
   }
-
-
 
   getSanitizedListOfReport(hasCountryLevelOrganisationUnit: boolean) {
     return hasCountryLevelOrganisationUnit

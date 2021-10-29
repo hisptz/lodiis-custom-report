@@ -1,4 +1,4 @@
-export interface ReportModelInterface{
-    id:number,
-    name:String
-    }
+export interface ReportModelInterface {
+  id: number;
+  name: String;
+}

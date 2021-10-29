@@ -19,7 +19,7 @@ export interface State {
   router: RouterReducerState;
   reportData: ReportDataState;
   generatedReports: GeneratedReportsState;
-  customReportData:CustomReportState
+  customReportData: CustomReportState;
 }
 
 export const reducers: ActionReducerMap<State> = {
@@ -28,7 +28,7 @@ export const reducers: ActionReducerMap<State> = {
   router: routerReducer,
   reportData: reportDataReducer,
   generatedReports: generatedReportReducer,
-  customReportData: customReportReducer
+  customReportData: customReportReducer,
 };
 
 export const metaReducers: MetaReducer<State>[] = !environment.production

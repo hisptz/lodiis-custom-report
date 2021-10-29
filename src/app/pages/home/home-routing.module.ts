@@ -10,14 +10,13 @@ const routes: Routes = [
     component: HomeComponent,
   },
   {
-    path:'report',
-    component:ReportListComponent   
+    path: 'report',
+    component: ReportListComponent,
   },
   {
-    path:'validator-report/:onAddReport',
-    component:MetadataValidatorComponent
-  }
-  
+    path: 'validator-report/:onAddReport',
+    component: MetadataValidatorComponent,
+  },
 ];
 
 @NgModule({

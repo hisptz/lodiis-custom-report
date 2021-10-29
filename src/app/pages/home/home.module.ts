@@ -48,7 +48,15 @@ import { MatButtonModule } from '@angular/material/button';
     CustomReportTableComponent,
     ReportactionComponent,
   ],
-  imports: [CommonModule,MatButtonModule ,MatMenuModule,SharedModule,MatDialogModule, HomeRoutingModule,FormsModule],
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatMenuModule,
+    SharedModule,
+    MatDialogModule,
+    HomeRoutingModule,
+    FormsModule,
+  ],
   entryComponents: [ReportErrorComponent],
 })
 export class HomeModule {}
