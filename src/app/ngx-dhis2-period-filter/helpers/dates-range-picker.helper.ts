@@ -1,21 +1,14 @@
-export function formatDateToYYMMDD(dateValue) {
-  return (
-    dateValue.getFullYear() +
-    '-' +
-    formatMonthOrDate(dateValue.getMonth() + 1, 'm') +
-    '-' +
-    formatMonthOrDate(dateValue.getDate(), 'd')
-  );
-}
-
-function formatMonthOrDate(value, type) {
-  if (type == 'm' && value.toString().length == 1) {
-    return '0' + value;
-  } else if (type == 'm') {
-    return value + 1;
-  } else if (type == 'd' && value.toString().length == 1) {
-    return '0' + value;
-  } else {
-    return value;
+export function formatDateToYYMMDD(date) {
+  let dateObject = new Date(date);
+  if (isNaN(dateObject.getDate())) {
+    dateObject = new Date();
   }
+  const day = dateObject.getDate();
+  const month = dateObject.getMonth() + 1;
+  const year = dateObject.getFullYear();
+  return (
+    year +
+    (month > 9 ? `-${month}` : `-0${month}`) +
+    (day > 9 ? `-${day}` : `-0${day}`)
+  );
 }
