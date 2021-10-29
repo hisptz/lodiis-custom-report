@@ -149,9 +149,7 @@ export class CustomReporFormComponent implements OnInit {
         );
         this.store.dispatch(AddCustomReport({ report }));
       }
-      if (this.isEdited$) {
-        this.router.navigateByUrl('/report');
-      }
+      this.dialogRef.closeAll();
     }
   }
 }

@@ -18,13 +18,16 @@ export const reducer = createReducer(
   on(LoadCustomReport, (state) => ({
     ...state,
     loading: true,
+    isRefreshing: false,
   })),
   on(AddCustomReport, (state, { report }) => ({
     ...state,
     isEdited: false,
+    isRefreshing: true,
   })),
   on(DeleteCustomReport, (state, { report }) => ({
     ...state,
+    isRefreshing: true,
   })),
 
   on(LoadSuccessCustomReport, (state, { reports }) => ({
@@ -32,10 +35,12 @@ export const reducer = createReducer(
     customReport: [...reports],
     loading: false,
     isEdited: false,
+    isRefreshing: false,
   })),
   on(EditCustomReport, (state, { report }) => ({
     ...state,
     isEdited: true,
+    isRefreshing: true,
   }))
 );
 
