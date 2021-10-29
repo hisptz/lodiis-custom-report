@@ -16,7 +16,7 @@ export class CustomReportListComponent {
   }
 
   onAddReport() {
-    const width = '800px';
+    const width = '670px';
     const height = '600px';
     this.dialogRef.open(CustomReporFormComponent, {
       height,

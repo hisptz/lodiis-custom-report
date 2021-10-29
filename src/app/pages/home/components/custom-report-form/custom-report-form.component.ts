@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { DxConfig } from 'src/app/shared/models/report-config-inteface';
-import { Router } from '@angular/router';
 import { ConfigService } from '../../services/config.service';
 import { uuid } from '../../helpers/dhis2-uid-generator';
 import { Report } from 'src/app/shared/models/report.model';
@@ -16,10 +15,7 @@ import {
   EditCustomReport,
 } from 'src/app/store/actions/custom-report.actions';
 import { Observable } from 'rxjs';
-import {
-  getCustomReportById,
-  getIsEditedStatus,
-} from 'src/app/store/selectors/custom-report.selector';
+import { getCustomReportById } from 'src/app/store/selectors/custom-report.selector';
 import { take } from 'rxjs/operators';
 
 @Component({
@@ -34,11 +30,9 @@ export class CustomReporFormComponent implements OnInit {
   isError: boolean = true;
   showMessage: boolean = false;
   editedReport: Report;
-  isEdited$: Observable<boolean>;
 
   constructor(
     private dialogRef: MatDialog,
-    private router: Router,
     private configService: ConfigService,
     private store: Store<State>,
     @Inject(MAT_DIALOG_DATA) public data: { params: string }
@@ -78,7 +72,6 @@ export class CustomReporFormComponent implements OnInit {
     };
   }
   ngOnInit(): void {
-    this.isEdited$ = this.store.select(getIsEditedStatus);
     if (this.data.params === 'true') {
     } else {
       this.getEditedReport(this.data.params);

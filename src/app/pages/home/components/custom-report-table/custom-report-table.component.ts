@@ -31,7 +31,7 @@ export class CustomReportTableComponent implements OnInit {
   }
 
   onEdit(report: Report) {
-    const width = '800px';
+    const width = '670px';
     const height = '600px';
     this.dialogRef.open(CustomReporFormComponent, {
       height,
@@ -43,7 +43,7 @@ export class CustomReportTableComponent implements OnInit {
   }
 
   onConfirmDeleteAction(report: Report) {
-    const width = '800px';
+    const width = '500px';
     const height = '300px';
     this.dialogRef.open(CustomReporActionComponent, {
       height,

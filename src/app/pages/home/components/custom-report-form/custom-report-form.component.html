@@ -1,3 +1,4 @@
+<!--
 <div class="app-container">
   <div class="row">
     <div class="col">
@@ -61,41 +62,110 @@
               </mat-form-field>
             </div>
 
-            <div class="button-validator">
-              <div *ngIf="!isValid; else other_content">
-                <button
-                  class="no-outline"
-                  mat-stroked-button
-                  (click)="validateMetadata()"
-                >
-                  Validate</button
-                >&nbsp;&nbsp;
-                <button
-                  class="no-outline"
-                  mat-stroked-button
-                  (click)="saveMetadata()"
-                >
-                  Save</button
-                >&nbsp;&nbsp;
-              </div>
-              <ng-template #other_content>
-                <div>
-                  <mat-icon
-                    *ngIf="isError; else valid_content"
-                    style="color: green; size: 50px"
-                    >check_circle_outline</mat-icon
+            <div mat-dialog-actions class="actions-button-container">
+              <div class="button-validator">
+                <div *ngIf="!isValid; else other_content">
+                  <button
+                    class="no-outline"
+                    mat-stroked-button
+                    (click)="validateMetadata()"
                   >
-                  <ng-template #valid_content>
-                    <mat-icon style="color: red; size: 50px"
-                      >highlight_off</mat-icon
-                    >
-                  </ng-template>
+                    Validate</button
+                  >&nbsp;&nbsp;
+                  <button
+                    class="no-outline"
+                    mat-stroked-button
+                    (click)="saveMetadata()"
+                  >
+                    Save</button
+                  >&nbsp;&nbsp;
                 </div>
-              </ng-template>
+                <ng-template #other_content>
+                  <div>
+                    <mat-icon
+                      *ngIf="isError; else valid_content"
+                      style="color: green; size: 50px"
+                      >check_circle_outline</mat-icon
+                    >
+                    <ng-template #valid_content>
+                      <mat-icon style="color: red; size: 50px"
+                        >highlight_off</mat-icon
+                      >
+                    </ng-template>
+                  </div>
+                </ng-template>
+              </div>
             </div>
           </div>
         </div>
       </ng-template>
+    </div>
+  </div>
+</div>
+
+-->
+<div class="row">
+  <div class="col">
+    <div>
+      <div>
+        <mat-card-title
+          style="margin-bottom: 1%; font-size: 15px; font-weight: bold"
+          >Custom Reports Columns
+        </mat-card-title>
+        <h5>Report Title</h5>
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input
+            [(ngModel)]="title"
+            (input)="title = $event.target.value"
+            type="text"
+            matInput
+            required
+          />
+        </mat-form-field>
+        <h5>Configurations</h5>
+        <mat-form-field appearance="outline">
+          <mat-label *ngIf="!showMessage; else elseTemplate">
+            Columns Configurations</mat-label
+          >
+          <ng-template #elseTemplate>
+            <mat-label
+              style="color: red"
+              *ngIf="showMessage; else elseTemplate"
+            >
+              Columns Configurations for custom report is not valid
+            </mat-label>
+          </ng-template>
+          <textarea
+            [(ngModel)]="message"
+            (input)="message = $event.target.value"
+            rows="10"
+            cols="70"
+            matInput
+            placeholder="Enter columns Configurations for custom report"
+            required
+          ></textarea>
+        </mat-form-field>
+      </div>
+      <div class="actions-button-container">
+        <button
+          class="no-outline"
+          mat-button
+          cdkFocusInitial
+          mat-stroked-button
+          (click)="validateMetadata()"
+        >
+          Validate</button
+        >&nbsp;&nbsp;
+        <button
+          class="no-outline"
+          mat-button
+          mat-stroked-button
+          (click)="saveMetadata()"
+        >
+          Save</button
+        >&nbsp;&nbsp;
+      </div>
     </div>
   </div>
 </div>
