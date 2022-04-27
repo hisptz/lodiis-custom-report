@@ -78,20 +78,19 @@ export const getCurrentUserAccessToReportConfiguration = createSelector(
   getCurrentUser,
   (currentUser: CurrentUser) => {
     let hasAccess = false;
-    const rolesIdAllowed: string[] = ['yrB6vc5Ip3r', 'jv5X0x0A0xy'];
-
+    //const rolesIdAllowed: string[] = ['yrB6vc5Ip3r', 'jv5X0x0A0xy'];
     if (currentUser && (currentUser.authorities ?? [].includes('ALL'))) {
-      hasAccess = true;
+     // hasAccess = true;
     } else if (currentUser && currentUser.userCredentials) {
-      (currentUser.userCredentials['userRoles'] ?? []).forEach(
-        (userObjectRoleId) => {
-          if (rolesIdAllowed.includes(userObjectRoleId)) {
-            hasAccess = true;
-          } else {
-            hasAccess = false;
-          }
-        }
-      );
+      // (currentUser.userCredentials['userRoles'] ?? []).forEach(
+      //   (userObjectRoleId) => {
+      //     if (rolesIdAllowed.includes(userObjectRoleId)) {
+      //       hasAccess = true;
+      //     } else {
+      //       hasAccess = false;
+      //     }
+      //   }
+      // );
     }
 
     return hasAccess;
