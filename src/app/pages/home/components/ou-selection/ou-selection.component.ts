@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { OrgUnitFilterConfig } from '@iapps/ngx-dhis2-org-unit-filter';
+import { OrgUnitFilterConfig } from 'src/app/ngx-dhis2-org-unit-filter/models/org-unit-filter-config.model';
 
 @Component({
   selector: 'app-ou-selection',
@@ -25,9 +25,6 @@ export class OuSelectionComponent implements OnInit {
       showOrgUnitLevelSection: true,
       reportUse: false,
       batchSize: 400,
-      hideActionButtons: false,
-      contentHeight: '400px',
-      emitOnSelection: false,
     };
   }
 
