@@ -101,8 +101,6 @@ export class HomeComponent implements OnInit {
       .pipe(take(1))
       .subscribe(
         (configs: any) => {
-          // @TODO remove below on deplyoment to production
-
           this.configService
             .getCustomReportConfigs()
             .pipe(take(1))
@@ -130,7 +128,6 @@ export class HomeComponent implements OnInit {
             });
         },
         () => {
-          // this.configService.get
           const reports = reportConfig.reports || ([] as Array<any>);
           const reportsByCurrentIp = getFilteredReportByUserImplementingPartner(
             reports,

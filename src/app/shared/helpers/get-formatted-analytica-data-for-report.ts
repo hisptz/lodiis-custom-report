@@ -214,7 +214,7 @@ export function getFormattedEventAnalyticDataForReport(
   programToProgramStageObject: any
 ) {
   const groupedAnalyticDataByBeneficiary = _.groupBy(analyticData, 'tei');
-  return _.flattenDeep(
+  return _.map(_.flattenDeep(
     _.map(_.keys(groupedAnalyticDataByBeneficiary), (tei: string) => {
       const analyticDataByBeneficiary = groupedAnalyticDataByBeneficiary[tei];
       const isNotAgywBeneficiary =
@@ -376,5 +376,12 @@ export function getFormattedEventAnalyticDataForReport(
       }
       return beneficiaryData;
     })
-  );
+  ),(beneficary: any)=>{
+    const serviceProvider = beneficary['Service Provider']|| '';
+    if(serviceProvider === "scriptrunner"){
+      beneficary['Implementing Mechanism Name'] = "Uploaded";
+      beneficary['Service Provider'] = "UPLOADED";
+    }
+    return beneficary
+  });
 }
