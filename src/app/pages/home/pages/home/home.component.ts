@@ -77,6 +77,7 @@ export class HomeComponent implements OnInit {
     this.fetchReportConfig();
     this.store
       .select(getCurrentUserOrganisationUnits)
+      .pipe(take(1))
       .subscribe((userOrganisationUnits) => {
         if (
           !this.selectedOrgUnitItems &&
@@ -102,6 +103,7 @@ export class HomeComponent implements OnInit {
         (configs: any) => {
           this.configService
             .getCustomReportConfigs()
+            .pipe(take(1))
             .subscribe((customConfig: any) => {
               const reports =
                 [...configs.reports, ...customConfig.reports] ||

@@ -1,38 +1,40 @@
-<div class="table-responsive">
-  <table class="report-table table-bordered">
+<div *ngIf="(isLoading$ | async) || (isRefreshing$ | async)">
+  <app-loader></app-loader>
+</div>
+<div *ngIf="!(isLoading$ | async)">
+  <table class="report-table table-bordered table-responsive">
     <thead>
       <tr>
-        <td class="p-1">s/n</td>
-        <td class="p-1" colspan="2">custom reports</td>
-        <td class="p-1">action</td>
+        <td>S/N</td>
+        <td colspan="3">Custom Report Name</td>
+        <td>Action</td>
       </tr>
     </thead>
-
     <tbody>
-      <ng-container *ngIf="isLoading$  | async; else elseTemplate">
-        <app-loader></app-loader>
-      </ng-container>
-      <ng-template #elseTemplate>
-        <tr *ngFor="let report of reports$ |async;let reportCount = index">
-          <td class="p-1">
-            {{ reportCount+1}}
-          </td>
-          <td class="p-1" colspan="2"><span style="padding-left: 0px">{{ report.name }}</span></td>
-          <td class="p-1">
-          <button mat-button [matMenuTriggerFor] = "menu"> <mat-icon >more_vert</mat-icon></button>    
-<mat-menu #menu = "matMenu" yPosition="below">
-   <button mat-menu-item (click)="onEdit(report)"> <mat-icon>edit</mat-icon>
-    <span>Edit</span></button>
-   <button mat-menu-item (click)="onConfirmDeleteAction(report)">
-    <mat-icon>delete</mat-icon>
-    <span>Delete</span>
-
-   </button>
-</mat-menu>
-          </td>
-
-        </tr>
-      </ng-template>
+      <tr *ngFor="let report of reports$ | async; let reportCount = index">
+        <td>
+          {{ reportCount + 1 }}
+        </td>
+        <td colspan="3">
+          {{ report.name }}
+        </td>
+        <td>
+          <button mat-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu" class="custom-menu-panel" yPosition="below">
+            <button mat-menu-item (click)="onEdit(report)">
+              <mat-icon>edit</mat-icon> <span>Edit</span>
+            </button>
+            <button mat-menu-item (click)="onConfirmDeleteAction(report)">
+              <mat-icon>delete</mat-icon>
+              <span>Delete</span>
+            </button>
+          </mat-menu>
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>
+
+<div class="table-responsive"></div>

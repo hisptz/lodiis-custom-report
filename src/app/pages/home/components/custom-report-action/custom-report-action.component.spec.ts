@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReportListComponent } from './report-list.component';
+import { CustomReporActionComponent } from './custom-report-action.component';
 
-describe('ReportListComponent', () => {
-  let component: ReportListComponent;
-  let fixture: ComponentFixture<ReportListComponent>;
+describe('CustomReporActionComponent', () => {
+  let component: CustomReporActionComponent;
+  let fixture: ComponentFixture<CustomReporActionComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ReportListComponent],
+      declarations: [CustomReporActionComponent],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ReportListComponent);
+    fixture = TestBed.createComponent(CustomReporActionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

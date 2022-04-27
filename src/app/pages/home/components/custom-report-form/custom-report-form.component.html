@@ -1,0 +1,71 @@
+<div class="row">
+  <div class="col">
+    <div>
+      <h5>Report Title</h5>
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input
+          [(ngModel)]="title"
+          (input)="title = $event.target.value"
+          type="text"
+          matInput
+          required
+        />
+      </mat-form-field>
+      <h5>
+        Configurations
+        <span *ngIf="hasDxConfigValidated">
+          <mat-icon style="color: red; size: 50px" *ngIf="!isDxConfigValid"
+            >highlight_off</mat-icon
+          >
+          <mat-icon style="color: green; size: 50px" *ngIf="isDxConfigValid"
+            >check_circle_outline</mat-icon
+          >
+        </span>
+      </h5>
+      <mat-form-field appearance="outline">
+        <mat-label *ngIf="isDxConfigValid; else elseTemplate">
+          Columns Configurations
+        </mat-label>
+        <ng-template #elseTemplate>
+          <mat-label
+            style="color: red"
+            *ngIf="!isDxConfigValid; else elseTemplate"
+          >
+            Columns Configurations for custom report is not valid
+          </mat-label>
+        </ng-template>
+        <textarea
+          [(ngModel)]="dxConfigs"
+          (input)="dxConfigs = $event.target.value"
+          rows="10"
+          cols="70"
+          matInput
+          placeholder="Enter columns Configurations for custom report"
+          required
+        ></textarea>
+      </mat-form-field>
+    </div>
+    <div class="actions-button-container">
+      <button
+        class="no-outline"
+        mat-button
+        cdkFocusInitial
+        [disabled]="title == '' && dxConfigs == ''"
+        mat-stroked-button
+        (click)="validateMetadata()"
+      >
+        Validate</button
+      >&nbsp;&nbsp;
+      <button
+        class="no-outline"
+        mat-button
+        [disabled]="title == '' && dxConfigs == ''"
+        mat-stroked-button
+        (click)="saveMetadata()"
+      >
+        Save</button
+      >&nbsp;&nbsp;
+    </div>
+  </div>
+</div>
