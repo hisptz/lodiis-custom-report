@@ -214,174 +214,178 @@ export function getFormattedEventAnalyticDataForReport(
   programToProgramStageObject: any
 ) {
   const groupedAnalyticDataByBeneficiary = _.groupBy(analyticData, 'tei');
-  return _.map(_.flattenDeep(
-    _.map(_.keys(groupedAnalyticDataByBeneficiary), (tei: string) => {
-      const analyticDataByBeneficiary = groupedAnalyticDataByBeneficiary[tei];
-      const isNotAgywBeneficiary =
-        _.filter(
-          _.uniq(
-            _.flatMapDeep(
-              _.map(
-                analyticDataByBeneficiary,
-                (data: any) => data.programStage || []
+  return _.map(
+    _.flattenDeep(
+      _.map(_.keys(groupedAnalyticDataByBeneficiary), (tei: string) => {
+        const analyticDataByBeneficiary = groupedAnalyticDataByBeneficiary[tei];
+        const isNotAgywBeneficiary =
+          _.filter(
+            _.uniq(
+              _.flatMapDeep(
+                _.map(
+                  analyticDataByBeneficiary,
+                  (data: any) => data.programStage || []
+                )
               )
-            )
-          ),
-          (stage: string) => noneAgywParticipationProgramStages.includes(stage)
-        ).length > 0;
-      const beneficiaryData = {};
-      for (const dxConfigs of reportConfig.dxConfigs || []) {
-        const {
-          id,
-          ids,
-          name,
-          programStage,
-          isBoolean,
-          codes,
-          isDate,
-          displayValues,
-        } = dxConfigs;
-        let value = '';
-        if (id === 'hiv_risk_assessment_result') {
-          value = getBeneficiaryHivRiskAssessmentResult(
+            ),
+            (stage: string) =>
+              noneAgywParticipationProgramStages.includes(stage)
+          ).length > 0;
+        const beneficiaryData = {};
+        for (const dxConfigs of reportConfig.dxConfigs || []) {
+          const {
+            id,
             ids,
-            analyticDataByBeneficiary
-          );
-        } else if (id === 'beneficiary_age') {
-          const dob = getValueFromAnalyticalData(
-            analyticDataByBeneficiary,
-            beneficiaryDateOfBirthReference,
-            programStage
-          );
-          if (dob !== '') {
-            const age = getBeneficiaryAge(dob);
-            value = `${age}`;
+            name,
+            programStage,
+            isBoolean,
+            codes,
+            isDate,
+            displayValues,
+          } = dxConfigs;
+          let value = '';
+          if (id === 'hiv_risk_assessment_result') {
+            value = getBeneficiaryHivRiskAssessmentResult(
+              ids,
+              analyticDataByBeneficiary
+            );
+          } else if (id === 'beneficiary_age') {
+            const dob = getValueFromAnalyticalData(
+              analyticDataByBeneficiary,
+              beneficiaryDateOfBirthReference,
+              programStage
+            );
+            if (dob !== '') {
+              const age = getBeneficiaryAge(dob);
+              value = `${age}`;
+            }
+          } else if (id === 'beneficiary_age_range') {
+            const dob = getValueFromAnalyticalData(
+              analyticDataByBeneficiary,
+              beneficiaryDateOfBirthReference,
+              programStage
+            );
+            if (dob !== '') {
+              const age = getBeneficiaryAge(dob);
+              value = getBeneficiaryAgeRange(age);
+            }
+          } else if (id === 'beneficiary_age_ranges') {
+            const dob = getValueFromAnalyticalData(
+              analyticDataByBeneficiary,
+              beneficiaryDateOfBirthReference,
+              programStage
+            );
+            if (dob !== '') {
+              const age = getBeneficiaryAge(dob);
+              value = getBeneficiaryAgeRanges(age);
+            }
+          } else if (id === 'beneficiary_type') {
+            value = getBeneficiaryTypeValue(
+              analyticDataByBeneficiary,
+              programToProgramStageObject
+            );
+          } else if (id === 'prep_from_long_form') {
+            value = getLongFormPrEPValue(
+              analyticDataByBeneficiary,
+              ids,
+              programStage
+            );
+          } else if (id === 'is_service_provided') {
+            const lastService = getLastServiceFromAnalyticData(
+              analyticDataByBeneficiary,
+              programStage
+            );
+            value =
+              lastService && _.keys(lastService).length > 0
+                ? 'Yes'
+                : value === ''
+                ? ''
+                : 'No';
           }
-        } else if (id === 'beneficiary_age_range') {
-          const dob = getValueFromAnalyticalData(
-            analyticDataByBeneficiary,
-            beneficiaryDateOfBirthReference,
-            programStage
-          );
-          if (dob !== '') {
-            const age = getBeneficiaryAge(dob);
-            value = getBeneficiaryAgeRange(age);
+          if (id === 'last_service_community_council') {
+            const lastService = getLastServiceFromAnalyticData(
+              analyticDataByBeneficiary,
+              programStage
+            );
+            const locationId =
+              lastService && _.keys(lastService).length > 0
+                ? lastService['ou'] || ''
+                : '';
+            value = getLocationNameByIdAndLevel(
+              locations,
+              communityCouncilLevel,
+              locationId
+            );
+          } else if (id === 'facility_name') {
+            value = getLocationNameByLevel(
+              analyticDataByBeneficiary,
+              locations,
+              facilityLevel
+            );
+          } else if (id === 'district_of_service') {
+            value = getLocationNameByLevel(
+              analyticDataByBeneficiary,
+              locations,
+              districtLevel
+            );
+          } else if (id === 'date_of_last_service_received') {
+            const lastService = getLastServiceFromAnalyticData(
+              analyticDataByBeneficiary,
+              programStage
+            );
+            value =
+              lastService && _.keys(lastService).length > 0
+                ? lastService['eventdate'] || value
+                : value;
+          } else if (id === 'isAgywBeneficiary') {
+            value = !isNotAgywBeneficiary ? 'Yes' : 'No';
+          } else {
+            const eventReportData =
+              id !== '' && programStage === ''
+                ? _.find(analyticDataByBeneficiary, (data: any) => {
+                    return _.keys(data).includes(id);
+                  })
+                : _.find(analyticDataByBeneficiary, (data: any) => {
+                    return (
+                      _.keys(data).includes(id) &&
+                      data.programStage &&
+                      data.programStage === programStage
+                    );
+                  });
+            value = eventReportData ? eventReportData[id] : value;
           }
-        } else if (id === 'beneficiary_age_ranges') {
-          const dob = getValueFromAnalyticalData(
-            analyticDataByBeneficiary,
-            beneficiaryDateOfBirthReference,
-            programStage
-          );
-          if (dob !== '') {
-            const age = getBeneficiaryAge(dob);
-            value = getBeneficiaryAgeRanges(age);
+          if (
+            _.keys(beneficiaryData).includes(name) &&
+            beneficiaryData[name] !== ''
+          ) {
+            value = beneficiaryData[name];
           }
-        } else if (id === 'beneficiary_type') {
-          value = getBeneficiaryTypeValue(
-            analyticDataByBeneficiary,
-            programToProgramStageObject
-          );
-        } else if (id === 'prep_from_long_form') {
-          value = getLongFormPrEPValue(
-            analyticDataByBeneficiary,
-            ids,
-            programStage
-          );
-        } else if (id === 'is_service_provided') {
-          const lastService = getLastServiceFromAnalyticData(
-            analyticDataByBeneficiary,
-            programStage
-          );
-          value =
-            lastService && _.keys(lastService).length > 0
-              ? 'Yes'
-              : value === ''
-              ? ''
-              : 'No';
+          beneficiaryData[name] =
+            value !== ''
+              ? getSanitizesReportValue(
+                  value,
+                  codes,
+                  isBoolean,
+                  isDate,
+                  displayValues,
+                  isNotAgywBeneficiary
+                )
+              : getSanitizedDisplayValue(
+                  value,
+                  displayValues,
+                  isNotAgywBeneficiary
+                );
         }
-        if (id === 'last_service_community_council') {
-          const lastService = getLastServiceFromAnalyticData(
-            analyticDataByBeneficiary,
-            programStage
-          );
-          const locationId =
-            lastService && _.keys(lastService).length > 0
-              ? lastService['ou'] || ''
-              : '';
-          value = getLocationNameByIdAndLevel(
-            locations,
-            communityCouncilLevel,
-            locationId
-          );
-        } else if (id === 'facility_name') {
-          value = getLocationNameByLevel(
-            analyticDataByBeneficiary,
-            locations,
-            facilityLevel
-          );
-        } else if (id === 'district_of_service') {
-          value = getLocationNameByLevel(
-            analyticDataByBeneficiary,
-            locations,
-            districtLevel
-          );
-        } else if (id === 'date_of_last_service_received') {
-          const lastService = getLastServiceFromAnalyticData(
-            analyticDataByBeneficiary,
-            programStage
-          );
-          value =
-            lastService && _.keys(lastService).length > 0
-              ? lastService['eventdate'] || value
-              : value;
-        } else if (id === 'isAgywBeneficiary') {
-          value = !isNotAgywBeneficiary ? 'Yes' : 'No';
-        } else {
-          const eventReportData =
-            id !== '' && programStage === ''
-              ? _.find(analyticDataByBeneficiary, (data: any) => {
-                  return _.keys(data).includes(id);
-                })
-              : _.find(analyticDataByBeneficiary, (data: any) => {
-                  return (
-                    _.keys(data).includes(id) &&
-                    data.programStage &&
-                    data.programStage === programStage
-                  );
-                });
-          value = eventReportData ? eventReportData[id] : value;
-        }
-        if (
-          _.keys(beneficiaryData).includes(name) &&
-          beneficiaryData[name] !== ''
-        ) {
-          value = beneficiaryData[name];
-        }
-        beneficiaryData[name] =
-          value !== ''
-            ? getSanitizesReportValue(
-                value,
-                codes,
-                isBoolean,
-                isDate,
-                displayValues,
-                isNotAgywBeneficiary
-              )
-            : getSanitizedDisplayValue(
-                value,
-                displayValues,
-                isNotAgywBeneficiary
-              );
+        return beneficiaryData;
+      })
+    ),
+    (beneficary: any) => {
+      const serviceProvider = beneficary['Service Provider'] || '';
+      if (serviceProvider === 'scriptrunner') {
+        beneficary['Implementing Mechanism Name'] = 'UPLOADED';
+        beneficary['Service Provider'] = 'UPLOADED';
       }
-      return beneficiaryData;
-    })
-  ),(beneficary: any)=>{
-    const serviceProvider = beneficary['Service Provider']|| '';
-    if(serviceProvider === "scriptrunner"){
-      beneficary['Implementing Mechanism Name'] = "UPLOADED";
-      beneficary['Service Provider'] = "UPLOADED";
+      return beneficary;
     }
-    return beneficary
-  });
+  );
 }

@@ -79,11 +79,7 @@ export class HomeComponent implements OnInit {
       .select(getCurrentUserOrganisationUnits)
       .pipe(take(1))
       .subscribe((userOrganisationUnits) => {
-        if (
-          !this.selectedOrgUnitItems &&
-          userOrganisationUnits &&
-          userOrganisationUnits.length > 0
-        ) {
+        if (userOrganisationUnits && userOrganisationUnits.length > 0) {
           this.selectedOrgUnitItems = getDefaultOrganisationUnitSelections(
             userOrganisationUnits
           );
@@ -258,8 +254,43 @@ export class HomeComponent implements OnInit {
       const reportName = `${this.selectedReport.name}_${
         date.toISOString().split('T')[0]
       }`;
-      this.excelFileService.writeToSingleSheetExcelFile(data, reportName);
-      this.downloading = false;
+      let skipHeader = false;
+      if (data.length > 0) {
+        const reportSummary = [];
+        const headers = _.uniq(_.flattenDeep(_.map(_.keys(_.head(data)))));
+        if (headers.length > 0) {
+          skipHeader = true;
+          const selectedLocation = _.map(
+            this.selectedOrgUnitItems,
+            (item: any) => item.name || ''
+          ).join(', ');
+          const selectedPeriod = _.map(
+            this.selectedPeriods,
+            (item: any) => item.name || ''
+          ).join(', ');
+          const defaultHeader = _.head(headers);
+          const selectedLocationJsonData = {};
+          const selectedPeriodJsonData = {};
+          selectedLocationJsonData[
+            defaultHeader
+          ] = `Location : ${selectedLocation}`;
+          selectedPeriodJsonData[defaultHeader] = `Period : ${selectedPeriod}`;
+          reportSummary.push(selectedLocationJsonData);
+          reportSummary.push(selectedPeriodJsonData);
+          reportSummary.push({});
+          const headerJson = {};
+          for (const header of headers) {
+            headerJson[header] = header;
+          }
+          reportSummary.push(headerJson);
+        }
+        this.excelFileService.writeToSingleSheetExcelFile(
+          [...reportSummary, ...data],
+          reportName,
+          skipHeader
+        );
+        this.downloading = false;
+      }
     });
   }
 
