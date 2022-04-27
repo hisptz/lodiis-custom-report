@@ -378,10 +378,9 @@ export function getFormattedEventAnalyticDataForReport(
     })
   ),(beneficary: any)=>{
     const serviceProvider = beneficary['Service Provider']|| '';
-    console.log({beneficary,serviceProvider});
     if(serviceProvider === "scriptrunner"){
       beneficary['Implementing Mechanism Name'] = "Uploaded";
-      beneficary['Service Provider'] = "Uploaded";
+      beneficary['Service Provider'] = "UPLOADED";
     }
     return beneficary
   });
