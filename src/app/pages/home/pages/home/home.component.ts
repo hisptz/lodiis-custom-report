@@ -88,16 +88,6 @@ export class HomeComponent implements OnInit {
           );
         }
       });
-    /**
-     *  {
-          "id": "WTZ7GLTrE8Q",
-          "name": "Header One",
-          "isDate": false,
-          "isBoolean": false,
-          "isAttribute": true,
-          "programStage": ""
-        }
-     */
   }
   goReportList() {
     this.router.navigate(['/report']);
@@ -110,8 +100,6 @@ export class HomeComponent implements OnInit {
       .pipe(take(1))
       .subscribe(
         (configs: any) => {
-          // @TODO remove below on deplyoment to production
-
           this.configService
             .getCustomReportConfigs()
             .subscribe((customConfig: any) => {
@@ -138,7 +126,6 @@ export class HomeComponent implements OnInit {
             });
         },
         () => {
-          // this.configService.get
           const reports = reportConfig.reports || ([] as Array<any>);
           const reportsByCurrentIp = getFilteredReportByUserImplementingPartner(
             reports,

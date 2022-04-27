@@ -41,26 +41,29 @@ function getLastServiceFromAnalyticData(
 function getLongFormPrEPValue(
   analyticsDataByBeneficiary: Array<any>,
   prepFields: Array<string>,
-  programStage: string): string {
+  programStage: string
+): string {
   const programStageData = _.find(
     analyticsDataByBeneficiary || [],
     (data: any) => {
       return data.programStage && data.programStage === programStage;
-  });
+    }
+  );
 
-  if(programStageData) {
+  if (programStageData) {
     for (const field of prepFields) {
       if (
-        !programStageData.hasOwnProperty(field)
-        || programStageData[field] !== '1') {
-          return '0';
-        }
+        !programStageData.hasOwnProperty(field) ||
+        programStageData[field] !== '1'
+      ) {
+        return '0';
       }
-    } else {
-      return '0';
     }
-    return '1';
+  } else {
+    return '0';
   }
+  return '1';
+}
 
 function getLocationNameByLevel(
   analyticDataByBeneficiary: Array<any>,
@@ -211,7 +214,7 @@ export function getFormattedEventAnalyticDataForReport(
   programToProgramStageObject: any
 ) {
   const groupedAnalyticDataByBeneficiary = _.groupBy(analyticData, 'tei');
-  return _.flattenDeep(
+  return _.map(_.flattenDeep(
     _.map(_.keys(groupedAnalyticDataByBeneficiary), (tei: string) => {
       const analyticDataByBeneficiary = groupedAnalyticDataByBeneficiary[tei];
       const isNotAgywBeneficiary =
@@ -279,9 +282,12 @@ export function getFormattedEventAnalyticDataForReport(
             analyticDataByBeneficiary,
             programToProgramStageObject
           );
-
         } else if (id === 'prep_from_long_form') {
-          value = getLongFormPrEPValue(analyticDataByBeneficiary, ids, programStage);
+          value = getLongFormPrEPValue(
+            analyticDataByBeneficiary,
+            ids,
+            programStage
+          );
         } else if (id === 'is_service_provided') {
           const lastService = getLastServiceFromAnalyticData(
             analyticDataByBeneficiary,
@@ -370,5 +376,13 @@ export function getFormattedEventAnalyticDataForReport(
       }
       return beneficiaryData;
     })
-  );
+  ),(beneficary: any)=>{
+    const serviceProvider = beneficary['Service Provider']|| '';
+    console.log({beneficary,serviceProvider});
+    if(serviceProvider === "scriptrunner"){
+      beneficary['Implementing Mechanism Name'] = "Uploaded";
+      beneficary['Service Provider'] = "Uploaded";
+    }
+    return beneficary
+  });
 }

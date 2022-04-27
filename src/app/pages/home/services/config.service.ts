@@ -19,9 +19,20 @@ export class ConfigService {
   }
 
   getCustomReportConfigs(): Observable<{ reports: Report[] }> {
-    return this.httpClient.get(
-      this.configUrl + '/implementing-partners-reports'
-    );
+    return new Observable((observer) => {
+      this.httpClient
+        .get(this.configUrl + '/implementing-partners-reports')
+        .subscribe(
+          (data) => {
+            observer.next(data);
+            observer.complete();
+          },
+          () => {
+            observer.next({ reports: [] });
+            observer.complete();
+          }
+        );
+    });
   }
 
   async getExtendeReportMetadata(programIds: String[] = []) {
