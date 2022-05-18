@@ -340,17 +340,23 @@ export function getFormattedEventAnalyticDataForReport(
           } else if (id === 'isAgywBeneficiary') {
             value = !isNotAgywBeneficiary ? 'Yes' : 'No';
           } else {
+            // Take consideration of services codes
             const eventReportData =
               id !== '' && programStage === ''
                 ? _.find(analyticDataByBeneficiary, (data: any) => {
-                    return _.keys(data).includes(id);
+                    return codes && codes.length > 0
+                      ? _.keys(data).includes(id) && codes.includes(data[id])
+                      : _.keys(data).includes(id);
                   })
                 : _.find(analyticDataByBeneficiary, (data: any) => {
-                    return (
-                      _.keys(data).includes(id) &&
-                      data.programStage &&
-                      data.programStage === programStage
-                    );
+                    return codes && codes.length > 0
+                      ? _.keys(data).includes(id) &&
+                          codes.includes(data[id]) &&
+                          data.programStage &&
+                          data.programStage === programStage
+                      : _.keys(data).includes(id) &&
+                          data.programStage &&
+                          data.programStage === programStage;
                   });
             value = eventReportData ? eventReportData[id] : value;
           }
