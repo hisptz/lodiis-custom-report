@@ -1636,15 +1636,8 @@
           "programStage": "uctHRP6BBXP"
         },
         {
-          "id": "",
-          "name": "District of Birth",
-          "isDate": false,
-          "isBoolean": false,
-          "programStage": ""
-        },
-        {
-          "id": "",
-          "name": "Birth Order",
+          "id": "district_of_service",
+          "name": "District of Residence",
           "isDate": false,
           "isBoolean": false,
           "programStage": ""
@@ -2196,15 +2189,8 @@
           "programStage": "uctHRP6BBXP"
         },
         {
-          "id": "",
-          "name": "District of Birth",
-          "isDate": false,
-          "isBoolean": false,
-          "programStage": ""
-        },
-        {
-          "id": "",
-          "name": "Birth Order",
+          "id": "district_of_service",
+          "name": "District of Residence",
           "isDate": false,
           "isBoolean": false,
           "programStage": ""
@@ -2751,15 +2737,8 @@
           "programStage": "uctHRP6BBXP"
         },
         {
-          "id": "",
-          "name": "District of Birth",
-          "isDate": false,
-          "isBoolean": false,
-          "programStage": ""
-        },
-        {
-          "id": "",
-          "name": "Birth Order",
+          "id": "district_of_service",
+          "name": "District of Residence",
           "isDate": false,
           "isBoolean": false,
           "programStage": ""
