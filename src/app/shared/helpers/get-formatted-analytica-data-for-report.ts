@@ -9,7 +9,7 @@ const communityCouncilLevel = 3;
 const facilityLevel = 4;
 
 const noneAgywParticipationProgramStages = ['uctHRP6BBXP'];
-const beneficiaryDateOfBirthReference = 'qZP982qpSPS';
+const beneficiaryDateOfBirthReference = ['qZP982qpSPS', 'jVSwC6Ln95H'];
 const primaryChildCheckReference = 'KO5NC4pfBmv';
 
 function getLastServiceFromAnalyticData(
@@ -105,7 +105,7 @@ function getBeneficiaryAge(dob: string) {
 
 function getValueFromAnalyticalData(
   analyticData: Array<any>,
-  id: string,
+  ids: string[],
   programStage: string
 ) {
   let value = '';
@@ -115,7 +115,10 @@ function getValueFromAnalyticalData(
       dataObjet.programStage &&
       (dataObjet.programStage === programStage || programStage === '')
   )) {
-    value = data.hasOwnProperty(id) && `${data[id]}` !== '' ? data[id] : value;
+    for (const id of ids) {
+      value =
+        data.hasOwnProperty(id) && `${data[id]}` !== '' ? data[id] : value;
+    }
   }
   return value;
 }
@@ -195,7 +198,7 @@ function getBeneficiaryTypeValue(
   } else if (beneficiaryProgramId === 'em38qztTI8s') {
     const isPrimaryChild = getValueFromAnalyticalData(
       analyticDataByBeneficiary,
-      primaryChildCheckReference,
+      [primaryChildCheckReference],
       ''
     );
     beneficiaryType =
