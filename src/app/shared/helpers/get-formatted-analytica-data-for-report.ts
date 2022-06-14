@@ -11,6 +11,24 @@ const facilityLevel = 4;
 const noneAgywParticipationProgramStages = ['uctHRP6BBXP'];
 const beneficiaryDateOfBirthReference = ['qZP982qpSPS', 'jVSwC6Ln95H'];
 const primaryChildCheckReference = 'KO5NC4pfBmv';
+const casePlanProgramStages = ['gkNKXUxpyv9', 'vjF07cZNST3'];
+
+function getAssessmentDate(analyticDataByBeneficiary: Array<any>) {
+  let date = '';
+  for (const programStage of casePlanProgramStages) {
+    const serviceData = getLastServiceFromAnalyticData(
+      analyticDataByBeneficiary,
+      programStage
+    );
+    if (_.keys(serviceData).length > 0) {
+      date =
+        serviceData && _.keys(serviceData).length > 0
+          ? serviceData['eventdate'] || date
+          : date;
+    }
+  }
+  return date;
+}
 
 function getLastServiceFromAnalyticData(
   analyticDataByBeneficiary: Array<any>,
@@ -247,7 +265,13 @@ export function getFormattedEventAnalyticDataForReport(
             displayValues,
           } = dxConfigs;
           let value = '';
-          if (id === 'hiv_risk_assessment_result') {
+          if (id === 'assessmment_date') {
+            const assessmentDate = getAssessmentDate(analyticDataByBeneficiary);
+            value = `${assessmentDate}`.split(' ')[0];
+          } else if (id === 'is_assemmenet_conducted') {
+            const assessmentDate = getAssessmentDate(analyticDataByBeneficiary);
+            value = assessmentDate === '' ? 'No' : 'Yes';
+          } else if (id === 'hiv_risk_assessment_result') {
             value = getBeneficiaryHivRiskAssessmentResult(
               ids,
               analyticDataByBeneficiary

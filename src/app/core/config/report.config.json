@@ -468,7 +468,7 @@
           "programStage": ""
         },
         {
-          "id": "",
+          "id": "is_assemmenet_conducted",
           "name": "ASSESSMENT CONDUCTED?",
           "isDate": false,
           "program": "",
@@ -477,7 +477,7 @@
           "programStage": ""
         },
         {
-          "id": "",
+          "id": "assessmment_date",
           "name": "ASSESSMENT DATE",
           "isDate": false,
           "program": "",
