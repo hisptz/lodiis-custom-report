@@ -243,7 +243,16 @@ function getDataElementConfigs(
   }[]
 ) {
   return _.filter(
-    dxConfigs || [],
+    _.flattenDeep(
+      _.map(dxConfigs || [], (dxConfig: any) => {
+        const ids = dxConfig.ids || [];
+        return ids.length === 0
+          ? dxConfig
+          : _.map(ids, (newId: string) => {
+              return { ...dxConfig, id: newId };
+            });
+      })
+    ),
     (dxConfig: any) =>
       !dxConfig.isAttribute &&
       dxConfig.id !== '' &&
@@ -261,7 +270,16 @@ function getAttributeConfigs(
 ) {
   return _.uniqBy(
     _.filter(
-      dxConfigs || [],
+      _.flattenDeep(
+        _.map(dxConfigs || [], (dxConfig: any) => {
+          const ids = dxConfig.ids || [];
+          return ids.length === 0
+            ? dxConfig
+            : _.map(ids, (newId: string) => {
+                return { ...dxConfig, id: newId };
+              });
+        })
+      ),
       (dxConfig: any) =>
         dxConfig.isAttribute &&
         dxConfig.id &&
