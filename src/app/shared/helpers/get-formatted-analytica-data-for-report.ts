@@ -250,7 +250,8 @@ export function getFormattedEventAnalyticDataForReport(
               )
             ),
             (stage: string) =>
-              noneAgywParticipationProgramStages.includes(stage)
+              noneAgywParticipationProgramStages.includes(stage) ||
+              noneAgywDreamBeneficairiesStage.includes(stage)
           ).length > 0;
         const beneficiaryData = {};
         for (const dxConfigs of reportConfig.dxConfigs || []) {
