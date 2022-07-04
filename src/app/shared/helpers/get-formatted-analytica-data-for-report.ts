@@ -32,6 +32,25 @@ function getAssessmentDate(analyticDataByBeneficiary: Array<any>) {
   return date;
 }
 
+function isBeneficiaryEligibleForPrep(
+  ids: any,
+  analyticDataByBeneficiary: any
+) {
+  const dataObj = {};
+  for (const id of ids) {
+    dataObj[id] = '1';
+  }
+  for (const beneficairyData of analyticDataByBeneficiary) {
+    for (const id of ids) {
+      const value = beneficairyData[id] ?? '';
+      if (!['Yes', 'true', '1'].includes(`${value}`)) {
+        dataObj[id] = '0';
+      }
+    }
+  }
+  return _.uniq(_.values(dataObj)).includes('0') ? 'No' : 'Yes';
+}
+
 function getLastServiceFromAnalyticData(
   analyticDataByBeneficiary: Array<any>,
   programStage: string
@@ -296,8 +315,10 @@ export function getFormattedEventAnalyticDataForReport(
               ouIds.length > 0 ? ouIds[0] : value
             );
           } else if (id === 'is_eligible_for_prep') {
-            //
-            //console.log({ id,ids, analyticDataByBeneficiary });
+            value = isBeneficiaryEligibleForPrep(
+              ids,
+              analyticDataByBeneficiary
+            );
           } else if (id === 'date_of_last_service_received') {
             //
             // console.log({ id, analyticDataByBeneficiary });
