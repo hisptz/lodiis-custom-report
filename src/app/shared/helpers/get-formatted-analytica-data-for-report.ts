@@ -9,6 +9,8 @@ const communityCouncilLevel = 3;
 const facilityLevel = 4;
 
 const noneAgywParticipationProgramStages = ['uctHRP6BBXP'];
+const noneAgywDreamBeneficairiesStage = ['Yn6AJ0CAxb2'];
+const prepVisitProgramStages = ['nVCqxOg0nMQ', 'Yn6AJ0CAxb2'];
 const beneficiaryDateOfBirthReference = ['qZP982qpSPS', 'jVSwC6Ln95H'];
 const primaryChildCheckReference = 'KO5NC4pfBmv';
 const casePlanProgramStages = ['gkNKXUxpyv9', 'vjF07cZNST3'];
@@ -266,7 +268,46 @@ export function getFormattedEventAnalyticDataForReport(
             displayValues,
           } = dxConfigs;
           let value = '';
-          if (id === 'assessmment_date') {
+
+          if (id === 'district_of_residence') {
+            const ouIds = _.uniq(
+              _.flattenDeep(
+                _.map(analyticDataByBeneficiary, (dataObj) =>
+                  _.keys(dataObj).length > 0 ? dataObj['ou'] || '' : ''
+                )
+              )
+            );
+            value = getLocationNameByIdAndLevel(
+              locations,
+              districtLevel,
+              ouIds.length > 0 ? ouIds[0] : value
+            );
+          } else if (id === 'community_council_of_residence') {
+            const ouIds = _.uniq(
+              _.flattenDeep(
+                _.map(analyticDataByBeneficiary, (dataObj) =>
+                  _.keys(dataObj).length > 0 ? dataObj['ou'] || '' : ''
+                )
+              )
+            );
+            value = getLocationNameByIdAndLevel(
+              locations,
+              communityCouncilLevel,
+              ouIds.length > 0 ? ouIds[0] : value
+            );
+          } else if (id === 'is_eligible_for_prep') {
+            //
+            //console.log({ id,ids, analyticDataByBeneficiary });
+          } else if (id === 'date_of_last_service_received') {
+            //
+            // console.log({ id, analyticDataByBeneficiary });
+          } else if (id === 'following_up_visit') {
+            //
+            // console.log({ id, analyticDataByBeneficiary });
+          } else if (id === 'prep_beneficairy_status') {
+            //
+            //  console.log({ id, analyticDataByBeneficiary });
+          } else if (id === 'assessmment_date') {
             const assessmentDate = getAssessmentDate(analyticDataByBeneficiary);
             value = `${assessmentDate}`.split(' ')[0];
           } else if (id === 'is_assemmenet_conducted') {
