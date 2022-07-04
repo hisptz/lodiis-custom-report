@@ -255,7 +255,10 @@ export function getFormattedEventAnalyticDataForReport(
   locations: any,
   programToProgramStageObject: any
 ) {
-  const groupedAnalyticDataByBeneficiary = _.groupBy(analyticData, 'tei');
+  const groupedAnalyticDataByBeneficiary = _.groupBy(
+    _.uniqBy(analyticData, 'psi'),
+    'tei'
+  );
   return _.map(
     _.flattenDeep(
       _.map(_.keys(groupedAnalyticDataByBeneficiary), (tei: string) => {
@@ -287,7 +290,6 @@ export function getFormattedEventAnalyticDataForReport(
             displayValues,
           } = dxConfigs;
           let value = '';
-
           if (id === 'district_of_residence') {
             const ouIds = _.uniq(
               _.flattenDeep(
@@ -319,9 +321,6 @@ export function getFormattedEventAnalyticDataForReport(
               ids,
               analyticDataByBeneficiary
             );
-          } else if (id === 'date_of_last_service_received') {
-            //
-            // console.log({ id, analyticDataByBeneficiary });
           } else if (id === 'following_up_visit') {
             //
             // console.log({ id, analyticDataByBeneficiary });
