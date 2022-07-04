@@ -51,6 +51,18 @@ function isBeneficiaryEligibleForPrep(
   return _.uniq(_.values(dataObj)).includes('0') ? 'No' : 'Yes';
 }
 
+function getPrepBeneficiaryStatus(analyticDataByBeneficiary: any) {
+  const prepVisits = _.filter(analyticDataByBeneficiary, (data) => {
+    const programStageId = data['programStage'];
+    return prepVisitProgramStages.includes(programStageId);
+  });
+  return prepVisits.length == 1
+    ? 'PrEP New'
+    : prepVisits.length > 1
+    ? 'PrEP Continue'
+    : '';
+}
+
 function getLastServiceFromAnalyticData(
   analyticDataByBeneficiary: Array<any>,
   programStage: string
@@ -325,8 +337,7 @@ export function getFormattedEventAnalyticDataForReport(
             //
             // console.log({ id, analyticDataByBeneficiary });
           } else if (id === 'prep_beneficairy_status') {
-            //
-            //  console.log({ id, analyticDataByBeneficiary });
+            value = getPrepBeneficiaryStatus(analyticDataByBeneficiary);
           } else if (id === 'assessmment_date') {
             const assessmentDate = getAssessmentDate(analyticDataByBeneficiary);
             value = `${assessmentDate}`.split(' ')[0];
