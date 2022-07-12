@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import { getFormattedDate } from 'src/app/core/utils/date-formatter.util';
 import {
   getSanitizesReportValue,
   getSanitizedDisplayValue,
@@ -9,9 +10,14 @@ const communityCouncilLevel = 3;
 const facilityLevel = 4;
 
 const noneAgywParticipationProgramStages = ['uctHRP6BBXP'];
+const noneAgywDreamBeneficairiesStage = ['Yn6AJ0CAxb2'];
+const prepVisitProgramStages = ['nVCqxOg0nMQ', 'Yn6AJ0CAxb2'];
 const beneficiaryDateOfBirthReference = ['qZP982qpSPS', 'jVSwC6Ln95H'];
 const primaryChildCheckReference = 'KO5NC4pfBmv';
 const casePlanProgramStages = ['gkNKXUxpyv9', 'vjF07cZNST3'];
+export const defaultPrepVisitKey = 'Follow up Visit';
+
+export function getSanitizedPrepCustomReport(eventReportAnalyticData: any) {}
 
 function getAssessmentDate(analyticDataByBeneficiary: Array<any>) {
   let date = '';
@@ -28,6 +34,78 @@ function getAssessmentDate(analyticDataByBeneficiary: Array<any>) {
     }
   }
   return date;
+}
+
+function _isBenediciaryScreenedForPrep(
+  ids: string[],
+  analyticDataByBeneficiary: any
+) {
+  var isScreenedForPrep = false;
+  for (var beneficairyData of analyticDataByBeneficiary) {
+    for (const id of ids) {
+      if (_.keys(beneficairyData).includes(id)) {
+        const value = beneficairyData[id] ?? '';
+        if (`${value}`.trim() !== '') {
+          isScreenedForPrep = true;
+        }
+      }
+    }
+  }
+  return isScreenedForPrep;
+}
+
+function getFollowingUpVisits(analyticDataByBeneficiary: any) {
+  const followingUpVisits = {};
+  const visitDates = _.reverse(
+    _.map(
+      _.sortBy(
+        _.filter(analyticDataByBeneficiary, (beneficiaryData: any) => {
+          const programStageId = beneficiaryData['programStage'] || '';
+          return prepVisitProgramStages.includes(programStageId);
+        }),
+        ['eventdate']
+      ),
+      (beneficiaryData: any) => getFormattedDate(beneficiaryData['eventdate'])
+    )
+  );
+  let visitIndex = 0;
+  for (const visitDate of visitDates) {
+    visitIndex++;
+    const key = `${defaultPrepVisitKey} ${visitIndex}`;
+    followingUpVisits[key] = visitDate;
+  }
+  return followingUpVisits;
+}
+
+function isBeneficiaryEligibleForPrep(
+  ids: any,
+  analyticDataByBeneficiary: any
+) {
+  const dataObj = {};
+  for (const id of ids) {
+    dataObj[id] = '1';
+  }
+  for (const beneficairyData of analyticDataByBeneficiary) {
+    for (const id of ids) {
+      const value = beneficairyData[id] ?? '';
+      if (!['Yes', 'true', '1'].includes(`${value}`)) {
+        dataObj[id] = '0';
+      }
+    }
+  }
+  return _.uniq(_.values(dataObj)).includes('0') ? 'No' : 'Yes';
+}
+
+function getPrepBeneficiaryStatus(analyticDataByBeneficiary: any) {
+  const prepVisits = _.filter(analyticDataByBeneficiary, (data: any) => {
+    const programStageId = data['programStage'];
+    return prepVisitProgramStages.includes(programStageId);
+  });
+  return prepVisits.length == 1
+    ? 'PrEP New'
+    : prepVisits.length > 1
+    ? 'PrEP Continue'
+    : '';
 }
 
 function getLastServiceFromAnalyticData(
@@ -234,7 +312,10 @@ export function getFormattedEventAnalyticDataForReport(
   locations: any,
   programToProgramStageObject: any
 ) {
-  const groupedAnalyticDataByBeneficiary = _.groupBy(analyticData, 'tei');
+  const groupedAnalyticDataByBeneficiary = _.groupBy(
+    _.uniqBy(analyticData, 'psi'),
+    'tei'
+  );
   return _.map(
     _.flattenDeep(
       _.map(_.keys(groupedAnalyticDataByBeneficiary), (tei: string) => {
@@ -250,9 +331,10 @@ export function getFormattedEventAnalyticDataForReport(
               )
             ),
             (stage: string) =>
-              noneAgywParticipationProgramStages.includes(stage)
+              noneAgywParticipationProgramStages.includes(stage) ||
+              noneAgywDreamBeneficairiesStage.includes(stage)
           ).length > 0;
-        const beneficiaryData = {};
+        let beneficiaryData = {};
         for (const dxConfigs of reportConfig.dxConfigs || []) {
           const {
             id,
@@ -265,7 +347,46 @@ export function getFormattedEventAnalyticDataForReport(
             displayValues,
           } = dxConfigs;
           let value = '';
-          if (id === 'assessmment_date') {
+          if (id === 'district_of_residence') {
+            const ouIds = _.uniq(
+              _.flattenDeep(
+                _.map(analyticDataByBeneficiary, (dataObj) =>
+                  _.keys(dataObj).length > 0 ? dataObj['ou'] || '' : ''
+                )
+              )
+            );
+            value = getLocationNameByIdAndLevel(
+              locations,
+              districtLevel,
+              ouIds.length > 0 ? ouIds[0] : value
+            );
+          } else if (id === 'community_council_of_residence') {
+            const ouIds = _.uniq(
+              _.flattenDeep(
+                _.map(analyticDataByBeneficiary, (dataObj) =>
+                  _.keys(dataObj).length > 0 ? dataObj['ou'] || '' : ''
+                )
+              )
+            );
+            value = getLocationNameByIdAndLevel(
+              locations,
+              communityCouncilLevel,
+              ouIds.length > 0 ? ouIds[0] : value
+            );
+          } else if (id === 'is_eligible_for_prep') {
+            value = isBeneficiaryEligibleForPrep(
+              ids,
+              analyticDataByBeneficiary
+            );
+          } else if (id === 'is_screened_for_prep') {
+            var isScreenedForPrep = _isBenediciaryScreenedForPrep(
+              ids,
+              analyticDataByBeneficiary
+            );
+            value = isScreenedForPrep ? 'Yes' : 'No';
+          } else if (id === 'prep_beneficairy_status') {
+            value = getPrepBeneficiaryStatus(analyticDataByBeneficiary);
+          } else if (id === 'assessmment_date') {
             const assessmentDate = getAssessmentDate(analyticDataByBeneficiary);
             value = `${assessmentDate}`.split(' ')[0];
           } else if (id === 'is_assemmenet_conducted') {
@@ -387,27 +508,34 @@ export function getFormattedEventAnalyticDataForReport(
                   });
             value = eventReportData ? eventReportData[id] : value;
           }
-          if (
-            _.keys(beneficiaryData).includes(name) &&
-            beneficiaryData[name] !== ''
-          ) {
-            value = beneficiaryData[name];
+          if (id === 'following_up_visit') {
+            const followingUpVisits = getFollowingUpVisits(
+              analyticDataByBeneficiary
+            );
+            beneficiaryData = { ...beneficiaryData, ...followingUpVisits };
+          } else {
+            if (
+              _.keys(beneficiaryData).includes(name) &&
+              beneficiaryData[name] !== ''
+            ) {
+              value = beneficiaryData[name];
+            }
+            beneficiaryData[name] =
+              value !== ''
+                ? getSanitizesReportValue(
+                    value,
+                    codes,
+                    isBoolean,
+                    isDate,
+                    displayValues,
+                    isNotAgywBeneficiary
+                  )
+                : getSanitizedDisplayValue(
+                    value,
+                    displayValues,
+                    isNotAgywBeneficiary
+                  );
           }
-          beneficiaryData[name] =
-            value !== ''
-              ? getSanitizesReportValue(
-                  value,
-                  codes,
-                  isBoolean,
-                  isDate,
-                  displayValues,
-                  isNotAgywBeneficiary
-                )
-              : getSanitizedDisplayValue(
-                  value,
-                  displayValues,
-                  isNotAgywBeneficiary
-                );
         }
         return beneficiaryData;
       })

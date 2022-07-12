@@ -7,9 +7,8 @@ const defaultAnalyticKeys = [
   'tei',
   'ouname',
   'ou',
+  'psi',
 ];
-
-const noneAgywParticipationProgramStages = ['uctHRP6BBXP'];
 
 export function getProgressPercentage(numerator: number, denominator: number) {
   const percentageValue = ((numerator / denominator) * 100).toFixed(0);
@@ -77,29 +76,19 @@ export function getSanitizedAnalyticData(Analytics: any, programStage: string) {
       _.keys(_.omit(dimensions, _.concat(['ou', 'pe'], dimensions.ou || [])))
     )
   );
-  if (noneAgywParticipationProgramStages.includes(programStage)) {
-    defaultKeys.push('psi');
-  }
-  return _.map(
-    _.flattenDeep(
-      _.map(rows, (rowData: any) => {
-        const dataObject = { programStage: programStage };
-        for (const key of defaultKeys) {
-          const keyIndex = _.findIndex(
-            headers || [],
-            (header: any) => header && header.name === key
-          );
-          if (keyIndex > -1) {
-            dataObject[key] = rowData[keyIndex] || '';
-          }
+  return _.flattenDeep(
+    _.map(rows, (rowData: any) => {
+      const dataObject = { programStage: programStage };
+      for (const key of defaultKeys) {
+        const keyIndex = _.findIndex(
+          headers || [],
+          (header: any) => header && header.name === key
+        );
+        if (keyIndex > -1) {
+          dataObject[key] = rowData[keyIndex] || '';
         }
-        return dataObject;
-      })
-    ),
-    (dataObject: any) => {
-      return _.keys(dataObject).includes('psi')
-        ? _.omit({ ...dataObject, tei: dataObject['psi'] }, ['psi'])
-        : dataObject;
-    }
+      }
+      return dataObject;
+    })
   );
 }

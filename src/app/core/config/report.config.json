@@ -1,6 +1,706 @@
 {
   "reports": [
     {
+      "id": "KB_prep_report",
+      "name": "KB PrEP report",
+      "program": ["hOEIHJDrrvz", "CK4iMK8b0aZ"],
+      "dxConfigs": [
+        {
+          "id": "WTZ7GLTrE8Q",
+          "name": "First Name",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": true,
+          "programStage": ""
+        },
+        {
+          "id": "rSP9c21JsfC",
+          "name": "Surname",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": true,
+          "programStage": ""
+        },
+        {
+          "id": "qZP982qpSPS",
+          "name": "Date of Birth",
+          "isDate": true,
+          "isBoolean": false,
+          "isAttribute": true,
+          "programStage": ""
+        },
+        {
+          "id": "beneficiary_age",
+          "name": "Age",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": true,
+          "programStage": ""
+        },
+        {
+          "id": "vIX4GTSCX4P",
+          "name": "Sex",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": true,
+          "programStage": ""
+        },
+        {
+          "id": "VJiWumvINR6",
+          "name": "Sex",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": true,
+          "programStage": ""
+        },
+        {
+          "id": "RB8Wx75hGa4",
+          "name": "Village of Residence",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": true,
+          "programStage": ""
+        },
+        {
+          "id": "isAgywBeneficiary",
+          "name": "AGYW/Dreams Beneficiary",
+          "isDate": false,
+          "isBoolean": false,
+          "programStage": ""
+        },
+        {
+          "id": "district_of_residence",
+          "name": "District of Residence",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": true,
+          "programStage": ""
+        },
+        {
+          "id": "community_council_of_residence",
+          "name": "Community Council of Residence",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": true,
+          "programStage": ""
+        },
+        {
+          "id": "tNdoR0jYr7R",
+          "name": "Phone Numbers",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": true,
+          "programStage": ""
+        },
+        {
+          "id": "is_screened_for_prep",
+          "ids": [
+            "YDxOvZTdzAc",
+            "yuOiCMwlOlb",
+            "w16L3KidzUp",
+            "HIsG7OjQfqo",
+            "wg43kJ09Up5",
+            "DCXxIRxPse3",
+            "Ufy2ZT9yphQ",
+            "nLLHqOGTQK9",
+            "sa81lAvBb7Y",
+            "wJ0ctEtFyzS",
+            "dQBja8nUr18",
+            "ACcf4Jyy30c",
+            "wNIvEyH95EU",
+            "z7eAqo0LMqi",
+            "oZPPEMZ0hXt",
+            "uBJeTLcoAKM",
+            "OLaa0ZiGMVu",
+            "zGAjwEL0yL5",
+            "fufd2D8sYc3",
+            "fchWv2MSmaS",
+            "heT7TrQQAA1",
+            "mdpVjiigyEe",
+            "QTHDGaiEgMk",
+            "wSnrfl8u3Kw",
+            "pcS3AkmRGnq",
+            "ycrnvO8Am4c",
+            "eOy1XwiYC8H",
+            "X2m9v2E5WaI"
+          ],
+          "name": "Screened for PrEP",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": false,
+          "programStage": ""
+        },
+        {
+          "id": "is_screened_for_prep",
+          "ids": [
+            "BrcTtRhrxXp",
+            "uHrSSJghmTS",
+            "rprU5DII5Aw",
+            "kK8Gt6LA8QM",
+            "gufQ1ELVqcS",
+            "gCvMVscBNfk",
+            "WeaVsrFcWne",
+            "RqWMrqUcDqv",
+            "d3zHELPzSaH",
+            "YQI32r1MQxA",
+            "pQaAQdJnE1w",
+            "DobfAIMBOvy",
+            "jpbLNWRjUJK",
+            "bH9DpJOIutM",
+            "h0P6UfkUvLP",
+            "POaEWdS7Lw5",
+            "veoA322323t",
+            "vMR9VtzuH3R",
+            "qgNIIJBeMBT",
+            "gDlQ3IThgzH",
+            "AkuZ9MSPfZ4",
+            "qibwngZ6fd5",
+            "JBmwR9pBO4I",
+            "Ihu2PjZMh8B",
+            "W8LTmGz13QM",
+            "XfB60ruQI3I",
+            "D0tq5I6jgLk",
+            "q9dpokR3G1q",
+            "rZov68n0pzv",
+            "kqDlnMhTKTd",
+            "B8jihEQnoJG",
+            "ov7UEdiyjJA",
+            "dpfubDzhwhX"
+          ],
+          "name": "Screened for PrEP",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": false,
+          "programStage": "mMjGlK1W0Xo"
+        },
+        {
+          "id": "is_eligible_for_prep",
+          "ids": ["sa81lAvBb7Y", "dQBja8nUr18"],
+          "name": "Eligible for PrEP",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": true,
+          "programStage": ""
+        },
+        {
+          "id": "is_eligible_for_prep",
+          "ids": ["h0P6UfkUvLP", "veoA322323t"],
+          "name": "Eligible for PrEP",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": false,
+          "programStage": "mMjGlK1W0Xo"
+        },
+        {
+          "id": "prep_beneficairy_status",
+          "name": "Beneficiary Status",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": false,
+          "programStage": ""
+        },
+        {
+          "id": "q8qPtzanSTU",
+          "name": "Number of Sex Partners",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": true,
+          "programStage": ""
+        },
+        {
+          "id": "rh881j2vfvT",
+          "name": "STIs (Past or Present)",
+          "isDate": false,
+          "isBoolean": true,
+          "isAttribute": true,
+          "programStage": "",
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "Yes"
+            },
+            {
+              "value": "",
+              "displayName": "No"
+            }
+          ]
+        },
+        {
+          "id": "iY67qYnywgS",
+          "name": "Regular Condom Use",
+          "isDate": false,
+          "isBoolean": true,
+          "isAttribute": true,
+          "programStage": "PGFt6IwdZLM",
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "Yes"
+            },
+            {
+              "value": "",
+              "displayName": "No"
+            }
+          ]
+        },
+        {
+          "id": "p33MrrhsQRz",
+          "name": "Transactional Sex",
+          "isDate": false,
+          "isBoolean": true,
+          "isAttribute": true,
+          "programStage": "",
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "Yes"
+            },
+            {
+              "value": "",
+              "displayName": "No"
+            }
+          ]
+        },
+        {
+          "id": "yc3BlUIEup3",
+          "name": "Experiences of Violence",
+          "isDate": false,
+          "isBoolean": true,
+          "isAttribute": true,
+          "programStage": "",
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "Yes"
+            },
+            {
+              "value": "",
+              "displayName": "No"
+            }
+          ]
+        },
+        {
+          "id": "bApA6X6TVvJ",
+          "name": "School Enrollment",
+          "isDate": false,
+          "isBoolean": true,
+          "isAttribute": true,
+          "programStage": "",
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "NOT ENROLLED IN SCHOOL"
+            },
+            {
+              "value": "",
+              "displayName": "ENROLLED IN SCHOOL"
+            }
+          ]
+        },
+        {
+          "id": "HJIHPjOf5s1",
+          "name": "Alcohol Use",
+          "isDate": false,
+          "isBoolean": true,
+          "isAttribute": true,
+          "programStage": "",
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "Yes"
+            },
+            {
+              "value": "",
+              "displayName": "No"
+            }
+          ]
+        },
+        {
+          "id": "B4ojlzKypUF",
+          "name": "Orphanhood",
+          "isDate": false,
+          "isBoolean": true,
+          "isAttribute": true,
+          "programStage": "",
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "Yes"
+            },
+            {
+              "value": "",
+              "displayName": "No"
+            }
+          ]
+        },
+        {
+          "id": "N8tlZl91pBY",
+          "name": "HIV Status",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": false,
+          "programStage": "kq6qeEgbDVY"
+        },
+        {
+          "id": "mdpVjiigyEe",
+          "name": "Initiated",
+          "isDate": false,
+          "isBoolean": true,
+          "isAttribute": true,
+          "programStage": "",
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "Yes"
+            },
+            {
+              "value": "",
+              "displayName": "No"
+            },
+            {
+              "value": "No",
+              "displayName": "No"
+            }
+          ]
+        },
+        {
+          "id": "D0tq5I6jgLk",
+          "name": "Initiated",
+          "isDate": false,
+          "isBoolean": true,
+          "isAttribute": false,
+          "programStage": "mMjGlK1W0Xo",
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "Yes"
+            },
+            {
+              "value": "",
+              "displayName": "No"
+            },
+            {
+              "value": "No",
+              "displayName": "No"
+            }
+          ]
+        },
+        {
+          "id": "enrollmentdate",
+          "name": "Date of enrollment to the program",
+          "isDate": true,
+          "isBoolean": false,
+          "programStage": ""
+        },
+        {
+          "id": "date_of_last_service_received",
+          "name": "Date Of Last Service Received",
+          "isDate": true,
+          "isBoolean": false,
+          "programStage": ""
+        },
+        {
+          "id": "district_of_service",
+          "name": "District of Service",
+          "isDate": false,
+          "isBoolean": false,
+          "programStage": ""
+        },
+        {
+          "id": "last_service_community_council",
+          "name": "Community Council of Service",
+          "isDate": false,
+          "isBoolean": false,
+          "programStage": ""
+        },
+        {
+          "id": "BrcTtRhrxXp",
+          "name": "Health Facility",
+          "isDate": false,
+          "isBoolean": false,
+          "programStage": "mMjGlK1W0Xo"
+        },
+        {
+          "id": "LNaNh7kvh4X",
+          "name": "Current Pregnancy status",
+          "isDate": false,
+          "isBoolean": true,
+          "isAttribute": true,
+          "programStage": "",
+          "displayValues": [
+            {
+              "value": "Yes",
+              "displayName": "PREGNANT"
+            },
+            {
+              "value": "",
+              "displayName": "NOT PREGNANT"
+            }
+          ]
+        },
+        {
+          "id": "following_up_visit",
+          "name": "Follow up Visit",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": false,
+          "programStage": "nVCqxOg0nMQ"
+        },
+        {
+          "id": "following_up_visit",
+          "name": "Follow up Visit",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": false,
+          "programStage": "Yn6AJ0CAxb2"
+        },
+        {
+          "id": "jjz5PgokIho",
+          "name": "Next Visit Date",
+          "isDate": true,
+          "isBoolean": false,
+          "isAttribute": false,
+          "programStage": "nVCqxOg0nMQ"
+        },
+        {
+          "id": "jjz5PgokIho",
+          "name": "Next Visit Date",
+          "isDate": true,
+          "isBoolean": false,
+          "isAttribute": false,
+          "programStage": "Yn6AJ0CAxb2"
+        },
+        {
+          "id": "VW9nRqUEWbi",
+          "name": "[PrEp Visit] HIV Status",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": false,
+          "programStage": "nVCqxOg0nMQ"
+        },
+        {
+          "id": "VW9nRqUEWbi",
+          "name": "[PrEp Visit] HIV Status",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": false,
+          "programStage": "Yn6AJ0CAxb2"
+        },
+        {
+          "id": "wBG1kmHK6kJ",
+          "name": "Visit Outcome",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": false,
+          "programStage": "nVCqxOg0nMQ"
+        },
+        {
+          "id": "wBG1kmHK6kJ",
+          "name": "Visit Outcome",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": false,
+          "programStage": "Yn6AJ0CAxb2"
+        },
+        {
+          "id": "UL0xa3Sz9ML",
+          "name": "Date PrEP stopped",
+          "isDate": true,
+          "isBoolean": false,
+          "isAttribute": false,
+          "programStage": "nVCqxOg0nMQ"
+        },
+        {
+          "id": "UL0xa3Sz9ML",
+          "name": "Date PrEP stopped",
+          "isDate": true,
+          "isBoolean": false,
+          "isAttribute": false,
+          "programStage": "Yn6AJ0CAxb2"
+        },
+        {
+          "id": "A8SPsd6PF41",
+          "name": "PrEP stopped due to patient's decision",
+          "isDate": false,
+          "isBoolean": true,
+          "isAttribute": false,
+          "programStage": "nVCqxOg0nMQ"
+        },
+        {
+          "id": "A8SPsd6PF41",
+          "name": "PrEP stopped due to patient's decision",
+          "isDate": false,
+          "isBoolean": true,
+          "isAttribute": false,
+          "programStage": "Yn6AJ0CAxb2"
+        },
+        {
+          "id": "KxFYGVirFWF",
+          "name": "PrEP stopped due to poor adherence",
+          "isDate": false,
+          "isBoolean": true,
+          "isAttribute": false,
+          "programStage": "nVCqxOg0nMQ"
+        },
+        {
+          "id": "KxFYGVirFWF",
+          "name": "PrEP stopped due to poor adherence",
+          "isDate": false,
+          "isBoolean": true,
+          "isAttribute": false,
+          "programStage": "Yn6AJ0CAxb2"
+        },
+        {
+          "id": "qe6l3Iml00L",
+          "name": "PrEP stopped due to new HIV diagnosis",
+          "isDate": false,
+          "isBoolean": true,
+          "isAttribute": false,
+          "programStage": "nVCqxOg0nMQ"
+        },
+        {
+          "id": "qe6l3Iml00L",
+          "name": "PrEP stopped due to new HIV diagnosis",
+          "isDate": false,
+          "isBoolean": true,
+          "isAttribute": false,
+          "programStage": "Yn6AJ0CAxb2"
+        },
+        {
+          "id": "jjPOLtS5Kw8",
+          "name": "PrEP stopped due to the patient no longer being at high risk for HIV infection",
+          "isDate": false,
+          "isBoolean": true,
+          "isAttribute": false,
+          "programStage": "nVCqxOg0nMQ"
+        },
+
+        {
+          "id": "xxOuRNqolik",
+          "name": "PrEP stopped due to significant side effects",
+          "isDate": false,
+          "isBoolean": true,
+          "isAttribute": false,
+          "programStage": "nVCqxOg0nMQ"
+        },
+        {
+          "id": "xxOuRNqolik",
+          "name": "PrEP stopped due to significant side effects",
+          "isDate": false,
+          "isBoolean": true,
+          "isAttribute": false,
+          "programStage": "Yn6AJ0CAxb2"
+        },
+        {
+          "id": "y7lRj3QSDkn",
+          "name": "Other reason for stopping PrEP",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": false,
+          "programStage": "nVCqxOg0nMQ"
+        },
+        {
+          "id": "y7lRj3QSDkn",
+          "name": "Other reason for stopping PrEP",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": false,
+          "programStage": "Yn6AJ0CAxb2"
+        },
+        {
+          "id": "N8tlZl91pBY",
+          "name": "Linkages to care after HIV Infection(HIV status)",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": false,
+          "programStage": "kq6qeEgbDVY"
+        },
+        {
+          "id": "Ybc2k1zv7gK",
+          "name": "Linkages to care after HIV Infection(HIV status)",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": true,
+          "programStage": ""
+        },
+        {
+          "id": "",
+          "name": "Date tested pos",
+          "isDate": true,
+          "isBoolean": false,
+          "isAttribute": false,
+          "programStage": "kq6qeEgbDVY"
+        },
+        {
+          "id": "",
+          "name": "Date tested pos",
+          "isDate": true,
+          "isBoolean": false,
+          "isAttribute": true,
+          "programStage": ""
+        },
+        {
+          "id": "CCgL6RQ9BkR",
+          "name": "Date linked to Care",
+          "isDate": true,
+          "isBoolean": false,
+          "isAttribute": false,
+          "programStage": "kq6qeEgbDVY"
+        },
+        {
+          "id": "GwsIKCCsbSB",
+          "name": "Date linked to Care",
+          "isDate": true,
+          "isBoolean": false,
+          "isAttribute": true,
+          "programStage": ""
+        },
+        {
+          "id": "RJIRJBkyuaj",
+          "name": "Health Facility Linked to",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": false,
+          "programStage": "kq6qeEgbDVY"
+        },
+        {
+          "id": "vOl2rgl3KTy",
+          "name": "Health Facility Linked to",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": true,
+          "programStage": ""
+        },
+        {
+          "id": "klLkGxy328c",
+          "name": "Implementing Mechanism Name",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": true,
+          "programStage": ""
+        },
+        {
+          "id": "fQInK8s2RNR",
+          "name": "Sub-implementing Mechanism",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": true,
+          "programStage": ""
+        },
+        {
+          "id": "DdnlE8kmIkT",
+          "name": "Service Provider",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": true,
+          "programStage": ""
+        }
+      ],
+      "disablePeriodSelection": false,
+      "allowedImplementingPartners": ["H2CE3Iwdf7v", "KixA3B2O8Rp"],
+      "includeEnrollmentWithoutService": false
+    },
+    {
       "id": "OVC_Interverntion_enrollment",
       "name": "OVC Dataset ( Profile Data Only)",
       "program": ["em38qztTI8s", "BNsDaCclOiu"],

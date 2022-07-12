@@ -17,7 +17,10 @@ import {
   getSanitizedAnalyticData,
   getProgressPercentage,
 } from 'src/app/shared/helpers/report-data.helper';
-import { getFormattedEventAnalyticDataForReport } from 'src/app/shared/helpers/get-formatted-analytica-data-for-report';
+import {
+  defaultPrepVisitKey,
+  getFormattedEventAnalyticDataForReport,
+} from 'src/app/shared/helpers/get-formatted-analytica-data-for-report';
 import { getFormattedDate } from 'src/app/core/utils/date-formatter.util';
 
 @Injectable()
@@ -47,7 +50,7 @@ export class ReportDataEffects {
   }
 
   async getEventReportAnalyticData(analyticParameters: any, reportConfig: any) {
-    const eventReportAnalyticData = [];
+    let eventReportAnalyticData = [];
     const programToProgramStageObject = {};
     const programIds = _.flattenDeep([reportConfig.program]);
     const analyticData = [];
@@ -152,10 +155,32 @@ export class ReportDataEffects {
     } catch (error) {
       console.log({ error });
     }
-    return _.sortBy(_.flattenDeep(eventReportAnalyticData), [
+    eventReportAnalyticData = _.sortBy(_.flattenDeep(eventReportAnalyticData), [
       'District of Service',
       'Last Service Community Council',
     ]);
+    const prepVisitKeys = _.filter(
+      _.uniq(
+        _.flattenDeep(
+          _.map(eventReportAnalyticData, (data: any) => _.keys(data))
+        )
+      ),
+      (key: string) => key.includes(`${defaultPrepVisitKey} `)
+    );
+    return _.map(eventReportAnalyticData, (eventReportAnalytic) => {
+      const dataObject = {};
+      for (const dxConfigs of reportConfig.dxConfigs || []) {
+        const { name } = dxConfigs;
+        if (name.includes(`${defaultPrepVisitKey}`)) {
+          for (const prepVisitKey of prepVisitKeys) {
+            dataObject[prepVisitKey] = eventReportAnalytic[prepVisitKey] || '';
+          }
+        } else {
+          dataObject[name] = eventReportAnalytic[name];
+        }
+      }
+      return dataObject;
+    });
   }
 
   getProgramStagesByProgramId(programId: string) {

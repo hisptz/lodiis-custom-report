@@ -10,6 +10,14 @@ const defaultCustomDxConfigIds = [
   'district_of_service',
   'facility_name',
   'last_service_community_council',
+  'district_of_residence',
+  'following_up_visit',
+  'community_council_of_residence',
+  'is_eligible_for_prep',
+  'date_of_last_service_received',
+  'assessmment_date',
+  'is_assemmenet_conducted',
+  'prep_beneficairy_status',
 ];
 
 export function getAnalyticsParameters(
@@ -235,7 +243,16 @@ function getDataElementConfigs(
   }[]
 ) {
   return _.filter(
-    dxConfigs || [],
+    _.flattenDeep(
+      _.map(dxConfigs || [], (dxConfig: any) => {
+        const ids = dxConfig.ids || [];
+        return ids.length === 0
+          ? dxConfig
+          : _.map(ids, (newId: string) => {
+              return { ...dxConfig, id: newId };
+            });
+      })
+    ),
     (dxConfig: any) =>
       !dxConfig.isAttribute &&
       dxConfig.id !== '' &&
@@ -253,7 +270,16 @@ function getAttributeConfigs(
 ) {
   return _.uniqBy(
     _.filter(
-      dxConfigs || [],
+      _.flattenDeep(
+        _.map(dxConfigs || [], (dxConfig: any) => {
+          const ids = dxConfig.ids || [];
+          return ids.length === 0
+            ? dxConfig
+            : _.map(ids, (newId: string) => {
+                return { ...dxConfig, id: newId };
+              });
+        })
+      ),
       (dxConfig: any) =>
         dxConfig.isAttribute &&
         dxConfig.id &&
