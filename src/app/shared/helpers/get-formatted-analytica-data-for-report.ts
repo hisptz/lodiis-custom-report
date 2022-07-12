@@ -36,6 +36,24 @@ function getAssessmentDate(analyticDataByBeneficiary: Array<any>) {
   return date;
 }
 
+function _isBenediciaryScreenedForPrep(
+  ids: string[],
+  analyticDataByBeneficiary: any
+) {
+  var isScreenedForPrep = false;
+  for (var beneficairyData of analyticDataByBeneficiary) {
+    for (const id of ids) {
+      if (_.keys(beneficairyData).includes(id)) {
+        const value = beneficairyData[id] ?? '';
+        if (`${value}`.trim() !== '') {
+          isScreenedForPrep = true;
+        }
+      }
+    }
+  }
+  return isScreenedForPrep;
+}
+
 function getFollowingUpVisits(analyticDataByBeneficiary: any) {
   const followingUpVisits = {};
   const visitDates = _.reverse(
@@ -360,8 +378,12 @@ export function getFormattedEventAnalyticDataForReport(
               ids,
               analyticDataByBeneficiary
             );
-          } else if (id === 'screened_') {
-            // Prep intake => prep screening
+          } else if (id === 'is_screened_for_prep') {
+            var isScreenedForPrep = _isBenediciaryScreenedForPrep(
+              ids,
+              analyticDataByBeneficiary
+            );
+            value = isScreenedForPrep ? 'Yes' : 'No';
           } else if (id === 'prep_beneficairy_status') {
             value = getPrepBeneficiaryStatus(analyticDataByBeneficiary);
           } else if (id === 'assessmment_date') {
