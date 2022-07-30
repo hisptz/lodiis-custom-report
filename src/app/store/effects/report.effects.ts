@@ -43,21 +43,25 @@ export class ReportDataEffects {
     return new Observable((observer) => {
       this.getEventReportAnalyticData(analyticParameters, reportConfig)
         .then((data) => {
-          const sanitizedEventReportAnalyticData = _.map(
+          const sanitizedEventReportAnalyticData = _.filter(
             data,
             (eventReportAnalytic) => {
-              const filteredEventReportAnalytic = _.pickBy(
+              const objectWithMandatoryValue = _.pick(
                 eventReportAnalytic,
-                (value: any, key: string) => {
-                  if (MANDATORY_COLUMNS.includes(key)) {
-                    return value != '';
-                  }
-                  return true;
-                }
+                MANDATORY_COLUMNS
               );
-              return filteredEventReportAnalytic;
+              const isObjectContainValue = _.values(
+                objectWithMandatoryValue
+              ).every((singleObjectValue) => {
+                return singleObjectValue != '';
+              });
+
+              if (isObjectContainValue) {
+                return eventReportAnalytic;
+              }
             }
           );
+          console.log({ sanitizedEventReportAnalyticData });
           observer.next(sanitizedEventReportAnalyticData);
           observer.complete();
         })

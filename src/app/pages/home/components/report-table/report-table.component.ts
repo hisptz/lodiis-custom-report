@@ -19,8 +19,6 @@ export class ReportTableComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.tablePagination = null;
-    console.log('data are ');
-    console.log(this.currentAnalytics);
   }
 
   ngAfterViewInit() {
