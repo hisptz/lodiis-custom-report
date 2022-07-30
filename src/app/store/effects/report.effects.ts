@@ -61,7 +61,6 @@ export class ReportDataEffects {
               }
             }
           );
-          console.log({ sanitizedEventReportAnalyticData });
           observer.next(sanitizedEventReportAnalyticData);
           observer.complete();
         })
