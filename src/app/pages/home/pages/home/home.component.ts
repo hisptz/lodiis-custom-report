@@ -72,7 +72,13 @@ export class HomeComponent implements OnInit {
     this.isConfigAccessAllow$ = this.store.select(
       getCurrentUserAccessToReportConfiguration
     );
-    this.selectedPeriods = [];
+    this.selectedPeriods = [
+      {
+        id: 'LAST_YEAR',
+        name: 'Last year',
+        type: 'RelativeYearly',
+      },
+    ];
     this.programMetadataObjects = {};
     this.fetchReportConfig();
     this.store
@@ -255,9 +261,20 @@ export class HomeComponent implements OnInit {
         date.toISOString().split('T')[0]
       }`;
       let skipHeader = false;
+      const removedColumns: string[] = [
+        'First Name',
+        'Surname',
+        'Contact Numbers',
+      ];
+
       if (data.length > 0) {
+        const sanitizedData: any[] = data.map((singleData: any) => {
+          return _.omit(singleData, removedColumns);
+        });
         const reportSummary = [];
-        const headers = _.uniq(_.flattenDeep(_.map(_.keys(_.head(data)))));
+        const headers = _.uniq(
+          _.flattenDeep(_.map(_.keys(_.head(sanitizedData))))
+        );
         if (headers.length > 0) {
           skipHeader = true;
           const selectedLocation = _.map(
@@ -285,7 +302,7 @@ export class HomeComponent implements OnInit {
           reportSummary.push(headerJson);
         }
         this.excelFileService.writeToSingleSheetExcelFile(
-          [...reportSummary, ...data],
+          [...reportSummary, ...sanitizedData],
           reportName,
           skipHeader
         );

@@ -22,6 +22,7 @@ import {
   getFormattedEventAnalyticDataForReport,
 } from 'src/app/shared/helpers/get-formatted-analytica-data-for-report';
 import { getFormattedDate } from 'src/app/core/utils/date-formatter.util';
+import { MANDATORY_COLUMNS } from './../../core/constant/index';
 
 @Injectable()
 export class ReportDataEffects {
@@ -42,7 +43,25 @@ export class ReportDataEffects {
     return new Observable((observer) => {
       this.getEventReportAnalyticData(analyticParameters, reportConfig)
         .then((data) => {
-          observer.next(data);
+          const sanitizedEventReportAnalyticData = _.filter(
+            data,
+            (eventReportAnalytic) => {
+              const objectWithMandatoryValue = _.pick(
+                eventReportAnalytic,
+                MANDATORY_COLUMNS
+              );
+              const isObjectContainValue = _.values(
+                objectWithMandatoryValue
+              ).every((singleObjectValue) => {
+                return singleObjectValue != '';
+              });
+
+              if (isObjectContainValue) {
+                return eventReportAnalytic;
+              }
+            }
+          );
+          observer.next(sanitizedEventReportAnalyticData);
           observer.complete();
         })
         .catch((error) => observer.error(error));
@@ -167,6 +186,7 @@ export class ReportDataEffects {
       ),
       (key: string) => key.includes(`${defaultPrepVisitKey} `)
     );
+
     return _.map(eventReportAnalyticData, (eventReportAnalytic) => {
       const dataObject = {};
       for (const dxConfigs of reportConfig.dxConfigs || []) {
@@ -219,7 +239,7 @@ export class ReportDataEffects {
         .pipe(take(1))
         .subscribe(
           (data) => {
-            const loctions = _.map(
+            const locations = _.map(
               data['organisationUnits'] || [],
               (location: any) => {
                 const { level, name, ancestors } = location;
@@ -227,7 +247,7 @@ export class ReportDataEffects {
                 return _.omit({ ...location, ancestors }, ['level', 'name']);
               }
             );
-            resolve(loctions);
+            resolve(locations);
           },
           () => reject([])
         );
