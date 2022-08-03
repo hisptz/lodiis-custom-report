@@ -316,6 +316,7 @@ export function getFormattedEventAnalyticDataForReport(
     _.uniqBy(analyticData, 'psi'),
     'tei'
   );
+  const serviceCount: number = _.keys(groupedAnalyticDataByBeneficiary).length;
   return _.map(
     _.flattenDeep(
       _.map(_.keys(groupedAnalyticDataByBeneficiary), (tei: string) => {
@@ -537,7 +538,10 @@ export function getFormattedEventAnalyticDataForReport(
                   );
           }
         }
-        return beneficiaryData;
+        const sanitizedBeneficiaryData = _.assign(beneficiaryData, {
+          ['Total Services']: serviceCount,
+        });
+        return sanitizedBeneficiaryData;
       })
     ),
     (beneficary: any) => {
