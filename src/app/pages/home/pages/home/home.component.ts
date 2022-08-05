@@ -72,6 +72,7 @@ export class HomeComponent implements OnInit {
     this.isConfigAccessAllow$ = this.store.select(
       getCurrentUserAccessToReportConfiguration
     );
+
     this.selectedPeriods = [];
     this.programMetadataObjects = {};
     this.fetchReportConfig();
