@@ -73,7 +73,18 @@ export class HomeComponent implements OnInit {
       getCurrentUserAccessToReportConfiguration
     );
 
-    this.selectedPeriods = [];
+    this.selectedPeriods = [
+      {
+        id: '202112',
+        type: 'Monthly',
+        name: 'December 2021',
+      },
+      {
+        id: '202201',
+        type: 'Monthly',
+        name: 'January 2022',
+      },
+    ];
     this.programMetadataObjects = {};
     this.fetchReportConfig();
     this.store

@@ -91,6 +91,8 @@ export class ReportDataEffects {
           (parameter: any) => parameter && parameter.isEnrollmentAnalytic
         )
       );
+      console.log('formatted data 1');
+
       for (const analyticParameter of enrollmentAnalyticParamaters) {
         const programId = analyticParameter.programId || '';
         if (programId !== '') {
@@ -118,6 +120,8 @@ export class ReportDataEffects {
           }
         }
       }
+      console.log('formatted data 2');
+
       for (const programId of programIds) {
         for (const analyticParameter of eventAnalyticParamaters) {
           const programStages: any = await this.getProgramStagesByProgramId(
@@ -134,6 +138,8 @@ export class ReportDataEffects {
           analyticParametersWithPaginationFilters.push(response);
         }
       }
+      console.log('formatted data 3');
+
       for (const analyticParameter of _.flattenDeep(
         analyticParametersWithPaginationFilters
       )) {
@@ -144,6 +150,8 @@ export class ReportDataEffects {
           overAllProcessCount,
           totalOverAllProcess
         );
+        console.log('formatted data 4');
+
         const response: any = await this.getSingleEventReportAnalyticData(
           url,
           stage,
@@ -164,6 +172,7 @@ export class ReportDataEffects {
         );
         analyticData.push(sanitizedResponse);
       }
+      console.log('formatted data');
       const formattedEventReportData = getFormattedEventAnalyticDataForReport(
         _.flattenDeep(analyticData),
         reportConfig,

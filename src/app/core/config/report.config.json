@@ -249,12 +249,11 @@
           "programStage": ""
         },
         {
-          "id": "education_subsidies_level",
-          "ids": ["hXyqgOWZ17b","rsh5Kvx6qAU"],
+          "id": "rsh5Kvx6qAU",
           "name": "Educational Subsidies ",
           "codes": "EducationSubsidiesSupport",
           "isDate": false,
-          "isBoolean": false,
+          "isBoolean": true,
           "programStage": "MkyTrLeBG8I"
         },
         {
@@ -262,7 +261,7 @@
           "name": "Educational Subsidies ",
           "codes": "EducationSubsidiesSupport",
           "isDate": false,
-          "isBoolean": false,
+          "isBoolean": true,
           "programStage": "MkyTrLeBG8I"
         },
         {
@@ -403,8 +402,7 @@
           "programStage": "MkyTrLeBG8I"
         },
         {
-          "id": "sti_screening_referral_form",
-          "ids": ["rsh5Kvx6qAU","hXyqgOWZ17b"],
+          "id": "rsh5Kvx6qAU",
           "name": "STI Screening",
           "codes": ["STI Screening"],
           "isDate": false,
@@ -420,10 +418,9 @@
           "programStage": "MkyTrLeBG8I"
         },
         {
-          "id": "sti_screening_referral_form",
+          "id": "rsh5Kvx6qAU",
           "name": "STI Treatment",
           "codes": ["STI Treatment"],
-          "ids" :["rsh5Kvx6qAU "," hXyqgOWZ17b"],
           "isDate": false,
           "isBoolean": true,
           "programStage": "MkyTrLeBG8I"
@@ -437,8 +434,7 @@
           "programStage": "MkyTrLeBG8I"
         },
         {
-          "id": "emtct_referral_form",
-          "ids": ["rsh5Kvx6qAU", "hXyqgOWZ17b "],
+          "id": "rsh5Kvx6qAU",
           "name": "EMTCT",
           "codes": ["EMTCT"],
           "isDate": false,
@@ -455,8 +451,7 @@
           "programStage": "MkyTrLeBG8I"
         },
         {
-          "id": "cervical_cancer_screening_referral_form",
-          "ids": ["rsh5Kvx6qAU","hXyqgOWZ17b"],
+          "id": "rsh5Kvx6qAU",
           "name": "Cervical Cancer Screening",
           "codes": ["Cervical Cancer Screening"],
           "isDate": false,
