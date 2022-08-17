@@ -16,6 +16,17 @@ const beneficiaryDateOfBirthReference = ['qZP982qpSPS', 'jVSwC6Ln95H'];
 const primaryChildCheckReference = 'KO5NC4pfBmv';
 const casePlanProgramStages = ['gkNKXUxpyv9', 'vjF07cZNST3'];
 export const defaultPrepVisitKey = 'Follow up Visit';
+const interventionsConstant = {
+  hiv_prevention: 'HIV Prevention Education',
+  flatten_toun: 'AFLATEEN/TOUN',
+  financial_education: 'FinancialLiteracyEducation',
+  hiv_riskAssessment: 'HIV Risk Assessment',
+  violence_education: 'ViolencePreventionEducation',
+  go_girls: 'Go Girls',
+  condom_education: 'CondomEducationProvision',
+  saving_group: 'SAVING GROUPS',
+  silc: 'SILC',
+};
 
 export function getSanitizedPrepCustomReport(eventReportAnalyticData: any) {}
 
