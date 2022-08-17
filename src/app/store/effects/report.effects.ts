@@ -46,6 +46,8 @@ export class ReportDataEffects {
           const sanitizedEventReportAnalyticData = _.filter(
             data,
             (eventReportAnalytic) => {
+              //remove header to not display here
+
               const objectWithMandatoryValue = _.pick(
                 eventReportAnalytic,
                 MANDATORY_COLUMNS
@@ -91,7 +93,6 @@ export class ReportDataEffects {
           (parameter: any) => parameter && parameter.isEnrollmentAnalytic
         )
       );
-      console.log('formatted data 1');
 
       for (const analyticParameter of enrollmentAnalyticParamaters) {
         const programId = analyticParameter.programId || '';
@@ -120,7 +121,6 @@ export class ReportDataEffects {
           }
         }
       }
-      console.log('formatted data 2');
 
       for (const programId of programIds) {
         for (const analyticParameter of eventAnalyticParamaters) {
@@ -138,7 +138,6 @@ export class ReportDataEffects {
           analyticParametersWithPaginationFilters.push(response);
         }
       }
-      console.log('formatted data 3');
 
       for (const analyticParameter of _.flattenDeep(
         analyticParametersWithPaginationFilters
@@ -150,7 +149,6 @@ export class ReportDataEffects {
           overAllProcessCount,
           totalOverAllProcess
         );
-        console.log('formatted data 4');
 
         const response: any = await this.getSingleEventReportAnalyticData(
           url,
@@ -172,7 +170,6 @@ export class ReportDataEffects {
         );
         analyticData.push(sanitizedResponse);
       }
-      console.log('formatted data');
       const formattedEventReportData = getFormattedEventAnalyticDataForReport(
         _.flattenDeep(analyticData),
         reportConfig,
