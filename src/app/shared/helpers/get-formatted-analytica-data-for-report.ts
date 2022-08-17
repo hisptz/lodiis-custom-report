@@ -510,9 +510,11 @@ export function getFormattedEventAnalyticDataForReport(
                 : value;
           } else if (id === 'isAgywBeneficiary') {
             value = !isNotAgywBeneficiary ? 'Yes' : 'No';
-          } else if (id !== '' && codes.length > 0 && ids.length > 0) {
-            console.log('datas');
-          } else {
+          }
+          // else if (id !== '' && codes.length > 0 && ids.length > 0) {
+          //   console.log('datas');
+          // }
+          else {
             // Take consideration of services codes
             const eventReportData =
               id !== '' && programStage === ''
@@ -531,9 +533,9 @@ export function getFormattedEventAnalyticDataForReport(
                           data.programStage &&
                           data.programStage === programStage;
                   });
-            console.log({ eventReportData });
             value = eventReportData ? eventReportData[id] : value;
           }
+
           if (id === 'following_up_visit') {
             const followingUpVisits = getFollowingUpVisits(
               analyticDataByBeneficiary
