@@ -565,9 +565,14 @@ export function getFormattedEventAnalyticDataForReport(
                   );
           }
         }
-        const sanitizedBeneficiaryData = _.assign(beneficiaryData, {
+        const modifyBeneficiaryData = _.assign(beneficiaryData, {
           ['Total Services']: serviceCount,
         });
+        const sanitizedBeneficiaryData = computeCompletedPackage(
+          modifyBeneficiaryData,
+          tei,
+          analyticData
+        );
         return sanitizedBeneficiaryData;
       })
     ),
