@@ -251,6 +251,17 @@ function getBeneficiaryAgeRanges(age: number) {
 function getBeneficiaryAgeRange(age: number): string {
   return age < 18 ? '0-17' : '18+';
 }
+function getBeneficiaryCustomAgeRanges(age: number) {
+  let value =
+    age < 15 && age >= 10
+      ? '10-14'
+      : age < 20 && age >= 15
+      ? '15-19'
+      : age < 25 && age >= 20
+      ? '20-24'
+      : '';
+  return value;
+}
 
 function getBeneficiaryHivRiskAssessmentResult(
   ids: any,
