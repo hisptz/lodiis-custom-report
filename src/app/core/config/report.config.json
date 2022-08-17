@@ -498,6 +498,22 @@
           "isBoolean": false,
           "isAttribute": true,
           "programStage": ""
+        },
+        {
+          "id":"Eug4BXDFLym",
+           "name": "Type of intervention",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": false,
+          "programStage": ""
+        },
+        {
+          "id":"vL6NpUA0rIU",
+           "name": "Number of session",
+          "isDate": false,
+          "isBoolean": false,
+          "isAttribute": false,
+          "programStage": "bDJq2JWVTbC"
         }
       ],
       "disablePeriodSelection": false,
