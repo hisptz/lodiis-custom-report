@@ -586,3 +586,382 @@ export function getFormattedEventAnalyticDataForReport(
     }
   );
 }
+
+export function computeCompletedPackage(beneficiaryData, tei, analyticData) {
+  const sanitizedAnalyticData =
+    _.filter(analyticData, function (analyticObject) {
+      return analyticObject?.tei === tei;
+    }) ?? [];
+
+  const groupedAnalyticDataByIntervention = _.groupBy(
+    _.uniqBy(sanitizedAnalyticData, 'psi'),
+    'Eug4BXDFLym'
+  );
+  //check age band
+  const age: number = parseInt(beneficiaryData?.Age ?? '0');
+  let sanitizedBeneficiaryData = {};
+  const ageBand: string = getBeneficiaryCustomAgeRanges(age);
+  switch (ageBand) {
+    case '10-14':
+      // evaluate service variables
+      if (
+        (_.keys(groupedAnalyticDataByIntervention) ?? []).includes(
+          interventionsConstant.hiv_prevention
+        ) &&
+        evaluateSessionNumberPerIntervention(
+          groupedAnalyticDataByIntervention[
+            interventionsConstant.hiv_prevention
+          ] ?? [],
+          '>=',
+          9
+        ) &&
+        (_.keys(groupedAnalyticDataByIntervention) ?? []).includes(
+          interventionsConstant.violence_education
+        ) &&
+        evaluateSessionNumberPerIntervention(
+          groupedAnalyticDataByIntervention[
+            interventionsConstant.violence_education
+          ] ?? [],
+          '>=',
+          1
+        ) &&
+        (_.keys(groupedAnalyticDataByIntervention) ?? []).includes(
+          interventionsConstant.flatten_toun
+        ) &&
+        evaluateSessionNumberPerIntervention(
+          groupedAnalyticDataByIntervention[
+            interventionsConstant.flatten_toun
+          ] ?? [],
+          '>=',
+          9
+        ) &&
+        (_.keys(groupedAnalyticDataByIntervention) ?? []).includes(
+          interventionsConstant.financial_education
+        ) &&
+        evaluateSessionNumberPerIntervention(
+          groupedAnalyticDataByIntervention[
+            interventionsConstant.financial_education
+          ] ?? [],
+          '==',
+          4
+        ) &&
+        beneficiaryData[interventionsConstant.hiv_riskAssessment] === 'Yes'
+      ) {
+        sanitizedBeneficiaryData = _.assign(beneficiaryData, {
+          ['Total Completed Primary Package']: 'Yes',
+        });
+        computeSecondaryCompletedPackage(
+          ageBand,
+          sanitizedBeneficiaryData,
+          groupedAnalyticDataByIntervention
+        );
+      } else {
+        sanitizedBeneficiaryData = _.assign(beneficiaryData, {
+          ['Total Completed Primary Package']: 'No',
+        });
+        sanitizedBeneficiaryData = _.assign(beneficiaryData, {
+          ['Total Completed Primary Package and at least one Secondary Services']:
+            'No',
+        });
+      }
+      break;
+    case '15-19':
+      // evaluate service variables
+      if (
+        (_.keys(groupedAnalyticDataByIntervention) ?? []).includes(
+          interventionsConstant.hiv_prevention
+        ) &&
+        evaluateSessionNumberPerIntervention(
+          groupedAnalyticDataByIntervention[
+            interventionsConstant.hiv_prevention
+          ] ?? [],
+          '>=',
+          9
+        ) &&
+        (_.keys(groupedAnalyticDataByIntervention) ?? []).includes(
+          interventionsConstant.violence_education
+        ) &&
+        evaluateSessionNumberPerIntervention(
+          groupedAnalyticDataByIntervention[
+            interventionsConstant.violence_education
+          ] ?? [],
+          '>=',
+          1
+        ) &&
+        (_.keys(groupedAnalyticDataByIntervention) ?? []).includes(
+          interventionsConstant.flatten_toun
+        ) &&
+        evaluateSessionNumberPerIntervention(
+          groupedAnalyticDataByIntervention[
+            interventionsConstant.flatten_toun
+          ] ?? [],
+          '>=',
+          9
+        ) &&
+        (_.keys(groupedAnalyticDataByIntervention) ?? []).includes(
+          interventionsConstant.go_girls
+        ) &&
+        evaluateSessionNumberPerIntervention(
+          groupedAnalyticDataByIntervention[interventionsConstant.go_girls] ??
+            [],
+          '>=',
+          11
+        ) &&
+        (_.keys(groupedAnalyticDataByIntervention) ?? []).includes(
+          interventionsConstant.financial_education
+        ) &&
+        evaluateSessionNumberPerIntervention(
+          groupedAnalyticDataByIntervention[
+            interventionsConstant.financial_education
+          ] ?? [],
+          '==',
+          4
+        ) &&
+        (((_.keys(groupedAnalyticDataByIntervention) ?? []).includes(
+          interventionsConstant.condom_education
+        ) &&
+          evaluateSessionNumberPerIntervention(
+            groupedAnalyticDataByIntervention[
+              interventionsConstant.condom_education
+            ] ?? [],
+            '>=',
+            4
+          )) ||
+          beneficiaryData['Condom Education/ Provision'] === 'Yes') &&
+        beneficiaryData['HIV Risk Assessment'] === 'Yes'
+      ) {
+        sanitizedBeneficiaryData = _.assign(beneficiaryData, {
+          ['Total Completed Primary Package']: 'Yes',
+        });
+        computeSecondaryCompletedPackage(
+          ageBand,
+          sanitizedBeneficiaryData,
+          groupedAnalyticDataByIntervention
+        );
+      } else {
+        sanitizedBeneficiaryData = _.assign(beneficiaryData, {
+          ['Total Completed Primary Package']: 'No',
+        });
+        sanitizedBeneficiaryData = _.assign(beneficiaryData, {
+          ['Total Completed Primary Package and at least one Secondary Services']:
+            'No',
+        });
+      }
+      break;
+    case '20-24':
+      // evaluate service variables
+      if (
+        (_.keys(groupedAnalyticDataByIntervention) ?? []).includes(
+          interventionsConstant.hiv_prevention
+        ) &&
+        evaluateSessionNumberPerIntervention(
+          groupedAnalyticDataByIntervention[
+            interventionsConstant.hiv_prevention
+          ] ?? [],
+          '>=',
+          9
+        ) &&
+        (_.keys(groupedAnalyticDataByIntervention) ?? []).includes(
+          interventionsConstant.violence_education
+        ) &&
+        evaluateSessionNumberPerIntervention(
+          groupedAnalyticDataByIntervention[
+            interventionsConstant.violence_education
+          ] ?? [],
+          '>=',
+          1
+        ) &&
+        (_.keys(groupedAnalyticDataByIntervention) ?? []).includes(
+          interventionsConstant.flatten_toun
+        ) &&
+        evaluateSessionNumberPerIntervention(
+          groupedAnalyticDataByIntervention[
+            interventionsConstant.flatten_toun
+          ] ?? [],
+          '>=',
+          9
+        ) &&
+        (_.keys(groupedAnalyticDataByIntervention) ?? []).includes(
+          interventionsConstant.go_girls
+        ) &&
+        evaluateSessionNumberPerIntervention(
+          groupedAnalyticDataByIntervention[interventionsConstant.go_girls] ??
+            [],
+          '>=',
+          11
+        ) &&
+        (_.keys(groupedAnalyticDataByIntervention) ?? []).includes(
+          interventionsConstant.financial_education
+        ) &&
+        evaluateSessionNumberPerIntervention(
+          groupedAnalyticDataByIntervention[
+            interventionsConstant.financial_education
+          ] ?? [],
+          '==',
+          4
+        ) &&
+        (((_.keys(groupedAnalyticDataByIntervention) ?? []).includes(
+          interventionsConstant.condom_education
+        ) &&
+          evaluateSessionNumberPerIntervention(
+            groupedAnalyticDataByIntervention[
+              interventionsConstant.condom_education
+            ] ?? [],
+            '>=',
+            4
+          )) ||
+          beneficiaryData['Condom Education/ Provision'] === 'Yes') &&
+        beneficiaryData['HIV Risk Assessment'] === 'Yes'
+      ) {
+        sanitizedBeneficiaryData = _.assign(beneficiaryData, {
+          ['Total Completed Primary Package']: 'Yes',
+        });
+        computeSecondaryCompletedPackage(
+          ageBand,
+          sanitizedBeneficiaryData,
+          groupedAnalyticDataByIntervention
+        );
+      } else {
+        sanitizedBeneficiaryData = _.assign(beneficiaryData, {
+          ['Total Completed Primary Package']: 'No',
+        });
+        sanitizedBeneficiaryData = _.assign(beneficiaryData, {
+          ['Total Completed Primary Package and at least one Secondary Services']:
+            'No',
+        });
+      }
+      break;
+    default:
+      sanitizedBeneficiaryData = beneficiaryData;
+  }
+  return sanitizedBeneficiaryData;
+}
+
+export function computeSecondaryCompletedPackage(
+  ageBand: string,
+  beneficiaryData: any,
+  groupedAnalyticDataByIntervention
+) {
+  let sanitizedBeneficiaryData = {};
+  switch (ageBand) {
+    case '10-14':
+      if (
+        beneficiaryData['HIV Testing and Counseling'] === 'Yes' ||
+        ((_.keys(groupedAnalyticDataByIntervention) ?? []).includes(
+          interventionsConstant.condom_education
+        ) &&
+          evaluateSessionNumberPerIntervention(
+            groupedAnalyticDataByIntervention[
+              interventionsConstant.financial_education
+            ] ?? [],
+            '>=',
+            4
+          )) ||
+        beneficiaryData['Condom Education/ Provision'] === 'Yes' ||
+        beneficiaryData['Educational Subsidies'] === 'Yes' ||
+        beneficiaryData['Post Abuse Care Services'] === 'Yes' ||
+        beneficiaryData['Post GBV Care (Legal)'] === 'Yes' ||
+        ((_.keys(groupedAnalyticDataByIntervention) ?? []).includes(
+          interventionsConstant.saving_group
+        ) &&
+          evaluateSessionNumberPerIntervention(
+            groupedAnalyticDataByIntervention[
+              interventionsConstant.saving_group
+            ] ?? [],
+            '>=',
+            1
+          ))
+      ) {
+        sanitizedBeneficiaryData = _.assign(beneficiaryData, {
+          ['Total Completed Primary Package and at least one Secondary Services']:
+            'Yes',
+        });
+      } else {
+        sanitizedBeneficiaryData = _.assign(beneficiaryData, {
+          ['Total Completed Primary Package and at least one Secondary Services']:
+            'No',
+        });
+      }
+      break;
+    case '15-19':
+      //veoA322323t  == yes bH9DpJOIutM == yes h0P6UfkUvLP == yes
+      if (
+        beneficiaryData['HIV Testing and Counseling'] === 'Yes' ||
+        beneficiaryData['PrEP'] === 'Yes' ||
+        beneficiaryData['Contraceptive method mix'] === 'Yes' ||
+        beneficiaryData['Post Abuse Care Services'] === 'Yes' ||
+        beneficiaryData['Post GBV Care (Legal)'] === 'Yes' ||
+        ((_.keys(groupedAnalyticDataByIntervention) ?? []).includes(
+          interventionsConstant.saving_group
+        ) &&
+          evaluateSessionNumberPerIntervention(
+            groupedAnalyticDataByIntervention[
+              interventionsConstant.saving_group
+            ] ?? [],
+            '>=',
+            12
+          )) ||
+        beneficiaryData['Educational Subsidies'] === 'Yes'
+      ) {
+        sanitizedBeneficiaryData = _.assign(beneficiaryData, {
+          ['Total Completed Primary Package and at least one Secondary Services']:
+            'Yes',
+        });
+      } else {
+        sanitizedBeneficiaryData = _.assign(beneficiaryData, {
+          ['Total Completed Primary Package and at least one Secondary Services']:
+            'No',
+        });
+      }
+      break;
+    case '20-24':
+      if (
+        beneficiaryData['HIV Testing and Counseling'] === 'Yes' ||
+        beneficiaryData['PrEP'] === 'Yes' ||
+        beneficiaryData['Contraceptive method mix'] === 'Yes' ||
+        beneficiaryData['Post Abuse Care Services'] === 'Yes' ||
+        beneficiaryData['Post GBV Care (Legal)'] === 'Yes' ||
+        beneficiaryData['Parenting (Preg & Breastfeeding)'] === 'Y' ||
+        ((_.keys(groupedAnalyticDataByIntervention) ?? []).includes(
+          interventionsConstant.silc
+        ) &&
+          evaluateSessionNumberPerIntervention(
+            groupedAnalyticDataByIntervention[interventionsConstant.silc] ?? [],
+            '>=',
+            1
+          ))
+      ) {
+        sanitizedBeneficiaryData = _.assign(beneficiaryData, {
+          ['Total Completed Primary Package and at least one Secondary Services']:
+            'Yes',
+        });
+      } else {
+        sanitizedBeneficiaryData = _.assign(beneficiaryData, {
+          ['Total Completed Primary Package and at least one Secondary Services']:
+            'No',
+        });
+      }
+      break;
+    default:
+      sanitizedBeneficiaryData = beneficiaryData;
+  }
+}
+
+export function evaluateSessionNumberPerIntervention(
+  beneficiaryDataList: any[],
+  operator: string,
+  requiredSessionNumber: any
+) {
+  if (beneficiaryDataList?.length > 0) {
+    const logicalResponse = beneficiaryDataList.some(
+      (beneficiaryDataObject) => {
+        return eval(
+          beneficiaryDataObject['vL6NpUA0rIU'] ??
+            '0' + operator + requiredSessionNumber
+        );
+      }
+    );
+    return logicalResponse;
+  }
+  return false;
+}
