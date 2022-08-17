@@ -73,18 +73,7 @@ export class HomeComponent implements OnInit {
       getCurrentUserAccessToReportConfiguration
     );
 
-    this.selectedPeriods = [
-      {
-        id: '202112',
-        type: 'Monthly',
-        name: 'December 2021',
-      },
-      {
-        id: '202201',
-        type: 'Monthly',
-        name: 'January 2022',
-      },
-    ];
+    this.selectedPeriods = [];
     this.programMetadataObjects = {};
     this.fetchReportConfig();
     this.store
@@ -113,10 +102,7 @@ export class HomeComponent implements OnInit {
             .getCustomReportConfigs()
             .pipe(take(1))
             .subscribe((customConfig: any) => {
-              const reports =
-                [...configs.reports, ...customConfig.reports] ||
-                reportConfig.reports ||
-                [];
+              const reports: any = reportConfig.reports || [];
 
               const reportsByCurrentIp =
                 getFilteredReportByUserImplementingPartner(
