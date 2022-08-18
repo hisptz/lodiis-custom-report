@@ -461,6 +461,7 @@ export function getFormattedEventAnalyticDataForReport(
               ids,
               programStage
             );
+            console.log('value ', { value });
           } else if (id === 'is_service_provided') {
             const lastService = getLastServiceFromAnalyticData(
               analyticDataByBeneficiary,
@@ -597,6 +598,11 @@ export function computeCompletedPackage(beneficiaryData, tei, analyticData) {
     _.uniqBy(sanitizedAnalyticData, 'psi'),
     'Eug4BXDFLym'
   );
+  const groupedAnalyticDataByBeneficiary: any = _.groupBy(
+    _.uniqBy(analyticData, 'psi'),
+    'tei'
+  );
+  const analyticDataByBeneficiary = groupedAnalyticDataByBeneficiary[tei];
   //check age band
   const age: number = parseInt(beneficiaryData?.Age ?? '0');
   let sanitizedBeneficiaryData = {};
@@ -653,7 +659,8 @@ export function computeCompletedPackage(beneficiaryData, tei, analyticData) {
         computeSecondaryCompletedPackage(
           ageBand,
           sanitizedBeneficiaryData,
-          groupedAnalyticDataByIntervention
+          groupedAnalyticDataByIntervention,
+          analyticDataByBeneficiary
         );
       } else {
         sanitizedBeneficiaryData = _.assign(beneficiaryData, {
@@ -666,7 +673,7 @@ export function computeCompletedPackage(beneficiaryData, tei, analyticData) {
       }
       break;
     case '15-19':
-      // evaluate service variables
+      // evaluate service variable
       if (
         (_.keys(groupedAnalyticDataByIntervention) ?? []).includes(
           interventionsConstant.hiv_prevention
@@ -736,7 +743,8 @@ export function computeCompletedPackage(beneficiaryData, tei, analyticData) {
         computeSecondaryCompletedPackage(
           ageBand,
           sanitizedBeneficiaryData,
-          groupedAnalyticDataByIntervention
+          groupedAnalyticDataByIntervention,
+          analyticDataByBeneficiary
         );
       } else {
         sanitizedBeneficiaryData = _.assign(beneficiaryData, {
@@ -819,7 +827,8 @@ export function computeCompletedPackage(beneficiaryData, tei, analyticData) {
         computeSecondaryCompletedPackage(
           ageBand,
           sanitizedBeneficiaryData,
-          groupedAnalyticDataByIntervention
+          groupedAnalyticDataByIntervention,
+          analyticDataByBeneficiary
         );
       } else {
         sanitizedBeneficiaryData = _.assign(beneficiaryData, {
@@ -840,9 +849,16 @@ export function computeCompletedPackage(beneficiaryData, tei, analyticData) {
 export function computeSecondaryCompletedPackage(
   ageBand: string,
   beneficiaryData: any,
-  groupedAnalyticDataByIntervention
+  groupedAnalyticDataByIntervention,
+  analyticDataByBeneficiary
 ) {
   let sanitizedBeneficiaryData = {};
+  const ids: string[] = ['h0P6UfkUvLP', 'bH9DpJOIutM', 'veoA322323t'];
+  const programStage: string = 'mMjGlK1W0Xo';
+  const checkLongFromPrepValue =
+    getLongFormPrEPValue(analyticDataByBeneficiary, ids, programStage) === '0'
+      ? 'No'
+      : 'Yes';
   switch (ageBand) {
     case '10-14':
       if (
@@ -884,13 +900,13 @@ export function computeSecondaryCompletedPackage(
       }
       break;
     case '15-19':
-      //veoA322323t  == yes bH9DpJOIutM == yes h0P6UfkUvLP == yes
       if (
         beneficiaryData['HIV Testing and Counseling'] === 'Yes' ||
         beneficiaryData['PrEP'] === 'Yes' ||
         beneficiaryData['Contraceptive method mix'] === 'Yes' ||
         beneficiaryData['Post Abuse Care Services'] === 'Yes' ||
         beneficiaryData['Post GBV Care (Legal)'] === 'Yes' ||
+        checkLongFromPrepValue === 'Yes' ||
         ((_.keys(groupedAnalyticDataByIntervention) ?? []).includes(
           interventionsConstant.saving_group
         ) &&
@@ -921,7 +937,8 @@ export function computeSecondaryCompletedPackage(
         beneficiaryData['Contraceptive method mix'] === 'Yes' ||
         beneficiaryData['Post Abuse Care Services'] === 'Yes' ||
         beneficiaryData['Post GBV Care (Legal)'] === 'Yes' ||
-        beneficiaryData['Parenting (Preg & Breastfeeding)'] === 'Y' ||
+        checkLongFromPrepValue === 'Yes' ||
+        beneficiaryData['Parenting (Preg & Breastfeeding)'] === 'Yes' ||
         ((_.keys(groupedAnalyticDataByIntervention) ?? []).includes(
           interventionsConstant.silc
         ) &&
