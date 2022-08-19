@@ -39,14 +39,17 @@ export function getSanitizesReportValue(
   isBoolean: boolean,
   isDate: boolean,
   displayValues: Array<any>,
-  skipSanitizationOfDisplayName: boolean
+  skipSanitizationOfDisplayName: boolean,
+  ids
 ) {
   const displayNames = _.flattenDeep(
     _.map(displayValues || [], (displayValue) => displayValue.displayName)
   );
   displayNames.push('Yes', '1');
   let sanitizedValue = '';
-  if (codes && codes.length > 0) {
+  if (codes && codes.length > 0 && ids && ids.length > 0) {
+    sanitizedValue = value;
+  } else if (codes && codes.length > 0) {
     sanitizedValue =
       codes.includes(value) || displayNames.includes(value)
         ? 'Yes'

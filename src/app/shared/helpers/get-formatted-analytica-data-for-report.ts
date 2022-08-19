@@ -47,6 +47,38 @@ function getAssessmentDate(analyticDataByBeneficiary: Array<any>) {
   return date;
 }
 
+function getReferralValue(
+  analyticsDataByBeneficiary: Array<any>,
+  prepFields: Array<string>,
+  programStage: string,
+  codes
+): string {
+  const programStageData = _.find(
+    analyticsDataByBeneficiary || [],
+    (data: any) => {
+      return data.programStage && data.programStage === programStage;
+    }
+  );
+  if (programStageData) {
+    if (
+      prepFields.some((field) => {
+        return (
+          programStageData[field] !== '1' &&
+          prepFields.some((fieldWithCode) => {
+            return !codes.includes(programStageData[fieldWithCode]);
+          })
+        );
+      })
+    ) {
+      return 'No';
+    } else {
+      return 'Yes';
+    }
+  } else {
+    return 'No';
+  }
+}
+
 function _isBenediciaryScreenedForPrep(
   ids: string[],
   analyticDataByBeneficiary: any
@@ -461,7 +493,6 @@ export function getFormattedEventAnalyticDataForReport(
               ids,
               programStage
             );
-            console.log('value ', { value });
           } else if (id === 'is_service_provided') {
             const lastService = getLastServiceFromAnalyticData(
               analyticDataByBeneficiary,
@@ -473,6 +504,13 @@ export function getFormattedEventAnalyticDataForReport(
                 : value === ''
                 ? ''
                 : 'No';
+          } else if (id === 'referral_facility_id') {
+            value = getReferralValue(
+              analyticDataByBeneficiary,
+              ids,
+              programStage,
+              codes
+            );
           }
           if (id === 'last_service_community_council') {
             const lastService = getLastServiceFromAnalyticData(
@@ -511,11 +549,7 @@ export function getFormattedEventAnalyticDataForReport(
                 : value;
           } else if (id === 'isAgywBeneficiary') {
             value = !isNotAgywBeneficiary ? 'Yes' : 'No';
-          }
-          // else if (id !== '' && codes.length > 0 && ids.length > 0) {
-          //   console.log('datas');
-          // }
-          else {
+          } else {
             // Take consideration of services codes
             const eventReportData =
               id !== '' && programStage === ''
@@ -524,7 +558,8 @@ export function getFormattedEventAnalyticDataForReport(
                       ? _.keys(data).includes(id) && codes.includes(data[id])
                       : _.keys(data).includes(id);
                   })
-                : _.find(analyticDataByBeneficiary, (data: any) => {
+                : programStage === ''
+                ? _.find(analyticDataByBeneficiary, (data: any) => {
                     return codes && codes.length > 0
                       ? _.keys(data).includes(id) &&
                           codes.includes(data[id]) &&
@@ -533,7 +568,15 @@ export function getFormattedEventAnalyticDataForReport(
                       : _.keys(data).includes(id) &&
                           data.programStage &&
                           data.programStage === programStage;
+                  })
+                : _.find(analyticDataByBeneficiary, (data: any) => {
+                    return (
+                      _.keys(data).includes(id) &&
+                      data.programStage &&
+                      data.programStage === programStage
+                    );
                   });
+
             value = eventReportData ? eventReportData[id] : value;
           }
 
@@ -557,7 +600,8 @@ export function getFormattedEventAnalyticDataForReport(
                     isBoolean,
                     isDate,
                     displayValues,
-                    isNotAgywBeneficiary
+                    isNotAgywBeneficiary,
+                    ids
                   )
                 : getSanitizedDisplayValue(
                     value,

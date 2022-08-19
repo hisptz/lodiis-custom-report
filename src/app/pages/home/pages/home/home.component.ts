@@ -102,8 +102,10 @@ export class HomeComponent implements OnInit {
             .getCustomReportConfigs()
             .pipe(take(1))
             .subscribe((customConfig: any) => {
-              const reports: any = reportConfig.reports || [];
-
+              const reports =
+                [...configs.reports, ...customConfig.reports] ||
+                reportConfig.reports ||
+                [];
               const reportsByCurrentIp =
                 getFilteredReportByUserImplementingPartner(
                   reports,

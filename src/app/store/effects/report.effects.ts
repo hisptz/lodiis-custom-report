@@ -22,7 +22,10 @@ import {
   getFormattedEventAnalyticDataForReport,
 } from 'src/app/shared/helpers/get-formatted-analytica-data-for-report';
 import { getFormattedDate } from 'src/app/core/utils/date-formatter.util';
-import { MANDATORY_COLUMNS } from './../../core/constant/index';
+import {
+  MANDATORY_COLUMNS,
+  OPTIONAL_COLUMNS,
+} from './../../core/constant/index';
 
 @Injectable()
 export class ReportDataEffects {
@@ -46,20 +49,25 @@ export class ReportDataEffects {
           const sanitizedEventReportAnalyticData = _.filter(
             data,
             (eventReportAnalytic) => {
-              //remove header to not display here
+              if (
+                OPTIONAL_COLUMNS.every((field) => {
+                  return delete eventReportAnalytic[field];
+                })
+              ) {
+                //remove header to not display here
+                const objectWithMandatoryValue = _.pick(
+                  eventReportAnalytic,
+                  MANDATORY_COLUMNS
+                );
+                const isObjectContainValue = _.values(
+                  objectWithMandatoryValue
+                ).every((singleObjectValue) => {
+                  return singleObjectValue != '';
+                });
 
-              const objectWithMandatoryValue = _.pick(
-                eventReportAnalytic,
-                MANDATORY_COLUMNS
-              );
-              const isObjectContainValue = _.values(
-                objectWithMandatoryValue
-              ).every((singleObjectValue) => {
-                return singleObjectValue != '';
-              });
-
-              if (isObjectContainValue) {
-                return eventReportAnalytic;
+                if (isObjectContainValue) {
+                  return eventReportAnalytic;
+                }
               }
             }
           );
