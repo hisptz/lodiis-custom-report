@@ -306,6 +306,38 @@ function getBeneficiaryTypeValue(
   return beneficiaryType;
 }
 
+export function getServiceFromReferral(
+  analyticsDataByBeneficiary: Array<any>,
+  programStage: string,
+  codes
+): string {
+  const programStageData = _.find(
+    analyticsDataByBeneficiary || [],
+    (data: any) => {
+      return data.programStage && data.programStage === programStage;
+    }
+  );
+  if (programStageData) {
+    const communityServiceField = 'rsh5Kvx6qAU';
+    const facilityServiceField = 'OrC9Bh2bcFz';
+    const serviceProvidedField = 'hXyqgOWZ17b';
+    if (
+      `${programStageData[serviceProvidedField]}` === '1' &&
+      [communityServiceField, facilityServiceField].some(
+        (referralService: string) => {
+          return codes.includes(programStageData[referralService]);
+        }
+      )
+    ) {
+      return 'Yes';
+    } else {
+      return 'No';
+    }
+  } else {
+    return 'No';
+  }
+}
+
 export function getFormattedEventAnalyticDataForReport(
   analyticData: Array<any>,
   reportConfig: any,
@@ -316,7 +348,7 @@ export function getFormattedEventAnalyticDataForReport(
     _.uniqBy(analyticData, 'psi'),
     'tei'
   );
-  const serviceCount: number = _.keys(groupedAnalyticDataByBeneficiary).length;
+  console.log(groupedAnalyticDataByBeneficiary);
   return _.map(
     _.flattenDeep(
       _.map(_.keys(groupedAnalyticDataByBeneficiary), (tei: string) => {
@@ -477,6 +509,12 @@ export function getFormattedEventAnalyticDataForReport(
               locations,
               districtLevel
             );
+          } else if (id === 'service_from_referral') {
+            value = getServiceFromReferral(
+              analyticDataByBeneficiary,
+              programStage,
+              codes
+            );
           } else if (id === 'date_of_last_service_received') {
             const lastService = getLastServiceFromAnalyticData(
               analyticDataByBeneficiary,
@@ -538,19 +576,35 @@ export function getFormattedEventAnalyticDataForReport(
                   );
           }
         }
-        const sanitizedBeneficiaryData = _.assign(beneficiaryData, {
-          ['Total Services']: serviceCount,
-        });
-        return sanitizedBeneficiaryData;
+
+        const totalNumberOfServices = _.find(
+          reportConfig.dxConfigs,
+          (config: any) => config.id === 'total_services'
+        );
+
+        // TODO fix the service counts mechanism
+        if (totalNumberOfServices) {
+          const serviceCount = _.filter(
+            reportConfig.dxConfigs,
+            (dxConfig: any) =>
+              !dxConfig.isAttribute && beneficiaryData[dxConfig.name] === 'Yes'
+          ).length;
+          const sanitizedBeneficiaryData = _.assign(beneficiaryData, {
+            [totalNumberOfServices.name]: serviceCount,
+          });
+          return sanitizedBeneficiaryData;
+        } else {
+          return beneficiaryData;
+        }
       })
     ),
-    (beneficary: any) => {
-      const serviceProvider = beneficary['Service Provider'] || '';
+    (beneficiary: any) => {
+      const serviceProvider = beneficiary['Service Provider'] || '';
       if (serviceProvider === 'scriptrunner') {
-        beneficary['Implementing Mechanism Name'] = 'UPLOADED';
-        beneficary['Service Provider'] = 'UPLOADED';
+        beneficiary['Implementing Mechanism Name'] = 'UPLOADED';
+        beneficiary['Service Provider'] = 'UPLOADED';
       }
-      return beneficary;
+      return beneficiary;
     }
   );
 }
