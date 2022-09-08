@@ -348,7 +348,7 @@ export function getFormattedEventAnalyticDataForReport(
     _.uniqBy(analyticData, 'psi'),
     'tei'
   );
-  const serviceCount: number = _.keys(groupedAnalyticDataByBeneficiary).length;
+  console.log(groupedAnalyticDataByBeneficiary);
   return _.map(
     _.flattenDeep(
       _.map(_.keys(groupedAnalyticDataByBeneficiary), (tei: string) => {
@@ -576,10 +576,26 @@ export function getFormattedEventAnalyticDataForReport(
                   );
           }
         }
-        const sanitizedBeneficiaryData = _.assign(beneficiaryData, {
-          ['Total Services']: serviceCount,
-        });
-        return sanitizedBeneficiaryData;
+
+        const totalNumberOfServices = _.find(
+          reportConfig.dxConfigs,
+          (config: any) => config.id === 'total_services'
+        );
+
+        // TODO fix the service counts mechanism
+        if (totalNumberOfServices) {
+          const serviceCount = _.filter(
+            reportConfig.dxConfigs,
+            (dxConfig: any) =>
+              !dxConfig.isAttribute && beneficiaryData[dxConfig.name] === 'Yes'
+          ).length;
+          const sanitizedBeneficiaryData = _.assign(beneficiaryData, {
+            [totalNumberOfServices.name]: serviceCount,
+          });
+          return sanitizedBeneficiaryData;
+        } else {
+          return beneficiaryData;
+        }
       })
     ),
     (beneficiary: any) => {
