@@ -2275,13 +2275,6 @@
           "programStage": "gkNKXUxpyv9"
         },
         {
-          "id": "kvF996ugmMl",
-          "name": "FE Case plan",
-          "isDate": false,
-          "isBoolean": true,
-          "programStage": "vjF07cZNST3"
-        },
-        {
           "id": "WrjNxZBVHCL",
           "name": "K/TPLOT Case plan",
           "isDate": false,
@@ -3683,13 +3676,6 @@
           "isDate": false,
           "isBoolean": true,
           "programStage": "gkNKXUxpyv9"
-        },
-        {
-          "id": "kvF996ugmMl",
-          "name": "FE Case plan",
-          "isDate": false,
-          "isBoolean": true,
-          "programStage": "vjF07cZNST3"
         },
         {
           "id": "WrjNxZBVHCL",
