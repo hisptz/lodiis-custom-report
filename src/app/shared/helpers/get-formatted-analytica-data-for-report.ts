@@ -17,8 +17,6 @@ const primaryChildCheckReference = 'KO5NC4pfBmv';
 const casePlanProgramStages = ['gkNKXUxpyv9', 'vjF07cZNST3'];
 export const defaultPrepVisitKey = 'Follow up Visit';
 
-export function getSanitizedPrepCustomReport(eventReportAnalyticData: any) {}
-
 function getAssessmentDate(analyticDataByBeneficiary: Array<any>) {
   let date = '';
   for (const programStage of casePlanProgramStages) {
@@ -309,7 +307,7 @@ function getBeneficiaryTypeValue(
 export function getServiceFromReferral(
   analyticsDataByBeneficiary: Array<any>,
   programStage: string,
-  codes
+  codes: string[]
 ): string {
   const programStageData = _.find(
     analyticsDataByBeneficiary || [],

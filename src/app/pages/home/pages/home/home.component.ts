@@ -145,8 +145,10 @@ export class HomeComponent implements OnInit {
   }
 
   async setProgramMetadata(programIds: String[] = []) {
-    this.programMetadataObjects =
-      await this.configService.getExtendeReportMetadata(programIds);
+    if (programIds.length > 0) {
+      this.programMetadataObjects =
+        await this.configService.getExtendeReportMetadata(programIds);
+    }
   }
 
   getSanitizedListOfReport(hasCountryLevelOrganisationUnit: boolean) {
