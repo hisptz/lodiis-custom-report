@@ -1,6 +1,3 @@
 {
-  "hooks": {
-    "pre-commit": "",
-    "prepare-commit-msg": ""
-  }
+
 }

@@ -259,7 +259,7 @@
           "id": "service_from_referral",
           "ids": ["rsh5Kvx6qAU", "OrC9Bh2bcFz", "hXyqgOWZ17b"],
           "name": "Educational Subsidies ",
-          "codes": "EducationSubsidiesSupport",
+          "codes": ["EducationSubsidiesSupport"],
           "isDate": false,
           "isBoolean": true,
           "programStage": "MkyTrLeBG8I"
