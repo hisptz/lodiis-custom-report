@@ -30,6 +30,10 @@ export function getAnalyticsParameters(
     ids?: string[];
     name: string;
     programStage: string;
+    progranStages?: Array<{
+      id: string;
+      dataElements: string[];
+    }>;
   }>
 ) {
   const enrollmentAnalyticParameters = [];
@@ -240,18 +244,43 @@ function getDataElementConfigs(
     ids?: string[];
     name: string;
     programStage: string;
+    progranStages?: Array<{
+      id: string;
+      dataElements: string[];
+    }>;
   }[]
 ) {
   return _.filter(
     _.flattenDeep(
-      _.map(dxConfigs || [], (dxConfig: any) => {
-        const ids = dxConfig.ids || [];
-        return ids.length === 0
-          ? dxConfig
-          : _.map(ids, (newId: string) => {
-              return { ...dxConfig, id: newId };
-            });
-      })
+      _.map(
+        _.flattenDeep(
+          _.map(dxConfigs || [], (dxConfig: any) => {
+            const ids = dxConfig.ids || [];
+            return ids.length === 0
+              ? dxConfig
+              : _.map(ids, (newId: string) => {
+                  return { ...dxConfig, id: newId };
+                });
+          })
+        ),
+        (dxConfig: any) => {
+          const progranStages = dxConfig.progranStages || [];
+          return progranStages.length == 0
+            ? dxConfig
+            : _.map(progranStages, (progranStageConfig: any) => {
+                return _.map(
+                  progranStageConfig.dataElements,
+                  (newId: string) => {
+                    return {
+                      ...dxConfig,
+                      id: newId,
+                      progranStage: progranStageConfig.id,
+                    };
+                  }
+                );
+              });
+        }
+      )
     ),
     (dxConfig: any) =>
       !dxConfig.isAttribute &&
