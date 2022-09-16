@@ -452,20 +452,36 @@
           "programStage": ""
         },
         {
-          "id": "completed_primary",
+          "id": "completed_primary_package",
           "name": "Completed Primary Package",
           "isDate": false,
           "isBoolean": false,
           "isAttribute": false,
-          "programStage": ""
+          "programStage": "",
+          "programStages": [
+            {
+              "id": "PGFt6IwdZLM",
+              "dataElements": ["qFwm4RM45gi"]
+            },
+            {
+              "id": "bDJq2JWVTbC",
+              "dataElements": ["Eug4BXDFLym", "vL6NpUA0rIU"]
+            }
+          ]
         },
         {
-          "id": "completed_primary_and_atleast_secondary",
+          "id": "completed_primary_package_and_atleast_secondary",
           "name": "Completed Primary Package + at least one Secondary Service",
           "isDate": false,
           "isBoolean": false,
           "isAttribute": false,
-          "programStage": ""
+          "programStage": "",
+          "programStages": [
+            {
+              "id": "vAMc8n0YB6m",
+              "dataElements": ["zbHpXUjGv5H"]
+            }
+          ]
         },
         {
           "id": "klLkGxy328c",

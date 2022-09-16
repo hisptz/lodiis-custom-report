@@ -1,5 +1,7 @@
 import * as _ from 'lodash';
 import { getFormattedDate } from 'src/app/core/utils/date-formatter.util';
+import { evaluationOfPrimaryPackageCompletion } from 'src/app/pages/home/helpers/primary-package-completion-helper';
+import { evaluationOfSecondaryPrimaryPackageCompletion } from 'src/app/pages/home/helpers/secondary-primary-package-completion-helper';
 import {
   getSanitizesReportValue,
   getSanitizedDisplayValue,
@@ -346,7 +348,6 @@ export function getFormattedEventAnalyticDataForReport(
     _.uniqBy(analyticData, 'psi'),
     'tei'
   );
-  console.log(groupedAnalyticDataByBeneficiary);
   return _.map(
     _.flattenDeep(
       _.map(_.keys(groupedAnalyticDataByBeneficiary), (tei: string) => {
@@ -376,9 +377,20 @@ export function getFormattedEventAnalyticDataForReport(
             codes,
             isDate,
             displayValues,
+            programStages,
           } = dxConfigs;
           let value = '';
-          if (id === 'district_of_residence') {
+          if (id === 'completed_primary_package') {
+            value = evaluationOfPrimaryPackageCompletion(
+              analyticDataByBeneficiary,
+              programStages
+            );
+          } else if (id === 'completed_primary_package_and_atleast_secondary') {
+            value = evaluationOfSecondaryPrimaryPackageCompletion(
+              analyticDataByBeneficiary,
+              programStages
+            );
+          } else if (id === 'district_of_residence') {
             const ouIds = _.uniq(
               _.flattenDeep(
                 _.map(analyticDataByBeneficiary, (dataObj) =>
