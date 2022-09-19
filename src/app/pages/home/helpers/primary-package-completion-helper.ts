@@ -7,9 +7,11 @@ import {
 
 const serviceFormProgramStage = 'bDJq2JWVTbC';
 const hivRiskAssessmentProgramStage = 'PGFt6IwdZLM';
+const condomEducationProgramStage = 'NXsIkG9Q1BA';
 
 const hivAssessnentReference = 'qFwm4RM45gi';
 const interventionReference = 'Eug4BXDFLym';
+const condomEducationReference = 'd4AJf9yiKpL';
 
 export function evaluationOfPrimaryPackageCompletion(
   analyticDataByBeneficiary: any[],
@@ -36,8 +38,19 @@ export function evaluationOfPrimaryPackageCompletion(
       hivAssessnentReference,
       `1`
     );
+    const hasCondomEductionProvided = getStatusFromBeneficiarySericeData(
+      beneficiaryServiceData,
+      condomEducationProgramStage,
+      condomEducationReference,
+      `1`
+    );
     const ageBand = getDreamServiceLayeringAgeBand(analyticDataByBeneficiary);
-    console.log({ hasHivRiskAssessment, ageBand, beneficiaryServiceData });
+    console.log({
+      hasHivRiskAssessment,
+      hasCondomEductionProvided,
+      ageBand,
+      beneficiaryServiceData,
+    });
     switch (ageBand) {
       case '10-14': {
         // Logics
