@@ -1,15 +1,16 @@
-import { getDreamServiceLayeringAgeBand } from './beneficiary-helper';
+import * as _ from 'lodash';
+import {
+  getDreamServiceLayeringAgeBand,
+  getSessionCountOnDreamsService,
+  getStatusFromBeneficiarySericeData,
+} from './dreams-service-layering-helper';
+
+const serviceFormProgramStage = 'bDJq2JWVTbC';
+const hivRiskAssessmentProgramStage = 'PGFt6IwdZLM';
 
 const hivAssessnentReference = 'qFwm4RM45gi';
 const interventionReference = 'Eug4BXDFLym';
-const sessionNumberReference = 'vL6NpUA0rIU';
 
-//
-
-// qFwm4RM45gi :  HIV riks assessment :: stage=> PGFt6IwdZLM
-// vL6NpUA0rIU :  session number :: stage=> bDJq2JWVTbC
-// Eug4BXDFLym :  type of intervenntions :: stage=> bDJq2JWVTbC
-//
 export function evaluationOfPrimaryPackageCompletion(
   analyticDataByBeneficiary: any[],
   progranStages: Array<{
@@ -18,21 +19,40 @@ export function evaluationOfPrimaryPackageCompletion(
   }>
 ): string {
   let completed = 'No';
-  console.log({ progranStages, type: 'ppc' });
-  const ageBand = getDreamServiceLayeringAgeBand(analyticDataByBeneficiary);
-  switch (ageBand) {
-    case '10-14': {
-      // Logics
-      break;
+  const progranStageIds = _.flattenDeep(
+    _.map(progranStages, (progranStage: any) => progranStage.id || [])
+  );
+  const beneficiaryServiceData = _.filter(
+    analyticDataByBeneficiary,
+    (beneficiaryData: any) => {
+      const programStageId = beneficiaryData['programStage'] || '';
+      return progranStageIds.includes(programStageId);
     }
-    case '15-19': {
-      // Logics
-      break;
-    }
-    case '20-24': {
-      // Logics
-      break;
+  );
+  if (beneficiaryServiceData.length > 0) {
+    const hasHivRiskAssessment = getStatusFromBeneficiarySericeData(
+      beneficiaryServiceData,
+      hivRiskAssessmentProgramStage,
+      hivAssessnentReference,
+      `1`
+    );
+    const ageBand = getDreamServiceLayeringAgeBand(analyticDataByBeneficiary);
+    console.log({ hasHivRiskAssessment, ageBand, beneficiaryServiceData });
+    switch (ageBand) {
+      case '10-14': {
+        // Logics
+        break;
+      }
+      case '15-19': {
+        // Logics
+        break;
+      }
+      case '20-24': {
+        // Logics
+        break;
+      }
     }
   }
+
   return completed;
 }
