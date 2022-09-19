@@ -33,7 +33,7 @@ export function evaluationOfSecondaryPrimaryPackageCompletion(
       hivTestReference,
       '1'
     );
-    console.log({ hasTestedForHiv, ageBand, beneficiaryServiceData });
+   // console.log({ hasTestedForHiv, ageBand, beneficiaryServiceData });
     switch (ageBand) {
       case '10-14': {
         // Logics

@@ -21,6 +21,7 @@ export function evaluationOfPrimaryPackageCompletion(
   }>
 ): string {
   let completed = 'No';
+  const ageBand = getDreamServiceLayeringAgeBand(analyticDataByBeneficiary);
   const progranStageIds = _.flattenDeep(
     _.map(progranStages, (progranStage: any) => progranStage.id || [])
   );
@@ -31,7 +32,7 @@ export function evaluationOfPrimaryPackageCompletion(
       return progranStageIds.includes(programStageId);
     }
   );
-  if (beneficiaryServiceData.length > 0) {
+  if (beneficiaryServiceData.length > 0 && ageBand !== '') {
     const hasHivRiskAssessment = getStatusFromBeneficiarySericeData(
       beneficiaryServiceData,
       hivRiskAssessmentProgramStage,
@@ -44,16 +45,57 @@ export function evaluationOfPrimaryPackageCompletion(
       condomEducationReference,
       `1`
     );
-    const ageBand = getDreamServiceLayeringAgeBand(analyticDataByBeneficiary);
-    console.log({
+
+    const hivPreventionEducationSessions = getSessionCountOnDreamsService(
+      beneficiaryServiceData,
+      serviceFormProgramStage,
+      'HIV Prevention Education',
+      interventionReference
+    );
+    const violationEducationSessions = getSessionCountOnDreamsService(
+      beneficiaryServiceData,
+      serviceFormProgramStage,
+      'ViolencePreventionEducation',
+      interventionReference
+    );
+    const aflateenTounSessions = getSessionCountOnDreamsService(
+      beneficiaryServiceData,
+      serviceFormProgramStage,
+      'AFLATEEN/TOUN',
+      interventionReference
+    );
+    const financialEducationSessions = getSessionCountOnDreamsService(
+      beneficiaryServiceData,
+      serviceFormProgramStage,
+      'FinancialLiteracyEducation',
+      interventionReference
+    );
+    const goGirlsSessions = getSessionCountOnDreamsService(
+      beneficiaryServiceData,
+      serviceFormProgramStage,
+      'Go Girls',
+      interventionReference
+    );
+    const condomEducationSessions = getSessionCountOnDreamsService(
+      beneficiaryServiceData,
+      serviceFormProgramStage,
+      'CondomEducationProvision',
+      interventionReference
+    );
+    console.log(JSON.stringify({
+      ageBand,
       hasHivRiskAssessment,
       hasCondomEductionProvided,
-      ageBand,
-      beneficiaryServiceData,
-    });
+      hivPreventionEducationSessions,
+      violationEducationSessions,
+      aflateenTounSessions,
+      financialEducationSessions,
+      goGirlsSessions,
+      condomEducationSessions,
+    }));
     switch (ageBand) {
       case '10-14': {
-        // Logics
+        // logics
         break;
       }
       case '15-19': {
