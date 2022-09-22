@@ -1,6 +1,11 @@
-import { getDreamServiceLayeringAgeBand } from './beneficiary-helper';
+import * as _ from 'lodash';
+import {
+  getDreamServiceLayeringAgeBand,
+  getStatusFromBeneficiarySericeData,
+} from './dreams-service-layering-helper';
 
-//hiv test or hts => stage : vAMc8n0YB6m =>  zbHpXUjGv5H
+const htsProgramStage = 'vAMc8n0YB6m';
+const hivTestReference = 'zbHpXUjGv5H';
 
 export function evaluationOfSecondaryPrimaryPackageCompletion(
   analyticDataByBeneficiary: any[],
@@ -10,20 +15,38 @@ export function evaluationOfSecondaryPrimaryPackageCompletion(
   }>
 ): string {
   let completed = 'No';
-  console.log({ progranStages, type: 'sppc' });
-  const ageBand = getDreamServiceLayeringAgeBand(analyticDataByBeneficiary);
-  switch (ageBand) {
-    case '10-14': {
-      // Logics
-      break;
+  const progranStageIds = _.flattenDeep(
+    _.map(progranStages, (progranStage: any) => progranStage.id || [])
+  );
+  const beneficiaryServiceData = _.filter(
+    analyticDataByBeneficiary,
+    (beneficiaryData: any) => {
+      const programStageId = beneficiaryData['programStage'] || '';
+      return progranStageIds.includes(programStageId);
     }
-    case '15-19': {
-      // Logics
-      break;
-    }
-    case '20-24': {
-      // Logics
-      break;
+  );
+  if (beneficiaryServiceData.length > 0) {
+    const ageBand = getDreamServiceLayeringAgeBand(analyticDataByBeneficiary);
+    const hasTestedForHiv = getStatusFromBeneficiarySericeData(
+      beneficiaryServiceData,
+      htsProgramStage,
+      hivTestReference,
+      '1'
+    );
+   // console.log({ hasTestedForHiv, ageBand, beneficiaryServiceData });
+    switch (ageBand) {
+      case '10-14': {
+        // Logics
+        break;
+      }
+      case '15-19': {
+        // Logics
+        break;
+      }
+      case '20-24': {
+        // Logics
+        break;
+      }
     }
   }
   return completed;

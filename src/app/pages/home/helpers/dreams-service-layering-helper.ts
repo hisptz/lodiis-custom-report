@@ -1,4 +1,40 @@
+import * as _ from 'lodash';
+
 const beneficiaryDateOfBirthReference = ['qZP982qpSPS', 'jVSwC6Ln95H'];
+
+export function getStatusFromBeneficiarySericeData(
+  beneficiaryServiceData: any[],
+  programStage: string,
+  referenceDataElement: string,
+  refernceValue: string
+): boolean {
+  let status = false;
+  const hivRiskAssements = _.filter(
+    beneficiaryServiceData,
+    (serviceData: any) => serviceData['programStage'] === programStage
+  );
+  for (const serviceData of hivRiskAssements) {
+    const value = serviceData[referenceDataElement] ?? '';
+    if (`${value}` === `${refernceValue}`) {
+      status = true;
+    }
+  }
+  return status;
+}
+
+export function getSessionCountOnDreamsService(
+  beneficiaryServiceData: any[],
+  programStage: string,
+  serviceName: string,
+  referenceDataElement: string
+): number {
+  return _.filter(
+    beneficiaryServiceData,
+    (serviceData: any) =>
+      serviceData['programStage'] === programStage &&
+      serviceData[referenceDataElement] === serviceName
+  ).length;
+}
 
 export function getDreamServiceLayeringAgeBand(
   analyticDataByBeneficiary: any[]
