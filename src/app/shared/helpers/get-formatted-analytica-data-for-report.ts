@@ -1,5 +1,6 @@
 import * as _ from 'lodash';
 import { getFormattedDate } from 'src/app/core/utils/date-formatter.util';
+import { evaluationOfPrimaryPackageCompletionAtLeastOneSecondary } from 'src/app/pages/home/helpers/primary-package-completion-at-least-secondary-helper';
 import { evaluationOfPrimaryPackageCompletion } from 'src/app/pages/home/helpers/primary-package-completion-helper';
 import { evaluationOfSecondaryPrimaryPackageCompletion } from 'src/app/pages/home/helpers/secondary-primary-package-completion-helper';
 import {
@@ -385,8 +386,13 @@ export function getFormattedEventAnalyticDataForReport(
               analyticDataByBeneficiary,
               programStages
             );
-          } else if (id === 'completed_primary_package_and_atleast_secondary') {
+          } else if (id === 'completed_secondary_package') {
             value = evaluationOfSecondaryPrimaryPackageCompletion(
+              analyticDataByBeneficiary,
+              programStages
+            );
+          } else if (id === 'completed_primary_package_and_atleast_secondary') {
+            value = evaluationOfPrimaryPackageCompletionAtLeastOneSecondary(
               analyticDataByBeneficiary,
               programStages
             );
