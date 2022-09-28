@@ -82,32 +82,47 @@ export function evaluationOfPrimaryPackageCompletion(
       'CondomEducationProvision',
       interventionReference
     );
-    console.log(JSON.stringify({
-      ageBand,
-      hasHivRiskAssessment,
-      hasCondomEductionProvided,
-      hivPreventionEducationSessions,
-      violationEducationSessions,
-      aflateenTounSessions,
-      financialEducationSessions,
-      goGirlsSessions,
-      condomEducationSessions,
-    }));
     switch (ageBand) {
       case '10-14': {
-        // logics
+        if (
+          hasHivRiskAssessment &&
+          hivPreventionEducationSessions >= 9 &&
+          violationEducationSessions >= 1 &&
+          aflateenTounSessions >= 9 &&
+          financialEducationSessions === 4
+        ) {
+          completed = 'Yes';
+        }
         break;
       }
       case '15-19': {
-        // Logics
+        if (
+          hasHivRiskAssessment &&
+          hivPreventionEducationSessions >= 9 &&
+          violationEducationSessions >= 1 &&
+          aflateenTounSessions >= 9 &&
+          goGirlsSessions >= 10 &&
+          financialEducationSessions === 4
+        ) {
+          completed = 'Yes';
+        }
         break;
       }
       case '20-24': {
-        // Logics
+        if (
+          hasHivRiskAssessment &&
+          hivPreventionEducationSessions >= 9 &&
+          violationEducationSessions >= 1 &&
+          aflateenTounSessions >= 9 &&
+          goGirlsSessions >= 10 &&
+          (hasCondomEductionProvided || condomEducationSessions >= 4) &&
+          financialEducationSessions === 4
+        ) {
+          completed = 'Yes';
+        }
         break;
       }
     }
   }
-
   return completed;
 }
