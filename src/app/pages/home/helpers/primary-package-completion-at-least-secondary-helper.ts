@@ -51,12 +51,11 @@ export function evaluationOfPrimaryPackageCompletionAtLeastOneSecondary(
     }
   );
   if (beneficiaryServiceData.length > 0) {
-    const hasCompletedPrimaryPackage =
+    const completedPrimaryPackageStatus =
       evaluationOfSecondaryPrimaryPackageCompletion(
         analyticDataByBeneficiary,
         programStages
       );
-    const ageBand = getDreamServiceLayeringAgeBand(analyticDataByBeneficiary);
     const hasTestedForHiv = getStatusFromBeneficiarySericeData(
       beneficiaryServiceData,
       htsProgramStage,
@@ -155,19 +154,27 @@ export function evaluationOfPrimaryPackageCompletionAtLeastOneSecondary(
       'SAVING GROUP',
       interventionReference
     );
-    switch (ageBand) {
-      case '10-14': {
-        // Logics
-        break;
-      }
-      case '15-19': {
-        // Logics
-        break;
-      }
-      case '20-24': {
-        // Logics
-        break;
-      }
+    if (
+      completedPrimaryPackageStatus === 'Yes' &&
+      (hasTestedForHiv ||
+        hasParentingProvided ||
+        hasCondomEductionProvided ||
+        condomEducationSessions >= 4 ||
+        hasFamilyPlanningProvided ||
+        hasPrepShortFormProvided ||
+        (hasPrepHivNegative &&
+          hasPrepCreatinineClearance &&
+          hasPrepWeightBelow) ||
+        (hasReferralServiceProvided &&
+          educationSupportAtFacilityReferralCount > 0) ||
+        (hasReferralServiceProvided &&
+          educationSupportAtCommunityReferralCount > 0) ||
+        hasPostGbvClinicalProvided ||
+        hasPostGbvlegalProvided ||
+        silcSessions >= 1 ||
+        savingGroupsSessions >= 12)
+    ) {
+      completed = 'Yes';
     }
   }
   return completed;
