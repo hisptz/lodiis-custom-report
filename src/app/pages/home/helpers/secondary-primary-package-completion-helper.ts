@@ -149,18 +149,55 @@ export function evaluationOfSecondaryPrimaryPackageCompletion(
       'SAVING GROUP',
       interventionReference
     );
-    // console.log({ hasTestedForHiv, ageBand, beneficiaryServiceData });
     switch (ageBand) {
       case '10-14': {
-        // Logics
+        if (
+          hasTestedForHiv &&
+          (hasCondomEductionProvided || condomEducationSessions >= 4) &&
+          ((hasReferralServiceProvided &&
+            educationSupportAtFacilityReferralCount > 0) ||
+            (hasReferralServiceProvided &&
+              educationSupportAtCommunityReferralCount > 0)) &&
+          (hasPostGbvClinicalProvided || hasPostGbvlegalProvided) &&
+          savingGroupsSessions > 12
+        ) {
+          completed = 'Yes';
+        }
         break;
       }
       case '15-19': {
-        // Logics
+        if (
+          hasTestedForHiv &&
+          hasFamilyPlanningProvided &&
+          (hasPrepShortFormProvided ||
+            (hasPrepHivNegative &&
+              hasPrepCreatinineClearance &&
+              hasPrepWeightBelow)) &&
+          ((hasReferralServiceProvided &&
+            educationSupportAtFacilityReferralCount > 0) ||
+            (hasReferralServiceProvided &&
+              educationSupportAtCommunityReferralCount > 0)) &&
+          (hasPostGbvClinicalProvided || hasPostGbvlegalProvided) &&
+          savingGroupsSessions > 12
+        ) {
+          completed = 'Yes';
+        }
         break;
       }
       case '20-24': {
-        // Logics
+        if (
+          hasTestedForHiv &&
+          hasFamilyPlanningProvided &&
+          (hasPrepShortFormProvided ||
+            (hasPrepHivNegative &&
+              hasPrepCreatinineClearance &&
+              hasPrepWeightBelow)) &&
+          (hasPostGbvClinicalProvided || hasPostGbvlegalProvided) &&
+          silcSessions >= 1 &&
+          hasParentingProvided
+        ) {
+          completed = 'Yes';
+        }
         break;
       }
     }
