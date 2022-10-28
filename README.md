@@ -1,112 +1,81 @@
-[![Build Status](https://travis-ci.org/hisptz/pact-swazi-dashboard-widget.svg?branch=master)](https://travis-ci.org/hisptz/pact-swazi-dashboard-widget)
-[![dependencies Status](https://david-dm.org/hisptz/pact-swazi-dashboard-widget/status.svg)](https://david-dm.org/hisptz/pact-swazi-dashboard-widget)
-[![devDependencies Status](https://david-dm.org/hisptz/pact-swazi-dashboard-widget/dev-status.svg)](https://david-dm.org/hisptz/pact-swazi-dashboard-widget?type=dev)
-[![Maintainability](https://api.codeclimate.com/v1/badges/dbe97dbdfbd55344c38f/maintainability)](https://codeclimate.com/github/hisptz/pact-swazi-dashboard-widget/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/dbe97dbdfbd55344c38f/test_coverage)](https://codeclimate.com/github/hisptz/pact-swazi-dashboard-widget/test_coverage)
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![Greenkeeper badge](https://badges.greenkeeper.io/hisptz/pact-swazi-dashboard-widget.svg)](https://greenkeeper.io/)
+# KB CUSTOM REPORT
 
-# Angular DHIS2 based seed app
+## Contents
 
-Boilerplate codes to fast track developing DHIS2 applications based on Angular framework
+1.  #### [About](#about)
+2.  #### [Pre-requisites](#preRequisites)
+3.  #### [Project setup](#setup)
+4.  #### [Running the app](#run)
+5.  #### [Building the app](#build)
 
-## Prerequisites
+## <a name='about'></a>1. About
 
-1. [NodeJs (10 or higher)](https://nodejs.org)
-2. npm (6.4.0 or higher), can be installed by running `apt install npm`
-3. git, can be installed by running `apt install git`
+This is a web application for generating custom reports for the KB system. It allows generation fo these reports based on the set report configurations and current user access. Additionally it also allow downloading of the generated reports for further analysis.
 
-## Setup
+## <a name='preRequisites'></a>2. Pre-requisites
 
-Clone repository
+To get started with the app, you will need:
 
-```bash
- git clone https://github.com/hisptz/pact-swazi-dashboard-widget.git
+```
+node 12.14.1
+
+npm 6.13.4
+
+angular +12.2.0
 ```
 
-Navigate to application root folder
+## <a name='setup'></a>3. Project setup
 
-```bash
-cd pact-swazi-dashboard-widget
+Setting up the project is done by going through into two steps:
+
+- Packages installations
+- Proxy setup
+
+### Packages installations
+
+Project dependency packages can be downloaded through `npm` by using the below command:
+
 ```
-
-Install all required dependencies for the app
-
-```bash
 npm install
 ```
 
-## Development server
+### Proxy setup
 
-To start development server
+Proxy server can be set by creating on the root project directory, the `proxy-config.json` with contents similar to `proxy-config.example.json` or as shown below:
 
-`npm start`
-
-Navigate to [http://localhost:4200](http://localhost:4200).
-
-This command will require proxy-config.json file available in the root of your source code, usually this file has this format
-
-```json
+```
 {
   "/api": {
-    "target": "https://play.dhis2.org/2.29/",
+    "target": "<url_to_dhis_instance>",
     "secure": "false",
-    "auth": "admin:district",
+    "auth": "<username>:<password>",
     "changeOrigin": "true"
   },
   "/": {
-    "target": "https://play.dhis2.org/2.29/",
+    "target": "<url_to_dhis_instance>",
     "secure": "false",
-    "auth": "admin:district",
+    "auth": "<username>:<password>",
     "changeOrigin": "true"
   }
 }
 ```
 
-We have provided `proxy-config.example.json` file as an example, make a copy and rename to `proxy-config.json`
+## <a name='run'></a>4. Running the app
 
-## Index DB Setup
+With the project properly setup, the KB custom report app can be run by the scripts specified on the `package.json` file using the below `npm` command.
 
-This app support index DB as based on [dexie library](https://dexie.org/). In order to initiatiate index db then you have to passed index db configuration in forRoot of core module, so in app.module.ts
-
-```ts
-........
-@NgModule({
-  declarations: [AppComponent, ...fromPages.pages],
-  imports: [
-   ..........
-    CoreModule.forRoot({
-      namespace: 'iapps',
-      version: 1,
-      models: {
-        users: 'id',
-        dataElement: 'id',
-        .......
-      }
-    })
-    .......
-    ]
-    ......
-    })
+```
+npm start
 ```
 
-where in the models, for example user will be a table "user" and 'id' will be a keyIndex for the table
+This will expose the `http://localhost:4200` or another port (that will be specified on the command line interface) ready to be opened on the browser to view the app.
 
-## Build
+## <a name='build'></a>5. Building the app
 
-To build the project run
+The app can be build using the `package.json` specified script for building by running the below command
 
-`npm run build`
+```
+npm run build
+```
 
-The build artifacts will be stored in the `dist/`, this will include a zip file ready for deploying to any DHIS2 instance.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+This command will created a build folder with a zipped build file at the `dist` folder found at the root directory.
