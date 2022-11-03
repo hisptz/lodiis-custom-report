@@ -592,26 +592,38 @@ export function getFormattedEventAnalyticDataForReport(
                   );
           }
         }
-
         const totalNumberOfServices = _.find(
           reportConfig.dxConfigs,
           (config: any) => config.id === 'total_services'
         );
-
-        // TODO fix the service counts mechanism
         if (totalNumberOfServices) {
-          const serviceCount = _.filter(
+          const serviceColumnsWithValue = _.filter(
             reportConfig.dxConfigs,
             (dxConfig: any) =>
               !dxConfig.isAttribute && beneficiaryData[dxConfig.name] === 'Yes'
           ).length;
-          const sanitizedBeneficiaryData = _.assign(beneficiaryData, {
-            [totalNumberOfServices.name]: serviceCount,
-          });
-          return sanitizedBeneficiaryData;
-        } else {
-          return beneficiaryData;
+          const totalServiceProvided = _.flattenDeep(
+            _.map(analyticDataByBeneficiary, (dataObj: any) => {
+              const { psi, programStage, tei } = dataObj;
+              return psi &&
+                psi != '' &&
+                programStage &&
+                programStage != '' &&
+                tei &&
+                tei != ''
+                ? {
+                    psi,
+                    programStage,
+                    tei,
+                  }
+                : [];
+            })
+          ).length;
+          if (serviceColumnsWithValue > 0) {
+            beneficiaryData[totalNumberOfServices.name] = totalServiceProvided;
+          }
         }
+        return beneficiaryData;
       })
     ),
     (beneficiary: any) => {
