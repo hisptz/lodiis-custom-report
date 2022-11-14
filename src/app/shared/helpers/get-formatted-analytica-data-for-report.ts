@@ -602,22 +602,25 @@ export function getFormattedEventAnalyticDataForReport(
             (dxConfig: any) =>
               !dxConfig.isAttribute && beneficiaryData[dxConfig.name] === 'Yes'
           ).length;
-          const totalServiceProvided = _.flattenDeep(
-            _.map(analyticDataByBeneficiary, (dataObj: any) => {
-              const { psi, programStage, tei } = dataObj;
-              return psi &&
-                psi != '' &&
-                programStage &&
-                programStage != '' &&
-                tei &&
-                tei != ''
-                ? {
-                    psi,
-                    programStage,
-                    tei,
-                  }
-                : [];
-            })
+          const totalServiceProvided = _.uniqBy(
+            _.flattenDeep(
+              _.map(analyticDataByBeneficiary, (dataObj: any) => {
+                const { psi, programStage, tei } = dataObj;
+                return psi &&
+                  psi != '' &&
+                  programStage &&
+                  programStage != '' &&
+                  tei &&
+                  tei != ''
+                  ? {
+                      psi,
+                      programStage,
+                      tei,
+                    }
+                  : [];
+              })
+            ),
+            'psi'
           ).length;
           if (serviceColumnsWithValue > 0) {
             beneficiaryData[totalNumberOfServices.name] = totalServiceProvided;
