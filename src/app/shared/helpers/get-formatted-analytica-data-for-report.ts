@@ -597,6 +597,19 @@ export function getFormattedEventAnalyticDataForReport(
           (config: any) => config.id === 'total_services'
         );
         if (totalNumberOfServices) {
+          const serviceIds = _.uniq(
+            _.map(
+              _.filter(
+                reportConfig.dxConfigs,
+                (dxConfig: any) => !dxConfig.isAttribute
+              ),
+              ({ id, isBoolean, codes }) => ({
+                id,
+                allowedValues: codes ? [...codes] : isBoolean ? ['1'] : [],
+              })
+            )
+          );
+
           const serviceColumnsWithValue = _.filter(
             reportConfig.dxConfigs,
             (dxConfig: any) =>
@@ -604,20 +617,21 @@ export function getFormattedEventAnalyticDataForReport(
           ).length;
           const totalServiceProvided = _.uniqBy(
             _.flattenDeep(
-              _.map(analyticDataByBeneficiary, (dataObj: any) => {
+              _.filter(analyticDataByBeneficiary, (dataObj: any) => {
                 const { psi, programStage, tei } = dataObj;
-                return psi &&
+                return (
+                  psi &&
                   psi != '' &&
                   programStage &&
                   programStage != '' &&
                   tei &&
-                  tei != ''
-                  ? {
-                      psi,
-                      programStage,
-                      tei,
-                    }
-                  : [];
+                  tei != '' &&
+                  _.some(
+                    serviceIds,
+                    ({ id, allowedValues }) =>
+                      dataObj[id] != '' && allowedValues.includes(dataObj[id])
+                  )
+                );
               })
             ),
             'psi'
