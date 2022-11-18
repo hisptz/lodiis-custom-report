@@ -597,27 +597,44 @@ export function getFormattedEventAnalyticDataForReport(
           (config: any) => config.id === 'total_services'
         );
         if (totalNumberOfServices) {
+          const serviceIds = _.uniq(
+            _.map(
+              _.filter(
+                reportConfig.dxConfigs,
+                (dxConfig: any) => !dxConfig.isAttribute
+              ),
+              ({ id, isBoolean, codes }) => ({
+                id,
+                allowedValues: codes ? [...codes] : isBoolean ? ['1'] : [],
+              })
+            )
+          );
+
           const serviceColumnsWithValue = _.filter(
             reportConfig.dxConfigs,
             (dxConfig: any) =>
               !dxConfig.isAttribute && beneficiaryData[dxConfig.name] === 'Yes'
           ).length;
-          const totalServiceProvided = _.flattenDeep(
-            _.map(analyticDataByBeneficiary, (dataObj: any) => {
-              const { psi, programStage, tei } = dataObj;
-              return psi &&
-                psi != '' &&
-                programStage &&
-                programStage != '' &&
-                tei &&
-                tei != ''
-                ? {
-                    psi,
-                    programStage,
-                    tei,
-                  }
-                : [];
-            })
+          const totalServiceProvided = _.uniqBy(
+            _.flattenDeep(
+              _.filter(analyticDataByBeneficiary, (dataObj: any) => {
+                const { psi, programStage, tei } = dataObj;
+                return (
+                  psi &&
+                  psi != '' &&
+                  programStage &&
+                  programStage != '' &&
+                  tei &&
+                  tei != '' &&
+                  _.some(
+                    serviceIds,
+                    ({ id, allowedValues }) =>
+                      dataObj[id] != '' && allowedValues.includes(dataObj[id])
+                  )
+                );
+              })
+            ),
+            'psi'
           ).length;
           if (serviceColumnsWithValue > 0) {
             beneficiaryData[totalNumberOfServices.name] = totalServiceProvided;

@@ -2,7 +2,7 @@
   "reports": [
     {
       "id": "Consolidate_DREAM_services",
-      "name": "Consolidate DREAMS services",
+      "name": "Consolidated DREAMS services",
       "program": ["hOEIHJDrrvz"],
       "dxConfigs": [
         {
@@ -249,13 +249,6 @@
           "programStage": ""
         },
         {
-          "id": "p7saxV2libq",
-          "name": "Referral service provided ?",
-          "isDate": false,
-          "isBoolean": true,
-          "programStage": ""
-        },
-        {
           "id": "service_from_referral",
           "ids": ["rsh5Kvx6qAU", "OrC9Bh2bcFz", "hXyqgOWZ17b"],
           "name": "Educational Subsidies ",
@@ -265,11 +258,19 @@
           "programStage": "MkyTrLeBG8I"
         },
         {
-          "id": "d4AJf9yiKpL",
+          "id": "uciT2F6ByYO",
           "name": "Condom Education/ Provision",
           "isDate": false,
           "isBoolean": true,
           "programStage": "NXsIkG9Q1BA"
+        },
+        {
+          "id": "Eug4BXDFLym",
+          "name": "Condom Education/ Provision",
+          "codes": ["CondomEducationProvision"],
+          "isDate": false,
+          "isBoolean": true,
+          "programStage": "bDJq2JWVTbC"
         },
         {
           "id": "zbHpXUjGv5H",
@@ -377,6 +378,13 @@
           "programStage": "bDJq2JWVTbC"
         },
         {
+          "id": "ytVTXe4RVUJ",
+          "name": "HIV/ Prevention Education",
+          "isDate": false,
+          "isBoolean": true,
+          "programStage": "mCKbTbsQoMy"
+        },
+        {
           "id": "qFwm4RM45gi",
           "name": "HIV Risk Assessment",
           "isDate": false,
@@ -428,22 +436,6 @@
           "programStage": "MkyTrLeBG8I"
         },
         {
-          "id": "Eug4BXDFLym",
-          "name": "Type of intervention",
-          "isDate": false,
-          "isBoolean": false,
-          "isAttribute": false,
-          "programStage": ""
-        },
-        {
-          "id": "vL6NpUA0rIU",
-          "name": "Number of session",
-          "isDate": false,
-          "isBoolean": false,
-          "isAttribute": false,
-          "programStage": "bDJq2JWVTbC"
-        },
-        {
           "id": "total_services",
           "name": "Number of services received",
           "isDate": false,
@@ -469,7 +461,7 @@
             },
             {
               "id": "NXsIkG9Q1BA",
-              "dataElements": ["d4AJf9yiKpL"]
+              "dataElements": ["uciT2F6ByYO"]
             }
           ]
         },
@@ -491,7 +483,7 @@
             },
             {
               "id": "NXsIkG9Q1BA",
-              "dataElements": ["d4AJf9yiKpL"]
+              "dataElements": ["uciT2F6ByYO"]
             },
             {
               "id": "vAMc8n0YB6m",
@@ -503,7 +495,7 @@
             },
             {
               "id": "NXsIkG9Q1BA",
-              "dataElements": ["d4AJf9yiKpL"]
+              "dataElements": ["uciT2F6ByYO"]
             },
             {
               "id": "mMjGlK1W0Xo",
@@ -553,7 +545,7 @@
             },
             {
               "id": "NXsIkG9Q1BA",
-              "dataElements": ["d4AJf9yiKpL"]
+              "dataElements": ["uciT2F6ByYO"]
             },
             {
               "id": "mMjGlK1W0Xo",
@@ -615,7 +607,7 @@
     },
     {
       "id": "Consolidate_DREAM_referrals",
-      "name": "Consolidate DREAMS referrals",
+      "name": "Consolidated DREAMS referrals",
       "program": ["hOEIHJDrrvz"],
       "dxConfigs": [
         {
@@ -685,7 +677,7 @@
           ]
         },
         {
-          "id": "Qgy2ZvF0EwJ",
+          "id": "fTSAY18LgCF",
           "name": "ID number",
           "isDate": false,
           "isBoolean": false,
@@ -3009,8 +3001,8 @@
           "programStage": ""
         },
         {
-          "id": "Experience Emotional violence/abuse",
-          "name": "",
+          "id": "lm4BA6iOdlI",
+          "name": "Experience Emotional violence/abuse",
           "isDate": false,
           "isBoolean": true,
           "isAttribute": true,
@@ -5068,7 +5060,8 @@
         "H2CE3Iwdf7v",
         "vVMJBQvvm5D",
         "tmuVlsiEjUi",
-        "A5VS8GCyb8t"
+        "A5VS8GCyb8t",
+        "pNg5CAXMtLP"
       ],
       "includeEnrollmentWithoutService": false
     },
@@ -6933,7 +6926,8 @@
         "A5VS8GCyb8t",
         "RoLA6GyxTlS",
         "NuxoYkqopE2",
-        "KixA3B2O8Rp"
+        "KixA3B2O8Rp",
+        "pNg5CAXMtLP"
       ],
       "includeEnrollmentWithoutService": false
     },
