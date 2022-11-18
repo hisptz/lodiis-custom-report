@@ -378,6 +378,13 @@
           "programStage": "bDJq2JWVTbC"
         },
         {
+          "id": "ytVTXe4RVUJ",
+          "name": "HIV/ Prevention Education",
+          "isDate": false,
+          "isBoolean": true,
+          "programStage": "mCKbTbsQoMy"
+        },
+        {
           "id": "qFwm4RM45gi",
           "name": "HIV Risk Assessment",
           "isDate": false,

@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { Report } from 'src/app/shared/models/report.model';
 import * as _ from 'lodash';
-import { config } from 'process';
 
 @Injectable({
   providedIn: 'root',
