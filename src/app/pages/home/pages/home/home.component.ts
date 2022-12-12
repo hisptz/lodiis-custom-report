@@ -258,19 +258,10 @@ export class HomeComponent implements OnInit {
         date.toISOString().split('T')[0]
       }`;
       let skipHeader = false;
-      const removedColumns: string[] = [
-        'First Name',
-        'Surname',
-        'Contact Numbers',
-      ];
-
       if (data.length > 0) {
-        const sanitizedData: any[] = data.map((singleData: any) => {
-          return _.omit(singleData, removedColumns);
-        });
         const reportSummary = [];
         const headers = _.uniq(
-          _.flattenDeep(_.map(_.keys(_.head(sanitizedData))))
+          _.flattenDeep(_.map(_.keys(_.head(data))))
         );
         if (headers.length > 0) {
           skipHeader = true;
@@ -299,7 +290,7 @@ export class HomeComponent implements OnInit {
           reportSummary.push(headerJson);
         }
         this.excelFileService.writeToSingleSheetExcelFile(
-          [...reportSummary, ...sanitizedData],
+          [...reportSummary, ...data],
           reportName,
           skipHeader
         );
