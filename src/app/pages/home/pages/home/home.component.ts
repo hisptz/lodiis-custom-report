@@ -260,9 +260,7 @@ export class HomeComponent implements OnInit {
       let skipHeader = false;
       if (data.length > 0) {
         const reportSummary = [];
-        const headers = _.uniq(
-          _.flattenDeep(_.map(_.keys(_.head(data))))
-        );
+        const headers = _.uniq(_.flattenDeep(_.map(_.keys(_.head(data)))));
         if (headers.length > 0) {
           skipHeader = true;
           const selectedLocation = _.map(
