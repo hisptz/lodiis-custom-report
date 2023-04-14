@@ -8,7 +8,7 @@ import {
   getIsRefreshingStatus,
   getCustomReports,
 } from 'src/app/store/selectors/custom-report.selector';
-import { CustomReporFormComponent } from '../custom-report-form/custom-report-form.component';
+import { CustomReportFormComponent } from '../custom-report-form/custom-report-form.component';
 import { MatDialog } from '@angular/material/dialog';
 import { CustomReporActionComponent } from '../custom-report-action/custom-report-action.component';
 
@@ -33,7 +33,7 @@ export class CustomReportTableComponent implements OnInit {
   onEdit(report: Report) {
     const width = '670px';
     const height = '600px';
-    this.dialogRef.open(CustomReporFormComponent, {
+    this.dialogRef.open(CustomReportFormComponent, {
       height,
       width,
       data: {

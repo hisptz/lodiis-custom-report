@@ -34,7 +34,7 @@ export class ConfigService {
     });
   }
 
-  async getExtendeReportMetadata(programIds: String[] = []) {
+  async getExtendedReportMetadata(programIds: String[] = []) {
     const programMetadata = {};
     const filter = `filter=id:in:[${_.join(programIds, ',')}]`;
     const fields =
@@ -85,7 +85,7 @@ export class ConfigService {
     });
   }
 
-  async getUserImpelementingPartner() {
+  async getUserImplementingPartner() {
     const implementingPartnerAttributeId = 'wpiLo7DTwKF';
     let implementingPartnerId = '';
     const currentUserUrl = `me.json?fields=attributeValues[value,attribute[id]]`;

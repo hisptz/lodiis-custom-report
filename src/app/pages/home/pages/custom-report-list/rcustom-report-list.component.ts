@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { CustomReporFormComponent } from '../../components/custom-report-form/custom-report-form.component';
+import { CustomReportFormComponent } from '../../components/custom-report-form/custom-report-form.component';
 
 @Component({
   selector: 'app-custom-report-list',
@@ -18,7 +18,7 @@ export class CustomReportListComponent {
   onAddReport() {
     const width = '670px';
     const height = '600px';
-    this.dialogRef.open(CustomReporFormComponent, {
+    this.dialogRef.open(CustomReportFormComponent, {
       height,
       width,
       data: {

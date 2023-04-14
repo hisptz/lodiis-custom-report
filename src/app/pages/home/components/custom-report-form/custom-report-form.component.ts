@@ -22,7 +22,7 @@ import { take } from 'rxjs/operators';
   templateUrl: './custom-report-form.component.html',
   styleUrls: ['./custom-report-form.component.css'],
 })
-export class CustomReporFormComponent implements OnInit {
+export class CustomReportFormComponent implements OnInit {
   dxConfigs: any = '';
   title: string;
   isDxConfigValid: boolean;
@@ -132,7 +132,7 @@ export class CustomReporFormComponent implements OnInit {
     this.validateMetadata();
     if (this.isDxConfigValid) {
       const implementingPartnerId =
-        (await this.configService.getUserImpelementingPartner()) as string;
+        (await this.configService.getUserImplementingPartner()) as string;
       if (this.data.params != 'true') {
         let report = this.customReportOnEditSave(
           JSON.parse(this.dxConfigs),
