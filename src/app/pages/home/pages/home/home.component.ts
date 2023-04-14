@@ -92,37 +92,28 @@ export class HomeComponent implements OnInit {
   }
   async fetchReportConfig() {
     const implementingPartnerId =
-      (await this.configService.getUserImpelementingPartner()) as string;
+      (await this.configService.getUserImplementingPartner()) as string;
     this.configService
       .getReportConfigs()
       .pipe(take(1))
       .subscribe(
         (configs: any) => {
-          this.configService
-            .getCustomReportConfigs()
-            .pipe(take(1))
-            .subscribe((customConfig: any) => {
-              const reports =
-                [...configs.reports, ...customConfig.reports] ||
-                reportConfig.reports ||
-                [];
+          const reports = configs.reports || reportConfig.reports || [];
 
-              const reportsByCurrentIp =
-                getFilteredReportByUserImplementingPartner(
-                  reports,
-                  implementingPartnerId
-                );
-              const selectedProgramIds = _.uniq(
-                _.flattenDeep(
-                  _.map(
-                    reportsByCurrentIp,
-                    (report: Report) => report.program || []
-                  )
-                )
-              );
-              this.setProgramMetadata(selectedProgramIds);
-              this.reports = reportsByCurrentIp;
-            });
+          const reportsByCurrentIp = getFilteredReportByUserImplementingPartner(
+            reports,
+            implementingPartnerId
+          );
+          const selectedProgramIds = _.uniq(
+            _.flattenDeep(
+              _.map(
+                reportsByCurrentIp,
+                (report: Report) => report.program || []
+              )
+            )
+          );
+          this.setProgramMetadata(selectedProgramIds);
+          this.reports = reportsByCurrentIp;
         },
         () => {
           const reports = reportConfig.reports || ([] as Array<any>);
@@ -147,7 +138,7 @@ export class HomeComponent implements OnInit {
   async setProgramMetadata(programIds: String[] = []) {
     if (programIds.length > 0) {
       this.programMetadataObjects =
-        await this.configService.getExtendeReportMetadata(programIds);
+        await this.configService.getExtendedReportMetadata(programIds);
     }
   }
 
@@ -258,20 +249,9 @@ export class HomeComponent implements OnInit {
         date.toISOString().split('T')[0]
       }`;
       let skipHeader = false;
-      const removedColumns: string[] = [
-        'First Name',
-        'Surname',
-        'Contact Numbers',
-      ];
-
       if (data.length > 0) {
-        const sanitizedData: any[] = data.map((singleData: any) => {
-          return _.omit(singleData, removedColumns);
-        });
         const reportSummary = [];
-        const headers = _.uniq(
-          _.flattenDeep(_.map(_.keys(_.head(sanitizedData))))
-        );
+        const headers = _.uniq(_.flattenDeep(_.map(_.keys(_.head(data)))));
         if (headers.length > 0) {
           skipHeader = true;
           const selectedLocation = _.map(
@@ -299,7 +279,7 @@ export class HomeComponent implements OnInit {
           reportSummary.push(headerJson);
         }
         this.excelFileService.writeToSingleSheetExcelFile(
-          [...reportSummary, ...sanitizedData],
+          [...reportSummary, ...data],
           reportName,
           skipHeader
         );

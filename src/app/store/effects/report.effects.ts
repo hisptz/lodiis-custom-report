@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { NgxDhis2HttpClientService } from '@iapps/ngx-dhis2-http-client';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
+import { retry, asyncify } from 'async-es';
 import { catchError, map, switchMap, take } from 'rxjs/operators';
 import * as _ from 'lodash';
 
@@ -79,19 +80,19 @@ export class ReportDataEffects {
       let overAllProcessCount = 0;
       let bufferProcessCount = 0;
       const locations = await this.getAllLocations();
-      const eventAnalyticParamaters = _.flattenDeep(
+      const eventAnalyticParameters = _.flattenDeep(
         _.filter(
           analyticParameters,
           (parameter: any) => parameter && !parameter.isEnrollmentAnalytic
         )
       );
-      const enrollmentAnalyticParamaters = _.flattenDeep(
+      const enrollmentAnalyticParameters = _.flattenDeep(
         _.filter(
           analyticParameters,
           (parameter: any) => parameter && parameter.isEnrollmentAnalytic
         )
       );
-      for (const analyticParameter of enrollmentAnalyticParamaters) {
+      for (const analyticParameter of enrollmentAnalyticParameters) {
         const programId = analyticParameter.programId || '';
         if (programId !== '') {
           const programStages: any = await this.getProgramStagesByProgramId(
@@ -119,17 +120,27 @@ export class ReportDataEffects {
         }
       }
       for (const programId of programIds) {
-        for (const analyticParameter of eventAnalyticParamaters) {
+        for (const analyticParameter of eventAnalyticParameters) {
           const programStages: any = await this.getProgramStagesByProgramId(
             programId
           );
           programToProgramStageObject[programId] = programStages;
-          const response: any =
-            await this.getAnalyticParameterWithPaginationFilter(
-              analyticParameter,
-              programId,
-              reportConfig
-            );
+          const response: any = await retry(
+            {
+              times: 10,
+              interval: (retryCount) => {
+                return 1000 * Math.pow(2, retryCount);
+              },
+            },
+            asyncify(
+              async () =>
+                await this.getAnalyticParameterWithPaginationFilter(
+                  analyticParameter,
+                  programId,
+                  reportConfig
+                )
+            )
+          );
           totalOverAllProcess += response.paginationFilters.length;
           analyticParametersWithPaginationFilters.push(response);
         }
@@ -265,7 +276,17 @@ export class ReportDataEffects {
     let analyticData = {};
     try {
       for (const paginationFilter of paginationFilters) {
-        const data: any = await this.getAnalyticResult(url, paginationFilter);
+        const data: any = await retry(
+          {
+            times: 10,
+            interval: (retryCount) => {
+              return 1000 * Math.pow(2, retryCount);
+            },
+          },
+          asyncify(
+            async () => await this.getAnalyticResult(url, paginationFilter)
+          )
+        );
         overAllProcessCount++;
         this.updateProgressStatus(
           bufferProcessCount,
@@ -279,9 +300,7 @@ export class ReportDataEffects {
           analyticData = { ...analyticData, rows };
         }
       }
-    } catch (error) {
-      console.log({ error });
-    }
+    } catch (error) {}
     return { data: analyticData, stage, overAllProcessCount };
   }
 
@@ -321,10 +340,10 @@ export class ReportDataEffects {
       ? `analytics/enrollments/query/${programUid}.json?${periodDimension}&dimension=ou:${ou}&${dataDimension}&stage=${stage}&displayProperty=NAME&outputType=ENROLLMENT&desc=enrollmentdate`
       : `analytics/events/query/${programUid}.json?${periodDimension}&dimension=ou:${ou}&${dataDimension}&stage=${stage}&displayProperty=NAME&outputType=EVENT&desc=eventdate`;
     try {
-      const response: any = await this.getPaginatinationFilters(url, pageSize);
+      const response: any = await this.getPaginationFilters(url, pageSize);
       paginationFilters.push(response);
     } catch (error) {
-      console.log({ error });
+      throw error;
     }
     return {
       ...analyticParameter,
@@ -346,7 +365,7 @@ export class ReportDataEffects {
     });
   }
 
-  getPaginatinationFilters(url: string, pageSize: number) {
+  getPaginationFilters(url: string, pageSize: number) {
     const paginationFilters = [];
     return new Promise((resolve, reject) => {
       this.httpClient
